@@ -1,16 +1,16 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
 
-import '../../node_modules/video.js/dist/video-js.css'
+import '../../../node_modules/video.js/dist/video-js.css'
 import videojs from 'video.js'
 
 import 'webrtc-adapter'
 import RecordRTC from 'recordrtc'
 // register videojs-record plugin with this import
-import '../../node_modules/videojs-record/dist/css/videojs.record.css'
-import Record from '../../node_modules/videojs-record/dist/videojs.record'
+import '../../../node_modules/videojs-record/dist/css/videojs.record.css'
+import Record from 'videojs-record/dist/videojs.record'
 
-class Camera extends React.Component {
+class Screen extends React.Component {
 
   async componentDidMount() {
     // instantiate Video.js
@@ -66,4 +66,4 @@ class Camera extends React.Component {
   }
 }
 
-export default Camera
+export default Screen

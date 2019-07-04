@@ -1,7 +1,8 @@
 import React from 'react'
-import Camera from '../components/camera.js';
+import Camera from '../components/record/camera';
+import Screen from '../components/record/screen';
 
-const videoJsOptions = {
+const CameraOptions = {
   controls: true,
   width: 320,
   height: 240,
@@ -17,12 +18,28 @@ const videoJsOptions = {
   }
 };
 
+const ScreenOptions = {
+  controls: true,
+  width: 320,
+  height: 240,
+  loop: false,
+  fluid: false,
+  plugins: {
+    record: {
+      maxLength: 10, //1200 seconds
+      debug: true, 
+      screen: true
+    }
+  }
+};
+
 class RecordPage extends React.Component {
 
   render() {
     return (
       <div>
-        <Camera {...videoJsOptions} />
+        <Camera {...CameraOptions} />
+        <Screen {...ScreenOptions} />
       </div>
     )
   }
