@@ -1,5 +1,4 @@
 import React from 'react'
-import { Button } from 'react-bootstrap'
 
 import '../../../node_modules/video.js/dist/video-js.css'
 import videojs from 'video.js'
