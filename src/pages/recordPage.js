@@ -1,6 +1,7 @@
 import React from 'react'
-import Camera from '../components/record/camera';
-import Screen from '../components/record/screen';
+import Camera from '../components/record/camera'
+import Screen from '../components/record/screen'
+import NavbarExp from '../components/utils/navbarExperimenter'
 
 const CameraOptions = {
   controls: true,
@@ -38,6 +39,7 @@ class RecordPage extends React.Component {
   render() {
     return (
       <div>
+        <NavbarExp />
         <Camera {...CameraOptions} />
         <Screen {...ScreenOptions} />
       </div>

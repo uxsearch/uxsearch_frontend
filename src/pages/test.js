@@ -1,11 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
+import NavbarExp from '../components/utils/navbarExperimenter'
 
 class Test extends React.Component {
   render() {
     return (
       <div>
+        <NavbarExp />
         <h1>Test test page</h1>
         <a href='/testing/record'>
           <Button className='btn btn-success'>
