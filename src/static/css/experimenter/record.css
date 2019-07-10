@@ -26,3 +26,15 @@
   top: 50%;
   transform: translate(0%, -50%);
 }
+
+.btn-finish-test {
+  background-color: #28a1f2 !important;
+  border: 2px solid #28a1f2 !important;
+  color: #efefef !important;
+  width: 100%;
+}
+
+.btn-finish-test:hover {
+  background-color: #008deb !important;
+  border: 2px solid #008deb !important;
+}

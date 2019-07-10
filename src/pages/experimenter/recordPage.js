@@ -2,7 +2,7 @@ import React from 'react'
 import Camera from '../../components/record/camera'
 import Screen from '../../components/record/screen'
 import NavbarExp from '../../components/utils/navbarExperimenter'
-import { Container, Row, Col } from 'react-bootstrap'
+import { Container, Row, Col, Button } from 'react-bootstrap'
 
 class RecordPage extends React.Component {
 
@@ -12,11 +12,21 @@ class RecordPage extends React.Component {
         <NavbarExp />
         <Container className='container-block'>
           <Row className='video-block'>
-            <Col xs={12} md={6} className='text-center'>
-              <Camera />
-            </Col>
-            <Col xs={12} md={6} className='text-center'>
-              <Screen />
+            <Col xs={12}>
+              <Row>
+                <Col xs={12} md={6} className='text-center'>
+                  <Camera />
+                </Col>
+                <Col xs={12} md={6} className='text-center'>
+                  <Screen />
+                </Col>
+              </Row>
+              <br />
+              <Row className='justify-content-center'>
+                <Col xs={12} md={3} className='text-center'>
+                  <Button type='submit' className='btn-finish-test'>Finish Testing</Button>
+                </Col>
+              </Row>
             </Col>
           </Row>
         </Container>
