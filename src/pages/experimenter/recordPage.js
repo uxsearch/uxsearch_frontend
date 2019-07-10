@@ -1,7 +1,7 @@
 import React from 'react'
-import Camera from '../components/record/camera'
-import Screen from '../components/record/screen'
-import NavbarExp from '../components/utils/navbarExperimenter'
+import Camera from '../../components/record/camera'
+import Screen from '../../components/record/screen'
+import NavbarExp from '../../components/utils/navbarExperimenter'
 
 const CameraOptions = {
   controls: true,
