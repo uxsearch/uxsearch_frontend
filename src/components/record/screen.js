@@ -9,16 +9,37 @@ import RecordRTC from 'recordrtc'
 import '../../../node_modules/videojs-record/dist/css/videojs.record.css'
 import Record from 'videojs-record/dist/videojs.record'
 
+import '../../static/css/experimenter/record.css'
+
+const ScreenOptions = {
+  controls: {
+    autoPlay: true
+  },
+  loop: false,
+  fluid: false,
+  autoSetup: true,
+  plugins: {
+    record: {
+      autoPlay: true,
+      maxLength: 10, //1200 seconds
+      debug: true,
+      screen: true
+    }
+  }
+};
+
 class Screen extends React.Component {
 
   async componentDidMount() {
     // instantiate Video.js
-    this.player = videojs(this.videoNode, this.props, () => {
+    this.player = videojs(this.videoNode, ScreenOptions, () => {
       // print version information at startup
       var version_info = 'Using video.js ' + videojs.VERSION +
         ' with videojs-record ' + videojs.getPluginVersion('record') +
         ' and recordrtc ' + RecordRTC.version;
       videojs.log(version_info);
+      console.log(ScreenOptions)
+
     });
 
     // device is ready
@@ -59,7 +80,7 @@ class Screen extends React.Component {
   render() {
     return (
       <div data-vjs-player>
-        <video id="myVideo" ref={node => this.videoNode = node} className="video-js vjs-default-skin" playsInline></video>
+        <video id="myVideo" ref={node => this.videoNode = node} className="video-js vjs-default-skin myVideo-dimension" playsInline></video>
       </div>
     );
   }
