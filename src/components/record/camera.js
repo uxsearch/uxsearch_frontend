@@ -28,6 +28,11 @@ const CameraOptions = {
     }
   }
 };
+
+const recordAuto = () => {
+  document.getElementById('cameraButton').click()
+}
+
 class Camera extends React.Component {
 
   async componentDidMount() {
@@ -36,8 +41,8 @@ class Camera extends React.Component {
         ' with videojs-record ' + videojs.getPluginVersion('record') +
         ' and recordrtc ' + RecordRTC.version;
       videojs.log(version_info)
-      console.log(this.player)
-
+      this.player.children_[1].setAttribute('id', 'cameraButton')
+      this.player.children_[1].setAttribute('onLoad', recordAuto())
     });
 
     // device is ready
