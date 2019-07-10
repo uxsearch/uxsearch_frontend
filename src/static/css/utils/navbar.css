@@ -2,4 +2,5 @@
 
 .nav-bgColor {
   background-color: #303030;
+  z-index: 1;
 }
