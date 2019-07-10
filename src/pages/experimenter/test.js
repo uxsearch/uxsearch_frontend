@@ -5,6 +5,7 @@ import NavbarExp from '../../components/utils/navbarExperimenter'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserAlt } from '@fortawesome/free-solid-svg-icons'
 
+
 class Test extends React.Component {
   render() {
     return (
@@ -16,7 +17,15 @@ class Test extends React.Component {
             Start Record
           </Button>
         </a>
-        <FontAwesomeIcon icon={faUserAlt} size="lg"/>
+        <FontAwesomeIcon icon={faUserAlt} size="lg"/> <br></br>
+
+        <h1>Video Result</h1>
+        <a href='/testing/VideoResult'>
+          <Button className='btn btn-success'>
+            Video Result
+          </Button>
+          
+        </a>
       </div>
     )
   }
