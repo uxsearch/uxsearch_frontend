@@ -1,27 +1,21 @@
 import React from 'react'
 import { Navbar,Nav } from 'react-bootstrap'
-import '../../static/css/navbar.css'
+import '../../static/css/utils/navbar.css'
 
 
 class NavbarUXer extends React.Component {
     render() {
         return (
             <div>
-               
-
-
-
                 <Navbar className='nav-bgColor'>
                 <Nav defaultActiveKey="/home" as="ul">
                     <Nav.Item as="li">
-                       <Nav.Link href="/testing/record">Active</Nav.Link> 
+                       <Nav.Link href="/testing/record">Projects</Nav.Link> 
                     </Nav.Item>
                     <Nav.Item as="li">
-                       <Nav.Link eventKey="link-1">Link</Nav.Link>
+                       <Nav.Link eventKey="link-1">Activities</Nav.Link>
                     </Nav.Item>
-                 
-                </Nav>
-                    
+                </Nav>                    
                     <img
                         src={require('../../static/img/Logo_White.png')}
                         width='55'
@@ -29,11 +23,7 @@ class NavbarUXer extends React.Component {
                         className="d-inline-block align-top"
                         alt="UX Search Logo"
                     />
-
-
-
-                </Navbar>
-               
+                </Navbar>            
             </div>
         )
     }
