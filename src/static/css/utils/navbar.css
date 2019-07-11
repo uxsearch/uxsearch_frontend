@@ -5,28 +5,34 @@
   position: fixed !important;
   min-width: 100%;
   z-index: 1;
-  color:#efefef; 
-  font-size: 110px
- 
+  max-width: 100%;
+  max-height: 100%;
 }
 
 
-/* UXer */
+/* UXer Navbar*/
 
 .nav-dropdown{
   font-size: 20px;
 
 }
 
-.nav-head{
-  font-size: 25px;
-  color: #efefef;
-  
+.nav-bgColoruxer {
+  background-color:#303030;
+  max-width: 100%;
+  max-height: 100%;
+  z-index: 1;
+  color:#efefef; 
+  width: 1900px;
+  height: 230px;
+  position:sticky;
 }
+
+
 .web-dev{
   font-size: 30px;
   color: #efefef;
-  
+  font :left;
 }
 .bell-solid{
   grid-area: right;
@@ -37,6 +43,6 @@
 color: #efefef;
 font-size: 15px;
 float: left;
-
+top: 100%
 }
 
