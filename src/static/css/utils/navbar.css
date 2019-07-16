@@ -33,6 +33,9 @@
   font-size: 30px;
   color: #efefef;
   font :left;
+  align-self: baseline;
+  flex-wrap: wrap-reverse;
+  
 }
 .bell-solid{
   grid-area: right;
@@ -42,7 +45,16 @@
 .web-topleft{
 color: #efefef;
 font-size: 15px;
-float: left;
-top: 100%
+justify-content:flex-start;
 }
 
+.nav-topright{
+color: #efefef;
+font-size: 15px;
+
+}
+
+.web-user{
+  justify-content:flex-start;
+  color: #efefef;
+}
