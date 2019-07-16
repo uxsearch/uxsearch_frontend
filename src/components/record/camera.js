@@ -9,7 +9,6 @@ import RecordRTC from 'recordrtc'
 import '../../../node_modules/videojs-record/dist/css/videojs.record.css'
 import Record from 'videojs-record/dist/videojs.record'
 
-import '../../static/css/experimenter/record.css'
 
 const CameraOptions = {
   controls: {

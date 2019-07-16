@@ -4,7 +4,9 @@ import Test from './pages/experimenter/test'
 import RecordPage from './pages/experimenter/recordPage'
 import VideoResult from './pages/uxer/videoResult'
 import NotFound from './pages/error/not_found.js'
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+//import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.css';
+
 
 class App extends React.Component {
   render() {
