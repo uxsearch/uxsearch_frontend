@@ -5,8 +5,7 @@ import RecordPage from './pages/experimenter/recordPage'
 import IndexExperiment from './pages/experimenter/index'
 import VideoResult from './pages/uxer/videoResult'
 import NotFound from './pages/error/not_found.js'
-//import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Experimenter = ({ match }) => {
   return (

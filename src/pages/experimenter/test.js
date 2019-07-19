@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Button } from 'react-bootstrap'
-import NavbarExp from '../../components/utils/navbarExperimenter'
+import { Button } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserAlt,faBell } from '@fortawesome/free-solid-svg-icons'
 
+import NavbarExp from '../../components/utils/navbarExperimenter'
 
 class Test extends React.Component {
   render() {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Row, Col, Button } from 'react-bootstrap'
+import { Container, Row, Col, Button } from 'reactstrap'
 
 import Camera from '../../components/record/camera'
 import Screen from '../../components/record/screen'
