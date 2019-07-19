@@ -6,6 +6,7 @@ import IndexExperiment from './pages/experimenter/index'
 import VideoResult from './pages/uxer/videoResult'
 import NotFound from './pages/error/not_found.js'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './static/css/custom-all.css'
 
 const Experimenter = ({ match }) => {
   return (
