@@ -1,7 +1,9 @@
 import React from 'react'
-import { Navbar,Nav } from 'react-bootstrap'
-import '../../static/css/navbar.css'
+import { Navbar, Nav, Col, Container } from 'reactstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBell } from '@fortawesome/free-solid-svg-icons'
 
+import '../../static/css/utils/navbar.css'
 
 class NavbarUXer extends React.Component {
 	render() {
@@ -24,14 +26,7 @@ class NavbarUXer extends React.Component {
 					</div>
 
 					<FontAwesomeIcon icon={faBell} size="x" color='#efefef' />
-					{/* <NavDropdown className='web-user'title="Wasin Wachirapusitanun" id="basic-nav-dropdown">
 
-                        <img src={require('../../static/img/user-solid.svg')} width='20' height='20px' />
-                        <NavDropdown.Item href="#MyAccount">My Account</NavDropdown.Item>
-
-                        <img src={require('../../static/img/sign-out-alt-solid.svg')} width='20' height='20px' />
-                        <NavDropdown.Item href="#Signout">Sign out</NavDropdown.Item>
-                    </NavDropdown> */}
 				</Navbar>
 			</div>
 		)
