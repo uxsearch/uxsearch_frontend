@@ -3,7 +3,7 @@ import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, Un
 import { Row, Col } from 'reactstrap'
 
 import logo from '../../static/img/Logo_White.png'
-import '../../static/css/utils/navbar.css'
+import '../../static/sass/navbar.scss'
 
 class NavbarUxer extends React.Component {
 	constructor(props) {
@@ -21,7 +21,7 @@ class NavbarUxer extends React.Component {
 	}
 	render() {
 		return (
-			<div>
+			<section id='uxer-navbar'>
 				<Navbar dark className='nav-bgColoruxer'>
 					{/* <Row>
 						<Col md>
@@ -67,7 +67,7 @@ class NavbarUxer extends React.Component {
 						</Nav>
 					</Collapse>
 				</Navbar>
-			</div>
+			</section>
 		);
 	}
 }
