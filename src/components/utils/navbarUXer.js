@@ -4,39 +4,38 @@ import '../../static/css/navbar.css'
 
 
 class NavbarUXer extends React.Component {
-    render() {
-        return (
-            <div>
-               
+	render() {
+		return (
+			<div>
+				<Navbar className='nav-bgColoruxer'>
+					<Container>
+						<Nav className="web-topleft">
+							<Nav.Link href="/testing/record">Projects</Nav.Link>
+							<Nav.Link eventKey="link-1">Activities</Nav.Link>
+						</Nav>
+					</Container>
 
+					<div className='web-dev'>
 
+						<Col md={100}> <img src={require('../../static/img/Logo_White.png')}
+							width='55' height='55px' className="d-inline-block align-top" alt="UX Search Logo" /></Col>
+						<Col>   <Nav.Link className='web-dev' href="/home" >Web Development</Nav.Link></Col>
 
-                <Navbar className='nav-bgColor'>
-                <Nav defaultActiveKey="/home" as="ul">
-                    <Nav.Item as="li">
-                       <Nav.Link href="/testing/record">Active</Nav.Link> 
-                    </Nav.Item>
-                    <Nav.Item as="li">
-                       <Nav.Link eventKey="link-1">Link</Nav.Link>
-                    </Nav.Item>
-                 
-                </Nav>
-                    
-                    <img
-                        src={require('../../static/img/Logo_White.png')}
-                        width='55'
-                        height='55px'
-                        className="d-inline-block align-top"
-                        alt="UX Search Logo"
-                    />
+					</div>
 
+					<FontAwesomeIcon icon={faBell} size="x" color='#efefef' />
+					{/* <NavDropdown className='web-user'title="Wasin Wachirapusitanun" id="basic-nav-dropdown">
 
+                        <img src={require('../../static/img/user-solid.svg')} width='20' height='20px' />
+                        <NavDropdown.Item href="#MyAccount">My Account</NavDropdown.Item>
 
-                </Navbar>
-               
-            </div>
-        )
-    }
+                        <img src={require('../../static/img/sign-out-alt-solid.svg')} width='20' height='20px' />
+                        <NavDropdown.Item href="#Signout">Sign out</NavDropdown.Item>
+                    </NavDropdown> */}
+				</Navbar>
+			</div>
+		)
+	}
 }
 
 export default NavbarUXer
