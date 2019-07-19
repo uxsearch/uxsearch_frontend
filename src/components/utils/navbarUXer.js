@@ -1,9 +1,7 @@
 import React from 'react'
-import { Navbar, Nav, Row, Col, Container, Form, FormControl, Button } from 'reactstrap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBell } from '@fortawesome/free-solid-svg-icons'
+import { Navbar,Nav } from 'react-bootstrap'
+import '../../static/css/navbar.css'
 
-import '../../static/css/utils/navbar.css'
 
 class NavbarUXer extends React.Component {
 	render() {
