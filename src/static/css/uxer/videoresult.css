@@ -1,0 +1,39 @@
+
+.video-block{
+    width: 1920pt;
+    height: 450px;
+    background: black;
+   
+   
+    
+}
+
+
+/* experimentprofile */
+.experprofile{
+  align-items: center;
+    width: 992px;
+    height: 465px;
+    background: #ffffff;
+    position: sticky
+}
+
+.bg-play-video{
+  width: 100%;
+  height: 310px;
+  background: violet;
+  
+text-align: left
+}
+
+.play-video{
+  width: 100%;
+  height: 300px;
+  display: flex
+  
+}
+
+
+
+
+

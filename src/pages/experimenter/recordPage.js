@@ -1,8 +1,11 @@
 import React from 'react'
-import Camera from '../../components/record/camera'
-import Screen from '../../components/record/screen'
+import { Container, Row, Col, Button } from 'reactstrap'
+
+import Camera from '../../components/experiment/record/camera'
+import Screen from '../../components/experiment/record/screen'
 import NavbarExp from '../../components/utils/navbarExperimenter'
-import { Container, Row, Col, Button } from 'react-bootstrap'
+
+import '../../static/css/experimenter/record.css'
 
 class RecordPage extends React.Component {
 
@@ -30,6 +33,7 @@ class RecordPage extends React.Component {
             </Col>
           </Row>
         </Container>
+
       </div>
     )
   }

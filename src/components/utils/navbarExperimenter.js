@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar } from 'react-bootstrap'
+import { Navbar } from 'reactstrap'
 import '../../static/css/utils/navbar.css'
 
 class NavbarExp extends React.Component {

@@ -1,8 +1,59 @@
 /* Experiment Navbar */
 
 .nav-bgColor {
-  background-color: #303030;
-  position: fixed !important;
+  background-color:#303030;
   min-width: 100%;
   z-index: 1;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+
+/* UXer Navbar*/
+
+.nav-dropdown{
+  font-size: 20px;
+
+}
+
+.nav-bgColoruxer {
+  background-color:#303030;
+  max-width: 100%;
+  max-height: 100%;
+  z-index: 1;
+  color:#efefef; 
+  width: 1900px;
+  height: 230px;
+  position:sticky;
+}
+
+
+.web-dev{
+  font-size: 30px;
+  color: #efefef;
+  font :left;
+  align-self: baseline;
+  flex-wrap: wrap-reverse;
+  
+}
+.bell-solid{
+  grid-area: right;
+ 
+}
+
+.web-topleft{
+color: #efefef;
+font-size: 15px;
+justify-content:flex-start;
+}
+
+.nav-topright{
+color: #efefef;
+font-size: 15px;
+
+}
+
+.web-user{
+  justify-content:flex-start;
+  color: #efefef;
 }
