@@ -12,14 +12,13 @@ class Test extends React.Component {
       <div>
         <NavbarExp />
         <h1>Test test page</h1>
-        <a href='/testing/record'>
+        <a href='/experimenter'>
           <Button className='btn btn-success'>
-            Start Record
+            Start Experimenter
           </Button>
         </a>
         <FontAwesomeIcon icon={faUserAlt} size="lg"/> <br></br>
         <FontAwesomeIcon icon={faBell} size="9x" color='#00ffff'/> <br></br>
-
 
         <h1>Video Result</h1>
         <a href='/testing/VideoResult'>
