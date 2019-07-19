@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Row, Col } from 'react-bootstrap'
+import { Container, Row, Col } from 'reactstrap'
 
 import '../../static/css/uxer/videoresult.css'
 

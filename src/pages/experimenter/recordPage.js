@@ -1,8 +1,8 @@
 import React from 'react'
 import { Container, Row, Col, Button } from 'reactstrap'
 
-import Camera from '../../components/record/camera'
-import Screen from '../../components/record/screen'
+import Camera from '../../components/experiment/record/camera'
+import Screen from '../../components/experiment/record/screen'
 import NavbarExp from '../../components/utils/navbarExperimenter'
 
 import '../../static/css/experimenter/record.css'
