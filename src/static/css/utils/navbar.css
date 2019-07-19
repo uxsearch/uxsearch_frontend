@@ -22,11 +22,25 @@
   max-height: 100%;
   z-index: 1;
   color:#efefef; 
-  width: 1900px;
-  height: 230px;
-  position:sticky;
 }
 
+.navLink {
+  color: #909090 !important;
+}
+
+.logo-icon {
+  width: 50px;
+  height: auto;
+}
+
+.hamburger-menu {
+  background-color: transparent !important;
+  border: 2px solid #efefef !important;
+}
+
+.navbar-toggler-icon {
+  color: #efefef !important;
+}
 
 .web-dev{
   font-size: 30px;
