@@ -1,17 +1,13 @@
 import React from 'react'
-
-import '../../../node_modules/video.js/dist/video-js.css'
+import '../../../../node_modules/video.js/dist/video-js.css'
 import videojs from 'video.js'
-
 import 'webrtc-adapter'
 import RecordRTC from 'recordrtc'
 // register videojs-record plugin with this import
-import '../../../node_modules/videojs-record/dist/css/videojs.record.css'
+import '../../../../node_modules/videojs-record/dist/css/videojs.record.css'
 import Record from 'videojs-record/dist/videojs.record'
 
-
-
-const ScreenOptions = {
+const CameraOptions = {
   controls: {
     autoPlay: true
   },
@@ -21,25 +17,28 @@ const ScreenOptions = {
   plugins: {
     record: {
       autoPlay: true,
+      audio: true,
+      video: true,
       maxLength: 10, //1200 seconds
-      debug: true,
-      screen: true
+      debug: true
     }
   }
 };
 
-class Screen extends React.Component {
+const recordAuto = () => {
+  document.getElementById('cameraButton').click()
+}
+
+class Camera extends React.Component {
 
   async componentDidMount() {
-    // instantiate Video.js
-    this.player = videojs(this.videoNode, ScreenOptions, () => {
-      // print version information at startup
+    this.player = videojs(this.videoNode, CameraOptions, () => {
       var version_info = 'Using video.js ' + videojs.VERSION +
         ' with videojs-record ' + videojs.getPluginVersion('record') +
         ' and recordrtc ' + RecordRTC.version;
-      videojs.log(version_info);
-      console.log(ScreenOptions)
-
+      videojs.log(version_info)
+      this.player.children_[1].setAttribute('id', 'cameraButton')
+      this.player.children_[1].setAttribute('onLoad', recordAuto())
     });
 
     // device is ready
@@ -47,36 +46,30 @@ class Screen extends React.Component {
       console.log('device is ready!');
       this.player.record().start()
     });
-
     // user clicked the record button and started recording
     this.player.on('startRecord', () => {
       console.log('started recording!');
     });
-
     // user completed recording and stream is available
     this.player.on('finishRecord', () => {
       // recordedData is a blob object containing the recorded data that
       // can be downloaded by the user, stored on server etc.
       console.log('finished recording: ', this.player.recordedData);
     });
-
     // error handling
     this.player.on('error', (element, error) => {
       console.warn(error);
     });
-
     this.player.on('deviceError', () => {
       console.error('device error:', this.player.deviceErrorCode);
     });
   }
-
   // destroy player on unmount
   componentWillUnmount() {
     if (this.player) {
       this.player.dispose();
     }
   }
-
   render() {
     return (
       <div data-vjs-player>
@@ -86,4 +79,4 @@ class Screen extends React.Component {
   }
 }
 
-export default Screen
+export default Camera
