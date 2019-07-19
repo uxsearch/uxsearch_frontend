@@ -4,7 +4,7 @@ import { Container, Row, Col, Button } from 'reactstrap';
 import NavbarExp from '../../components/utils/navbarExperimenter'
 import ProfileBlock from '../../components/experiment/profileBlock'
 
-import '../../static/css/experimenter/index.css'
+import '../../static/sass/experimenter/index.scss'
 
 class IndexExperiment extends React.Component {
   render() {

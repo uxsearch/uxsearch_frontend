@@ -7,7 +7,7 @@ import NavbarUXer from '../../components/utils/navbarUXer'
 import PlayVideo from '../../components/videoresult/video'
 import ExperProfile from '../../components/videoresult/experimenterProfile'
 
-import '../../static/css/uxer/videoresult.css'
+import '../../static/sass/uxer/videoResult.scss'
 
 
 class VideoResult extends React.Component {

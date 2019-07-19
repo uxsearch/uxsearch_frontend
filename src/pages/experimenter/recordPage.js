@@ -5,13 +5,13 @@ import Camera from '../../components/experiment/record/camera'
 import Screen from '../../components/experiment/record/screen'
 import NavbarExp from '../../components/utils/navbarExperimenter'
 
-import '../../static/css/experimenter/record.css'
+import '../../static/sass/experimenter/record.scss'
 
 class RecordPage extends React.Component {
 
   render() {
     return (
-      <div>
+      <section id='video-record'>
         <NavbarExp />
         <Container className='container-block'>
           <Row className='video-block'>
@@ -33,8 +33,7 @@ class RecordPage extends React.Component {
             </Col>
           </Row>
         </Container>
-
-      </div>
+      </section>
     )
   }
 }

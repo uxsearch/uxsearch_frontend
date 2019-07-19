@@ -1,0 +1,39 @@
+@import '../variables';
+
+#exper-index {
+  .title {
+    font-size: 30px;
+  }
+  
+  .bold-text {
+    font-weight: 9xs00;
+  }
+  
+  .black-line {
+    border-color: $dark;
+  }
+  
+  .profile-block {
+    background-color: $white !important;
+    border-radius: 20px;
+    padding: 30px !important;
+  }
+  
+  .space-btn {
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+  
+  .btn-start-test {
+    background-color: $blue !important;
+    border: 2px solid $blue !important;
+    color: $light !important;
+    width: 100%;
+    border-radius: 10px !important;
+  }
+  
+  .btn-start-test:hover {
+    background-color: $blue-hover !important;
+    border: 2px solid $blue-hover !important;
+  }
+}
