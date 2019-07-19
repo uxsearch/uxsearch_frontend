@@ -3,13 +3,14 @@ import NavbarUXer from '../../components/utils/navbarUXer'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserAlt } from '@fortawesome/free-solid-svg-icons'
 
+import { Button, ButtonToolbar } from 'react-bootstrap'
 //import '../../static/css/uxer/videoresult.css'
 import PlayVideo from '../../components/videoresult/video'
 
 import '../../static/css/uxer/videoresult.css'
 
 
-//import ExperProfile from '../../components/videoresult/experimenterProfile'
+import ExperProfile from '../../components/videoresult/experimenterProfile'
 
 class VideoResult extends React.Component {
   render() {
@@ -17,7 +18,9 @@ class VideoResult extends React.Component {
       <div>
         <NavbarUXer />
 
-       <PlayVideo/>
+        <PlayVideo />
+
+        <ExperProfile />
 
 
       </div>

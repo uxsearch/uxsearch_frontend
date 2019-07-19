@@ -18,11 +18,9 @@ class NavbarUXer extends React.Component {
                     </Container>
 
                     <div className='web-dev'>
-                       
                             <Col md={100}> <img src={require('../../static/img/Logo_White.png')}
                                 width='55' height='55px' className="d-inline-block align-top" alt="UX Search Logo" /></Col>
                             <Col>   <Nav.Link className='web-dev' href="/home" >Web Development</Nav.Link></Col>
-                        
                     </div>
 
                     <FontAwesomeIcon icon={faBell} size="x" color='#efefef' />
