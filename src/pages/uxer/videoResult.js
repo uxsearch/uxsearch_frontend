@@ -13,11 +13,11 @@ import '../../static/sass/uxer/videoResult.scss'
 class VideoResult extends React.Component {
   render() {
     return (
-      <div>
+      <section id='video-result'>
         <NavbarUXer />
         <PlayVideo />
         <ExperProfile />
-      </div>
+      </section>
     )
   }
 }

@@ -1,12 +1,12 @@
 import React from 'react'
 import { Row, Col, Container, Button } from 'reactstrap'
 
-import '../../static/css/uxer/videoresult.css'
+import '../../static/sass/uxer/videoResult.scss'
 
 class ExperProfile extends React.Component {
 	render() {
 		return (
-			<div >
+			<div>
 				<Row md={12}>
 					<img src={require('../../static/img/user-solid.svg')} width='50' height='30px' />
 					<h3> Leroy Romero</h3>
