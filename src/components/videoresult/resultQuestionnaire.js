@@ -19,14 +19,14 @@ class ResultQuestion extends React.Component {
                             <span>1. What you expect in this program?</span>
                             <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                                     Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                when an unknow printer took a galley of type and scrambled it to make a type specimen </p>
+                                when an unknow printer took a galley of type and scrambled it to make a type specimen. </p>
                         </Col>
                     </Row>
                     <Row>
                         <Col md={12}>
                             <span>2. Would you like to recommend something more?</span>
                             <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                when an unknow printer took a galley of type and scrambled it to make a type specimen </p>
+                                when an unknow printer took a galley of type and scrambled it to make a type specimen. </p>
                         </Col>
                     </Row>
                 </Container>
