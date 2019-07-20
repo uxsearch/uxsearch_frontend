@@ -33,25 +33,37 @@
     background-color: $white;
     width: 992px;
     height: 465px;
-    padding-top: 15px;
-    padding-left: 20px;
+    padding-top: 27px;
+    padding-left: 54px;
     margin-top: 100px;
     border-radius: 20px; 
   }
 
   .bg-questionnaire{
     background-color: $white;
-    width: 993px;
-    height: 500px;
-    padding-top: 15px;
-    padding-left: 20px;
+    width: 992px;
+    height: 465px;
+    padding-top: 27px;
+    padding-left: 54px;
     margin-top: 50px;
     border-radius: 20px; 
   }
 
   .card-video{
     background-color: $black;
-    padding: 20px;
+    padding: 10px;
     margin-top: 0px;
   }
+}
+
+.user{
+  padding-top: 15px;
+}
+
+.btn-usability-test {
+  background-color: $blue !important;
+  border: 2px solid $blue !important;
+  color: $light !important;
+  width: 100%;
+  border-radius: 10px !important;
 }

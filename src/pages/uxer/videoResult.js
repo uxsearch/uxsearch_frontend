@@ -6,6 +6,7 @@ import { faUserAlt } from '@fortawesome/free-solid-svg-icons'
 import NavbarUXer from '../../components/utils/navbarUXer'
 import PlayVideo from '../../components/videoresult/video'
 import ExperProfile from '../../components/videoresult/experimenterProfile'
+import ResultQuestion from '../../components/videoresult/resultQuestionnaire'
 
 import '../../static/sass/uxer/videoResult.scss'
 
@@ -17,6 +18,7 @@ class VideoResult extends React.Component {
         <NavbarUXer />
         <PlayVideo />
         <ExperProfile />
+        <ResultQuestion />
       </section>
     )
   }

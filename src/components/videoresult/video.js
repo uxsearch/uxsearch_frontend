@@ -18,7 +18,7 @@ class PlayVideo extends React.Component {
 			<div>
 				<div className='card-video'>
 					<Container >
-						<Row md={6}>
+						<Row>
 							<Col md={6}>
 								<video controls className='play-video'>
 									<source src='http://media.w3.org/2010/05/bunny/movie.mp4' type='video/mp4' />
