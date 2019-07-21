@@ -25,7 +25,14 @@ class Test extends React.Component {
           <Button className='btn btn-success'>
             Video Result
           </Button>
+        </a>
 
+
+        <h1>Experiment Page</h1>
+        <a href='/testing/ExperPage'>
+          <Button className='btn btn-success'>
+            Experimenter Page
+          </Button>
         </a>
       </div>
     )
