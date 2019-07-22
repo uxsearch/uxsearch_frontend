@@ -31,8 +31,8 @@ class ExperProfile extends React.Component {
 
 					<Container className='bg-experprofile'>
 						<Row >
-							<Col xs={6}>			
-									<h2>Experimenter Profile</h2>
+							<Col xs={6}>
+								<h2>Experimenter Profile</h2>
 							</Col>
 						</Row>
 						<br />
@@ -95,8 +95,8 @@ class ExperProfile extends React.Component {
 									</Col>
 								</Row>
 							</Col>
-							
-								<Col xs={6}>
+
+							<Col xs={6}>
 								<Row>
 									<Col xs={4}>
 										<span>Education : </span>
