@@ -2,7 +2,7 @@ import React from 'react';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Row, Col } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBell } from '@fortawesome/free-solid-svg-icons'
+import { faUserAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
 
 import logo from '../../static/img/Logo_White.png'
@@ -86,12 +86,14 @@ class NavbarUxer extends React.Component {
                 	</DropdownToggle>
 									<DropdownMenu right>
 										<DropdownItem>
-											My Account
+											<FontAwesomeIcon icon={faUserAlt} size='md' className='space-icon' />
+											<span>My Account</span>
                   	</DropdownItem>
 										<DropdownItem divider />
 										<DropdownItem>
-											Sign out
-                  	</DropdownItem>
+											<FontAwesomeIcon icon={faSignOutAlt} size='md' className='space-icon' />
+											<span>Sign out</span>
+										</DropdownItem>
 									</DropdownMenu>
 								</UncontrolledDropdown>
 							</Nav>
