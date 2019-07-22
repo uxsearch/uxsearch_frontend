@@ -1,0 +1,57 @@
+@import "../variables";
+
+#exper-page {
+	.no-margin {
+		margin: 0px;
+	}
+	
+	.all {
+		margin-top: 65px;
+	}
+	
+	.logo-search {
+    padding-right: 1px;
+  }
+	
+	.editSearch{
+    width: 200px;
+    position: relative;
+    left: 40px;
+  }
+	
+	.search {
+    border-radius: 10px;
+    background: $white;
+  }
+	
+	.editShare{
+    padding-left:1px; 
+    width: 250px;
+  }
+	
+	.share {
+    border-radius: 10px;
+    background: $white;
+  }
+
+  .faCopy {
+    position: relative;
+    background-color: $blue;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    border-radius: 100%;
+   
+    // z-index: 1;
+    // left:100px;
+  }
+
+  .icon-faCopy{
+		position: absolute;
+		transform: translate(-50%,-50%);
+		left: 50%;
+		top: 50%;
+		z-index: 2;
+		right: 100px;
+	}
+}
