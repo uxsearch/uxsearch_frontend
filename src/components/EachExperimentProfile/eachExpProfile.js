@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Row, Col, image, Media } from 'reactstrap'
+import { Container, Row, Col, Media } from 'reactstrap'
 
 
 import '../../static/sass/uxer/experPage.scss'
@@ -16,25 +16,28 @@ class EachExpPro extends React.Component {
                 <Col md={3}>
                 </Col>
                 <Col md={4} className='profile '>
-                  <div>
-                    <img
-                      src={require('../../static/img/1.jpg')}
-                      width='70px'
-                      height='70px'
-                      className="img d-inline-block align-top"
-                      alt="Profile"
-                    />
-                  </div>
+                  <a href='/testing/VideoResult' className='link'>
+                    <div>
+                      <img
+                        src={require('../../static/img/1.jpg')}
+                        width='70px'
+                        height='70px'
+                        className="img d-inline-block align-top"
+                        alt="Profile"
+                      />
+                    </div>
 
-                  <Col md={1} >
-                    <Row >
-                      <div className='name'>
-                        <p> Leroy </p>
-                        <p> Romero</p>
-                      </div>
-                    </Row>
-                  </Col>
+                    <Col md={1} >
+                      <Row >
+                        <div className='name'>
+                          <p> Leroy </p>
+                          <p> Romero</p>
+                        </div>
+                      </Row>
+                    </Col>
+                  </a>
                 </Col>
+
 
                 <Col md={4} className='profile'>
                   <div >
