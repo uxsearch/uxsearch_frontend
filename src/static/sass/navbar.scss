@@ -39,6 +39,16 @@
     font-size: 16px;
     color: #909090 !important;
   }
+
+  .link-text:hover {
+    font-size: 16px;
+    color: $white !important;
+  }
+
+  .link-text.active {
+    font-size: 16px;
+    color: $white !important;
+  }
   
   .space-title {
     margin-top: 50px;
@@ -82,20 +92,34 @@
   }
 
   .menu-block {
-    padding: 10px;
+    padding: 10px 20px;
   }
 
   .menu-block:hover {
-    color: $white;
+    .link-text {
+      color: $white !important;
+    }
   }
 
-  .menu-block.active {
+  .menu-block.active{
     border-bottom: 3px solid $blue;
-    color: $white
+    .link-text {
+      color: $white !important;
+    }
   }
 
   .link-text {
     font-size: 16px;
-    color: #909090 !important;
+    color: #909090;
+  }
+
+  @media (max-width: 767.98px) {
+    .nav-bgColoruxer {
+      padding: 0px;
+    }
+
+    .menu-block {
+      padding: 5px;
+    }
   }
 }

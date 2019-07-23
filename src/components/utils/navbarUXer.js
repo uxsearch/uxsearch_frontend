@@ -44,13 +44,13 @@ class NavbarUxer extends React.Component {
           <Collapse isOpen={!this.state.collapsed} navbar>
             <Nav navbar>
               <NavItem>
-                <NavLink href='#'>Projects</NavLink>
+                <NavLink href='#' className='link-text'>Projects</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href='#'>Activity</NavLink>
+                <NavLink href='#' className='link-text'>Activity</NavLink>
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
+                <DropdownToggle nav caret className='link-text'>
                   Uxer 1
                 </DropdownToggle>
                 <DropdownMenu right>
