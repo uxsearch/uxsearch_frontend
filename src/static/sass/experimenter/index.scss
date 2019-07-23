@@ -1,6 +1,10 @@
 @import '../variables';
 
 #exper-index {
+  .space-head-block {
+    margin-top: 85px;
+  }
+
   .title {
     font-size: 30px;
   }
@@ -10,7 +14,7 @@
   }
   
   .black-line {
-    border-color: $dark;
+    border-color: #ddd;
   }
   
   .profile-block {

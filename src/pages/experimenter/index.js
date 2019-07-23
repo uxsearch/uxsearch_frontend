@@ -1,10 +1,28 @@
 import React from 'react'
 import { Container, Row, Col, Button } from 'reactstrap';
+import swal from 'sweetalert'
 
 import NavbarExp from '../../components/utils/navbarExperimenter'
 import ProfileBlock from '../../components/experiment/profileBlock'
 
 import '../../static/sass/experimenter/index.scss'
+
+const modalSubmit = () => {
+  swal({
+    title: "Are you sure?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: false,
+  }).then((willSubmit) => {
+    if (willSubmit) {
+      swal("Thank you very much", {
+        icon: "success",
+        timer: 1000,
+        buttons: false
+      });
+    }
+  });
+}
 
 class IndexExperiment extends React.Component {
   render() {
@@ -14,7 +32,7 @@ class IndexExperiment extends React.Component {
         <Container>
           <Row>
             <Col xs={12}>
-              <Row>
+              <Row className='space-head-block'>
                 <Col xs={12}>
                   <p className='title'>Welcome to <span className='bold-text'>"UX Search Prototype"</span></p>
                 </Col>
@@ -32,7 +50,7 @@ class IndexExperiment extends React.Component {
               </Row>
               <Row className='justify-content-center space-btn'>
                 <Col xs={12} md={4} className='text-center'>
-                  <Button className='btn-start-test'>Start Usability Testing</Button>
+                  <Button className='btn-start-test' onClick={modalSubmit}>Start Usability Testing</Button>
                 </Col>
               </Row>
             </Col>

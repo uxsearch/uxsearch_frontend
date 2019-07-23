@@ -3,6 +3,7 @@
 /* Experiment Navbar */
 #exper-navbar {
   .nav-bgColor {
+    position: fixed;
     background-color: $dark;
     min-width: 100%;
     z-index: 1;
