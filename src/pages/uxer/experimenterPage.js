@@ -8,12 +8,14 @@ import EachExpPro from '../../components/EachExperimentProfile/eachExpProfile'
 
 import '../../static/sass/uxer/experPage.scss'
 import NavbarUxer from '../../components/utils/navbarUXer'
+import SubNavbar from '../../components/utils/subNavbar';
 
 class ExperPage extends React.Component {
   render() {
     return (
       <section id='exper-page'>
         <NavbarUxer />
+        <SubNavbar />
         <Container>
           <Row className='all justify-content-center align-items-center' >
             <Col md={1}>

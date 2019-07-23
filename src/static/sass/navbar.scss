@@ -24,15 +24,24 @@
     max-height: 100%;
     z-index: 1;
     color: $light; 
+    padding: 10px 100px;
+  }
+
+  .nav-bgColoruxer-mobile {
+    background-color: $dark;
+    max-width: 100%;
+    max-height: 100%;
+    z-index: 1;
+    color: $light; 
   }
 
   .link-text {
+    font-size: 16px;
     color: #909090 !important;
   }
   
   .space-title {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 50px;
   }
 
   .account-box {
@@ -55,5 +64,38 @@
   .logo-icon {
     width: 50px;
     height: auto;
+  }
+}
+
+#sub-navbar {
+  .nav-bgColoruxer {
+    background-color: $dark;
+    max-width: 100%;
+    max-height: 100%;
+    z-index: 1;
+    color: $light;
+    padding: 0px 100px;
+  }
+
+  .menu-line {
+    flex-direction: row !important;
+  }
+
+  .menu-block {
+    padding: 10px;
+  }
+
+  .menu-block:hover {
+    color: $white;
+  }
+
+  .menu-block.active {
+    border-bottom: 3px solid $blue;
+    color: $white
+  }
+
+  .link-text {
+    font-size: 16px;
+    color: #909090 !important;
   }
 }

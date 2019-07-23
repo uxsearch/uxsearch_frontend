@@ -36,7 +36,7 @@ class NavbarUxer extends React.Component {
   render() {
     return (
       <section id='uxer-navbar'>
-        <Navbar dark className='nav-bgColoruxer d-md-none'>
+        <Navbar dark className='nav-bgColoruxer-mobile d-md-none'>
           <NavbarBrand href='/' className='mr-auto'>
             <img className='logo-icon' src={logo} />
           </NavbarBrand>
@@ -68,7 +68,8 @@ class NavbarUxer extends React.Component {
         </Navbar>
         <Navbar expand='md' dark className='nav-bgColoruxer d-none d-md-block'>
           <Row>
-            <Col md={6}>
+            <Col md={1}></Col>
+            <Col md={5}>
               <Nav className='ml-auto' navbar>
                 <NavItem>
                   <NavLink href='#' className='link-text'>Projects</NavLink>
@@ -78,7 +79,7 @@ class NavbarUxer extends React.Component {
                 </NavItem>
               </Nav>
             </Col>
-            <Col md={6} className='account-box'>
+            <Col md={5} className='account-box'>
               <Nav>
                 <UncontrolledDropdown nav inNavbar className='dropdown-position'>
                   <DropdownToggle nav caret className='link-text'>
@@ -105,7 +106,7 @@ class NavbarUxer extends React.Component {
                 <img className='logo-icon' src={logo} />
               </NavbarBrand>
             </Col>
-            <Col md={11}>
+            <Col md={10}>
               <h1>Project Name</h1>
             </Col>
           </Row>
