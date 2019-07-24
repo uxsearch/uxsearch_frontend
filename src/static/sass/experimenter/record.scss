@@ -5,27 +5,29 @@
     margin: 0 !important;
   }
 
+  .space-head-block {
+    margin-top: 85px;
+  }
+
+  .title {
+    font-size: 25px;
+  }
+  
+  .bold-text {
+    font-weight: 900;
+  }
+
   .myVideo-dimension {
     width: 100% !important;
     height: 300px !important;
   }
 
-  .container-block {
-    position: relative;
-    height: 100vh;
-    overflow: hidden;
-  }
-
   .video-block {
+    margin: 15px 0px 50px 0px;
     background-color: $white !important;
     border-radius: 20px;
-    padding: 50px 10px;
-    position: absolute;
+    padding: 30px;
     width: 100%;
-    max-width: 100%;
-    max-height: 100%;
-    top: 50%;
-    transform: translate(0%, -50%);
   }
 
   .btn-finish-test {

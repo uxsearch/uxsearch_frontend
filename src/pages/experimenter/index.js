@@ -4,6 +4,7 @@ import swal from 'sweetalert'
 
 import NavbarExp from '../../components/utils/navbarExperimenter'
 import ProfileBlock from '../../components/experiment/profileBlock'
+import NotSupport from '../../components/utils/notSupport'
 
 import '../../static/sass/experimenter/index.scss'
 
@@ -11,13 +12,26 @@ const modalSubmit = () => {
   swal({
     title: "Are you sure?",
     icon: "warning",
-    buttons: true,
+    buttons: {
+      cancel: {
+        text: "Cancel",
+        value: null,
+        visible: true,
+      },
+      confirm: {
+        text: "Confirm",
+        value: true,
+        visible: true,
+      }
+    },
     dangerMode: false,
   }).then((willSubmit) => {
     if (willSubmit) {
-      swal("Thank you very much", {
+      swal({
+        title: "Thank you very much",
+        text: "If you complete test, press button to complete, please.",
         icon: "success",
-        timer: 1000,
+        timer: 2500,
         buttons: false
       });
     }
@@ -27,36 +41,39 @@ const modalSubmit = () => {
 class IndexExperiment extends React.Component {
   render() {
     return (
-      <section id='exper-index'>
-        <NavbarExp />
-        <Container>
-          <Row>
-            <Col xs={12}>
-              <Row className='space-head-block'>
-                <Col xs={12}>
-                  <p className='title'>Welcome to <span className='bold-text'>"UX Search Prototype"</span></p>
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={12}>
-                  <p>Hi, we are thank you for entry to make usability testing. In addition, every usability and recommends of you are very important for us.</p>
-                </Col>
-              </Row>
-              <hr className='black-line' />
-              <Row>
-                <Col xs={12}>
-                  <ProfileBlock />
-                </Col>
-              </Row>
-              <Row className='justify-content-center space-btn'>
-                <Col xs={12} md={4} className='text-center'>
-                  <Button className='btn-start-test' onClick={modalSubmit}>Start Usability Testing</Button>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Container>
-      </section>
+      <div>
+        <NotSupport className='d-md-block' />
+        <section id='exper-index' className='d-none d-md-block'>
+          <NavbarExp />
+          <Container>
+            <Row>
+              <Col xs={12}>
+                <Row className='space-head-block'>
+                  <Col xs={12}>
+                    <p className='title'>Welcome to <span className='bold-text'>"UX Search Prototype"</span></p>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs={12}>
+                    <p>Hi, we are thank you for entry to make usability testing. In addition, every usability and recommends of you are very important for us.</p>
+                  </Col>
+                </Row>
+                <hr className='black-line' />
+                <Row>
+                  <Col xs={12}>
+                    <ProfileBlock />
+                  </Col>
+                </Row>
+                <Row className='justify-content-center space-btn'>
+                  <Col xs={12} md={4} className='text-center'>
+                    <Button className='btn-start-test' onClick={modalSubmit}>Start Usability Testing</Button>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </Container>
+        </section>
+      </div>
     )
   }
 }
