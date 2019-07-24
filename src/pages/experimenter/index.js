@@ -44,7 +44,7 @@ class IndexExperiment extends React.Component {
               </Row>
               <hr className='black-line' />
               <Row>
-                <Col xs={12} className='profile-block'>
+                <Col xs={12}>
                   <ProfileBlock />
                 </Col>
               </Row>

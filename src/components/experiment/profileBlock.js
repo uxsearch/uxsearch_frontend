@@ -5,7 +5,7 @@ import { Row, Col, Form, FormGroup, Label, Input } from 'reactstrap'
 class ProfileBlock extends React.Component {
   render() {
     return (
-      <Form>
+      <Form className='profile-block'>
         <Row>
           <Col xs={12}>
             <h2>Basic Information</h2>
