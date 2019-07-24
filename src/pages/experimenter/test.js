@@ -34,6 +34,14 @@ class Test extends React.Component {
             Experimenter Page
           </Button>
         </a>
+
+        <h1>Project Page</h1>
+        <a href='/testing/ProjectPage'>
+          <Button className='btn btn-success'>
+            Project Page
+          </Button>
+        </a>
+
       </div>
     )
   }
