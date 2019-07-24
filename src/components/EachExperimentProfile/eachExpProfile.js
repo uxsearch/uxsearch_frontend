@@ -1,9 +1,7 @@
 import React from 'react'
-import { Container, Row, Col, Media } from 'reactstrap'
-
+import { Container, Row, Col } from 'reactstrap'
 
 import '../../static/sass/uxer/experPage.scss'
-
 
 class EachExpPro extends React.Component {
   render() {
@@ -37,7 +35,6 @@ class EachExpPro extends React.Component {
                     </Col>
                   </a>
                 </Col>
-
 
                 <Col md={4} className='profile'>
                   <div >
