@@ -24,6 +24,19 @@ const Experimenter = ({ match }) => {
   )
 }
 
+const UXer = ({ match }) => {
+  return (
+    <Router>
+      <Switch>
+        <Route exact path={`${match.path}/projects`} component={ProjectPage} />
+        <Route exact path={`${match.path}/project/experiments`} component={ExperPage} />
+        <Route exact path={`${match.path}/project/experiment/result`} component={VideoResult} />
+        <Route component={NotFound} />
+      </Switch>
+    </Router>
+  )
+}
+
 class App extends React.Component {
   render() {
     return (
@@ -31,9 +44,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' component={Test} />
           <Route path='/experimenter' component={Experimenter} />
-          <Route exact path='/testing/VideoResult' component={VideoResult} />
-          <Route exact path='/testing/ExperPage' component={ExperPage} />
-          <Route exact path='/testing/ProjectPage' component={ProjectPage} />
+          <Route path='/uxer' component={UXer} />
           <Route component={NotFound} />
         </Switch>
       </Router>

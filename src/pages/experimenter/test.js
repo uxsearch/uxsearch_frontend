@@ -21,7 +21,7 @@ class Test extends React.Component {
         <FontAwesomeIcon icon={faBell} size="9x" color='#00ffff' /> <br></br>
 
         <h1>Video Result</h1>
-        <a href='/testing/VideoResult'>
+        <a href='/uxer/project/experiment/result'>
           <Button className='btn btn-success'>
             Video Result
           </Button>
@@ -29,14 +29,14 @@ class Test extends React.Component {
 
 
         <h1>Experiment Page</h1>
-        <a href='/testing/ExperPage'>
+        <a href='/uxer/project/experiments'>
           <Button className='btn btn-success'>
             Experimenter Page
           </Button>
         </a>
 
         <h1>Project Page</h1>
-        <a href='/testing/ProjectPage'>
+        <a href='/uxer/projects'>
           <Button className='btn btn-success'>
             Project Page
           </Button>
