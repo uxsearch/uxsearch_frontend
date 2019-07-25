@@ -1,0 +1,60 @@
+@import "../variables";
+
+#project-page {
+
+  .all {
+    margin-top: 60px;
+  }
+
+ .link-text{
+   color:$black;
+ }
+
+
+  .project {
+    justify-content: center;
+    position: relative;
+    background-color: $white;
+    column-width: 200px;
+    height: 220px;
+    border-radius: 10px;
+    margin-top: 25px;
+    margin-right: 10px;
+    margin-left: 13px;
+    padding-top: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 10px;
+    font-family: Muli;
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
+    border-collapse: collapse;
+    color: $black;
+    border: 2px solid $white;
+    &:hover {
+      background: $white;
+      box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.2);
+      border: 2px solid $blue;
+    }
+    justify-self: center;
+  }
+
+  .bg-container {
+    margin-top: 10px;
+    margin-bottom: 50px;
+  }
+
+.img{
+  width: 100%;
+  border-top-left-radius:10px;
+  border-top-right-radius: 10px; 
+}
+
+.name-project{
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 25%;
+  top: 90%;
+}
+}
