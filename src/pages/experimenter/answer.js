@@ -1,11 +1,34 @@
 import React from 'react'
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap'
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
+import { Checkbox, Radio, RadioGroup, FormControlLabel, withStyles } from '@material-ui/core'
 import { Container, Row, Col } from 'reactstrap'
 
 import NavbarExp from '../../components/utils/navbarExperimenter'
 import NotSupport from '../../components/utils/notSupport'
 
 import '../../static/sass/experimenter/answer.scss'
+import { fontFamily } from '@material-ui/system';
+
+const RadioButton = withStyles({
+  root: {
+    color: 'rgba(0, 0, 0, 0.54)',
+    '&$checked': {
+      color: '#28a1f2',
+    },
+    fontFamily: 'Muli'
+  },
+  checked: {},
+})(props => <Radio color="default" {...props} />);
+
+const CheckboxButton = withStyles({
+  root: {
+    color: 'rgba(0, 0, 0, 0.54)',
+    '&$checked': {
+      color: '#28a1f2',
+    },
+  },
+  checked: {},
+})(props => <Checkbox color="default" classes='radio-text' {...props} />);
 
 class Answer extends React.Component {
   constructor(props) {
@@ -73,31 +96,31 @@ class Answer extends React.Component {
                                   <Row>
                                     <Col xs={12}>
                                       {data.type === 'textbox' &&
-                                        <Input type='textarea' name='answer' />
+                                        <Input type='textarea' name='answer1' rows="4" className='text-style' />
                                       }
                                       {data.type === 'multiple' &&
                                         <>
-                                          {data.option.map(option => (
-                                            <>
-                                              <FormGroup check>
-                                                <Label check>
-                                                  <Input type="radio" className='radio-btn' name={`answer`} value={option.text} />{' '}
-                                                  <span>{option.text}</span>
-                                                </Label>
-                                              </FormGroup>
-                                            </>
-                                          ))}
+                                          <RadioGroup
+                                            aria-label="answer2"
+                                            name="answer2"
+                                          >
+                                            {data.option.map(option => (
+                                              <>
+                                                <FormControlLabel value={option.text} control={<RadioButton />} label={option.text} />
+                                              </>
+                                            ))}
+                                          </RadioGroup>
                                         </>
                                       }
                                       {data.type === 'checkbox' &&
                                         <>
                                           {data.option.map(option => (
                                             <>
-                                              <FormGroup check>
-                                                <Label check>
-                                                  <Input type="checkbox" className='radio-btn' name={`answer`} value={option.text} />{' '}
-                                                  <span>{option.text}</span>
-                                                </Label>
+                                              <FormGroup className='no-margin'>
+                                                <FormControlLabel
+                                                  control={<CheckboxButton value={option.text} />}
+                                                  label={option.text}
+                                                />
                                               </FormGroup>
                                             </>
                                           ))}
@@ -109,7 +132,7 @@ class Answer extends React.Component {
                               </Col>
                             </Row>
                           </FormGroup>
-                          <hr />
+                          <br />
                         </>
                       ))}
                     </Form>

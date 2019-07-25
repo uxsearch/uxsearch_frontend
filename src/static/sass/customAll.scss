@@ -4,7 +4,7 @@ body {
   color: $dark !important;
   font-size: 18px;
   font-weight: 400;
-  font-family: 'Muli', 'Prompt', sans-serif !important;
+  font-family: $font !important;
   background-color: $light;
 }
 
@@ -40,4 +40,12 @@ body {
     font-weight: 900;
     color: $light;
   }
+}
+
+// Form
+.MuiTypography-body1 {
+  font-family: $font !important;
+  font-size: 18px !important;
+  font-weight: initial !important;
+  letter-spacing: initial !important;
 }
