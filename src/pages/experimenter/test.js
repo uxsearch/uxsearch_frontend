@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserAlt, faBell } from '@fortawesome/free-solid-svg-icons'
+import { faUserAlt } from '@fortawesome/free-solid-svg-icons'
 
 import NavbarExp from '../../components/utils/navbarExperimenter'
 
@@ -18,22 +18,8 @@ class Test extends React.Component {
           </Button>
         </a>
         <FontAwesomeIcon icon={faUserAlt} size="lg" /> <br></br>
-        <FontAwesomeIcon icon={faBell} size="9x" color='#00ffff' /> <br></br>
+       
 
-        <h1>Video Result</h1>
-        <a href='/uxer/project/experiment/result'>
-          <Button className='btn btn-success'>
-            Video Result
-          </Button>
-        </a>
-
-
-        <h1>Experiment Page</h1>
-        <a href='/uxer/project/experiments'>
-          <Button className='btn btn-success'>
-            Experimenter Page
-          </Button>
-        </a>
 
         <h1>Project Page</h1>
         <a href='/uxer/projects'>
