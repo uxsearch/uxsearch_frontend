@@ -1,9 +1,8 @@
 import React from 'react'
 
-import { Container, Row, Col, Input, Label, Form, FormGroup, UncontrolledDropdown,DropdownToggle,DropdownMenu,DropdownItem } from 'reactstrap'
+import { Container, Row, Col, Input, Label, Form, FormGroup, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserAlt,faSignOutAlt ,faSearch} from '@fortawesome/free-solid-svg-icons'
-
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 import NavbarUxer from '../../components/utils/navbarUXer'
 
@@ -35,27 +34,22 @@ class ProjectPage extends React.Component {
                             </Form>
                         </Col>
 
-                        <Col md={2}  className='justify-content-center align-items-center' >
-                                <DropdownToggle nav caret className='link-text'>
-                                    Recent
+                        <Col md={2} className='justify-content-center align-items-center' >
+                            <DropdownToggle nav caret className='link-text'>
+                                Recent
                 	</DropdownToggle>
-                                <DropdownMenu >
-                                    <DropdownItem>
-                                        <span>wait...</span>
-                                    </DropdownItem>     
-                                    <DropdownItem>    
-                                        <span>wait...</span>
-                                    </DropdownItem>
-                                </DropdownMenu>
+                            <DropdownMenu >
+                                <DropdownItem>
+                                    <span>wait...</span>
+                                </DropdownItem>
+                                <DropdownItem>
+                                    <span>wait...</span>
+                                </DropdownItem>
+                            </DropdownMenu>
                         </Col>
-
                     </Row>
                 </Container>
-
-
-
                 <EachProject />
-
             </section>
         )
     }

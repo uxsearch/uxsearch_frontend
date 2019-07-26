@@ -6,7 +6,6 @@ import '../../static/sass/uxer/projectPage.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisV, faTrash, faShare } from '@fortawesome/free-solid-svg-icons'
 
-
 class EachProject extends React.Component {
 
     constructor(props) {
@@ -23,7 +22,6 @@ class EachProject extends React.Component {
             dropdownOpen: !prevState.dropdownOpen
         }));
     }
-
 
     render() {
         return (
@@ -46,32 +44,25 @@ class EachProject extends React.Component {
                                         <p>Web Development</p>
                                         <FontAwesomeIcon icon={faEllipsisV} size="x" color='#303030' className='icon-dot' />
 
-
-
-
-
-
                                     </Col>
                                 </a>
-                               
-                                    <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                                        <DropdownToggle  >
-                                            <FontAwesomeIcon icon={faEllipsisV} size="x" color='#303030' className='icon-dot' />
-                                        </DropdownToggle>
 
-                                        <DropdownMenu right>
-                                            <DropdownItem >
-                                                <FontAwesomeIcon icon={faShare} size='x' className='space-icon' />
-                                                <span>Send link to experimenter</span>
-                                            </DropdownItem>
-                                            <DropdownItem >
-                                                <FontAwesomeIcon icon={faTrash} size='x' color='#DC143C' className='space-icon' />
-                                                <span>Delete</span>
-                                            </DropdownItem>
-                                        </DropdownMenu>
+                                <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                                    <DropdownToggle  >
+                                        <FontAwesomeIcon icon={faEllipsisV} size="x" color='#303030' className='icon-dot' />
+                                    </DropdownToggle>
 
-                                    </Dropdown>
-                               
+                                    <DropdownMenu right>
+                                        <DropdownItem >
+                                            <FontAwesomeIcon icon={faShare} size='x' className='space-icon' />
+                                            <span>Send link to experimenter</span>
+                                        </DropdownItem>
+                                        <DropdownItem >
+                                            <FontAwesomeIcon icon={faTrash} size='x' color='#DC143C' className='space-icon' />
+                                            <span>Delete</span>
+                                        </DropdownItem>
+                                    </DropdownMenu>
+                                </Dropdown>
                             </Col>
 
                             <Col md={3} className='project'>
@@ -103,7 +94,6 @@ class EachProject extends React.Component {
                                 </Col>
                             </Col>
                         </Row>
-
 
                         <Row>
                             <Col md={1}></Col>
@@ -149,9 +139,7 @@ class EachProject extends React.Component {
                                 </Col>
                             </Col>
                         </Row>
-
                     </Row>
-
                 </Container>
             </div >
         )
