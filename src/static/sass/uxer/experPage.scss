@@ -65,13 +65,8 @@
     &:hover {
       box-shadow: 1px 2px 10px $blue;
       border: 2px solid $blue;
+      justify-self: center;
     }
-<<<<<<< HEAD
-    justify-self: center;
-   
-   
-=======
->>>>>>> 628265038a7e50d83ee5f1b0bae910cff05aa7f9
   }
 
   .profile-block {
@@ -90,4 +85,4 @@
   .link {
     color: $dark;
   }
-}
+  }

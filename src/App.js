@@ -11,6 +11,8 @@ import ProjectPage from './pages/uxer/projectPage'
 import NotFound from './pages/error/not_found.js'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './static/sass/customAll.scss'
+import MyProject from './pages/uxer/myProject';
+import CreateProjectBlock from './components/uxer/createProjectBlock';
 
 const Experimenter = ({ match }) => {
   return (
@@ -33,6 +35,8 @@ const UXer = ({ match }) => {
         <Route exact path={`${match.path}/projects`} component={ProjectPage} />
         <Route exact path={`${match.path}/project/experiments`} component={ExperPage} />
         <Route exact path={`${match.path}/project/experiment/result`} component={VideoResult} />
+        <Route exact path={`${match.path}/project/experiment/home`} component={MyProject} />
+        <Route exact path={`${match.path}/project/experiment/modal`} component={CreateProjectBlock} />
         <Route component={NotFound} />
       </Switch>
     </Router>
