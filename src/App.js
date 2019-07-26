@@ -3,6 +3,7 @@ import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
 import Test from './pages/experimenter/test'
 import IndexExperiment from './pages/experimenter/index'
 import Answer from './pages/experimenter/answer'
+import ThanksPage from './pages/experimenter/thanks'
 import RecordPage from './pages/experimenter/recordPage'
 import VideoResult from './pages/uxer/videoResult'
 import ExperPage from './pages/uxer/experimenterPage'
@@ -18,6 +19,7 @@ const Experimenter = ({ match }) => {
         <Route exact path={`${match.path}`} component={IndexExperiment} />
         <Route exact path={`${match.path}/record`} component={RecordPage} />
         <Route exact path={`${match.path}/answer`} component={Answer} />
+        <Route exact path={`${match.path}/thanks`} component={ThanksPage} />
         <Route component={NotFound} />
       </Switch>
     </Router>
