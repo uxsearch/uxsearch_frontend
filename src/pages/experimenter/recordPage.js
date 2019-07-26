@@ -42,7 +42,7 @@ class RecordPage extends React.Component {
   render() {
     return (
       <div>
-        <NotSupport className='d-md-block' />
+        <NotSupport className='d-md-none' />
         <section id='video-record' className='d-none d-md-block'>
           <NavbarExp />
           <Container>
