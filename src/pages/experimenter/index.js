@@ -42,7 +42,7 @@ class IndexExperiment extends React.Component {
   render() {
     return (
       <div>
-        <NotSupport className='d-md-block' />
+        <NotSupport className='d-md-none' />
         <section id='exper-index' className='d-none d-md-block'>
           <NavbarExp />
           <Container>

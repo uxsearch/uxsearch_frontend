@@ -1,0 +1,17 @@
+@import '../variables';
+
+#thanks-page {
+  .space-head-block {
+    margin-top: 85px;
+  }
+  
+  .block {
+    background-color: $white;
+    border-radius: 20px;
+    padding: 30px;
+  }
+
+  .title {
+    font-size: 25px;
+  }
+}
