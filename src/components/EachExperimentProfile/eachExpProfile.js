@@ -14,7 +14,7 @@ class EachExpPro extends React.Component {
                 <Col md={3}>
                 </Col>
                 <Col md={4} className='profile '>
-                  <a href='/testing/VideoResult' className='link'>
+                  <a href='/uxer/project/experiment/result' className='link'>
                     <div>
                       <img
                         src={require('../../static/img/1.jpg')}

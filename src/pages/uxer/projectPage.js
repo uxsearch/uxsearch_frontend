@@ -35,10 +35,7 @@ class ProjectPage extends React.Component {
                             </Form>
                         </Col>
 
-
-
                         <Col md={2}  className='justify-content-center align-items-center' >
-                           
                                 <DropdownToggle nav caret className='link-text'>
                                     Recent
                 	</DropdownToggle>
@@ -50,7 +47,6 @@ class ProjectPage extends React.Component {
                                         <span>wait...</span>
                                     </DropdownItem>
                                 </DropdownMenu>
-                           
                         </Col>
 
                     </Row>

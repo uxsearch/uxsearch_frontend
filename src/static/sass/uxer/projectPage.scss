@@ -15,7 +15,7 @@
     justify-content: center;
     position: relative;
     background-color: $white;
-    column-width: 200px;
+    width: 395px;
     height: 220px;
     border-radius: 10px;
     margin-top: 25px;
@@ -31,13 +31,10 @@
     cursor: pointer;
     border-collapse: collapse;
     color: $black;
-    border: 2px solid $white;
-    &:hover {
-      background: $white;
-      box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.2);
-      border: 2px solid $blue;
-    }
-    justify-self: center;
+    border: 0px ;
+
+
+    
   }
 
   .bg-container {
@@ -54,7 +51,28 @@
 .name-project{
   position: absolute;
   transform: translate(-50%, -50%);
-  left: 25%;
+  left: 50%;
   top: 90%;
+  font-family: Muli;
+  font-size: 17px;
+  text-align:left;
+  margin:0px;
 }
+.icon-dot{
+  position: absolute;
+  transform: translate(-50%, -50%);
+  right: 10%;
+  left: 95%;
+  top: 33%;
+  
+}
+
+.link {
+  color: $dark;
+}
+
+.space-icon {
+  margin-right: 10px;
+}
+
 }
