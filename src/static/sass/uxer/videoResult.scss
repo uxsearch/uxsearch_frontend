@@ -1,0 +1,69 @@
+@import '../variables';
+
+#video-result {
+  .video-block{
+    width: 1920pt;
+    height: 450px;
+    background: $black;
+  }
+
+  /* experimentprofile */
+  .experprofile{
+    align-items: center;
+    width: 992px;
+    height: 465px;
+    background: $white;
+    position: sticky
+  }
+
+  .play-video{
+    width: 100%;
+    height: 300px;
+    display: flex
+  }
+
+  /* ปุ่ม usability testnote */
+  .bt-testnote{  
+    background-color: $white;
+    padding: 200px;
+    margin-block-end: 500px;
+  }
+
+  .bg-experprofile{
+    background-color: $white;
+    width: 992px;
+    height: 465px;
+    padding-top: 27px;
+    padding-left: 54px;
+    margin-top: 100px;
+    border-radius: 20px; 
+  }
+
+  .bg-questionnaire{
+    background-color: $white;
+    width: 992px;
+    height: 465px;
+    padding-top: 27px;
+    padding-left: 54px;
+    margin-top: 50px;
+    border-radius: 20px; 
+  }
+
+  .card-video{
+    background-color: $black;
+    padding: 10px;
+    margin-top: 0px;
+  }
+}
+
+.user{
+  padding-top: 15px;
+}
+
+.btn-usability-test {
+  background-color: $blue !important;
+  border: 2px solid $blue !important;
+  color: $light !important;
+  width: 100%;
+  border-radius: 10px !important;
+}

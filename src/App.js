@@ -1,12 +1,18 @@
 import React from 'react';
 import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
 import Test from './pages/experimenter/test'
-import RecordPage from './pages/experimenter/recordPage'
 import IndexExperiment from './pages/experimenter/index'
+import Answer from './pages/experimenter/answer'
+import ThanksPage from './pages/experimenter/thanks'
+import RecordPage from './pages/experimenter/recordPage'
 import VideoResult from './pages/uxer/videoResult'
+import ExperPage from './pages/uxer/experimenterPage'
+import ProjectPage from './pages/uxer/projectPage'
 import NotFound from './pages/error/not_found.js'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './static/css/custom-all.css'
+import './static/sass/customAll.scss'
+import MyProject from './pages/uxer/myProject';
+import CreateProjectBlock from './components/uxer/createProjectBlock';
 
 const Experimenter = ({ match }) => {
   return (
@@ -14,6 +20,23 @@ const Experimenter = ({ match }) => {
       <Switch>
         <Route exact path={`${match.path}`} component={IndexExperiment} />
         <Route exact path={`${match.path}/record`} component={RecordPage} />
+        <Route exact path={`${match.path}/answer`} component={Answer} />
+        <Route exact path={`${match.path}/thanks`} component={ThanksPage} />
+        <Route component={NotFound} />
+      </Switch>
+    </Router>
+  )
+}
+
+const UXer = ({ match }) => {
+  return (
+    <Router>
+      <Switch>
+        <Route exact path={`${match.path}/projects`} component={ProjectPage} />
+        <Route exact path={`${match.path}/project/experiments`} component={ExperPage} />
+        <Route exact path={`${match.path}/project/experiment/result`} component={VideoResult} />
+        <Route exact path={`${match.path}/project/experiment/home`} component={MyProject} />
+        <Route exact path={`${match.path}/project/experiment/modal`} component={CreateProjectBlock} />
         <Route component={NotFound} />
       </Switch>
     </Router>
@@ -27,7 +50,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' component={Test} />
           <Route path='/experimenter' component={Experimenter} />
-          <Route exact path='/testing/VideoResult' component={VideoResult} />
+          <Route path='/uxer' component={UXer} />
           <Route component={NotFound} />
         </Switch>
       </Router>

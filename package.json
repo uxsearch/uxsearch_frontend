@@ -6,6 +6,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
     "@fortawesome/free-solid-svg-icons": "^5.9.0",
     "@fortawesome/react-fontawesome": "^0.1.4",
+    "@material-ui/core": "^4.2.1",
     "bootstrap": "^4.3.1",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
@@ -14,6 +15,7 @@
     "react-scripts": "3.0.1",
     "reactstrap": "^8.0.1",
     "recordrtc": "^5.5.4",
+    "sweetalert": "^2.1.2",
     "videojs-record": "^3.7.1"
   },
   "scripts": {

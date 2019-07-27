@@ -1,0 +1,51 @@
+@import 'variables';
+
+body {
+  color: $dark !important;
+  font-size: 18px;
+  font-weight: 400;
+  font-family: $font !important;
+  background-color: $light;
+}
+
+// Swal
+
+.swal-footer {
+  text-align: center;
+}
+
+// Not Support
+#not-support {
+  background-color: $blue;
+
+  .block {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .not-support {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .icon-not-support {
+    color: $light;
+  }
+
+  .text-not-support {
+    margin-top: 15px;
+    font-size: 25px;
+    font-weight: 900;
+    color: $light;
+  }
+}
+
+// Form
+.MuiTypography-body1 {
+  font-family: $font !important;
+  font-size: 18px !important;
+  font-weight: initial !important;
+  letter-spacing: initial !important;
+}

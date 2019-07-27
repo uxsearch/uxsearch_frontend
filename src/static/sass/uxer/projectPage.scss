@@ -1,0 +1,75 @@
+@import "../variables";
+
+#project-page {
+
+  .all {
+    margin-top: 60px;
+  }
+
+ .link-text{
+   color:$black;
+ }
+
+
+  .project {
+    justify-content: center;
+    position: relative;
+    background-color: $white;
+    width: 395px;
+    height: 220px;
+    border-radius: 10px;
+    margin-top: 25px;
+    margin-right: 10px;
+    margin-left: 13px;
+    padding-top: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 10px;
+    font-family: Muli;
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
+    border-collapse: collapse;
+    color: $black;
+    border: 0px ;
+  }
+
+  .bg-container {
+    margin-top: 10px;
+    margin-bottom: 50px;
+  }
+
+.img{
+  width: 100%;
+  border-top-left-radius:10px;
+  border-top-right-radius: 10px; 
+}
+
+.name-project{
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 90%;
+  font-family: Muli;
+  font-size: 17px;
+  text-align:left;
+  margin:0px;
+}
+.icon-dot{
+  position: absolute;
+  transform: translate(-50%, -50%);
+  right: 10%;
+  left: 95%;
+  top: 33%;
+  
+}
+
+.link {
+  color: $dark;
+}
+
+.space-icon {
+  margin-right: 10px;
+}
+
+}

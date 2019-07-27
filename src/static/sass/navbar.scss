@@ -1,7 +1,10 @@
+@import 'variables';
+
 /* Experiment Navbar */
 #exper-navbar {
   .nav-bgColor {
-    background-color:#303030;
+    position: fixed;
+    background-color: $dark;
     min-width: 100%;
     z-index: 1;
     max-width: 100%;
@@ -14,62 +17,110 @@
 #uxer-navbar {
   .nav-dropdown{
     font-size: 20px;
-  
   }
   
   .nav-bgColoruxer {
-    background-color:#303030;
+    background-color: $dark;
     max-width: 100%;
     max-height: 100%;
     z-index: 1;
-    color:#efefef; 
+    color: $light; 
+    padding: 10px 100px;
+  }
+
+  .nav-bgColoruxer-mobile {
+    background-color: $dark;
+    max-width: 100%;
+    max-height: 100%;
+    z-index: 1;
+    color: $light; 
+  }
+
+  .link-text {
+    font-size: 16px;
+    color: #909090 !important;
+  }
+
+  .link-text:hover {
+    font-size: 16px;
+    color: $white !important;
+  }
+
+  .link-text.active {
+    font-size: 16px;
+    color: $white !important;
   }
   
-  .navLink {
-    color: #909090 !important;
+  .space-title {
+    margin-top: 50px;
+  }
+
+  .account-box {
+    position: relative;
+  }
+
+  .dropdown-position {
+    position: absolute;
+    right: 0;
+  }
+  
+  .border-right-logo {
+    border-right: 1px solid #909090;
+  }
+
+  .space-icon {
+    margin-right: 10px;
   }
   
   .logo-icon {
     width: 50px;
     height: auto;
   }
-  
-  .hamburger-menu {
-    background-color: transparent !important;
-    border: 2px solid #efefef !important;
+}
+
+#sub-navbar {
+  .nav-bgColoruxer {
+    background-color: $dark;
+    max-width: 100%;
+    max-height: 100%;
+    z-index: 1;
+    color: $light;
+    padding: 0px 100px;
   }
-  
-  .navbar-toggler-icon {
-    color: #efefef !important;
+
+  .menu-line {
+    flex-direction: row !important;
   }
-  
-  .web-dev{
-    font-size: 30px;
-    color: #efefef;
-    font :left;
-    align-self: baseline;
-    flex-wrap: wrap-reverse;
-    
+
+  .menu-block {
+    padding: 10px 20px;
   }
-  .bell-solid{
-    grid-area: right;
-   
+
+  .menu-block:hover {
+    .link-text {
+      color: $white !important;
+    }
   }
-  
-  .web-topleft{
-  color: #efefef;
-  font-size: 15px;
-  justify-content:flex-start;
+
+  .menu-block.active{
+    border-bottom: 3px solid $blue;
+    .link-text {
+      color: $white !important;
+    }
   }
-  
-  .nav-topright{
-  color: #efefef;
-  font-size: 15px;
-  
+
+  .link-text {
+    font-size: 16px;
+    color: #909090;
   }
-  
-  .web-user{
-    justify-content:flex-start;
-    color: #efefef;
+
+  @media (max-width: 767.98px) {
+    .nav-bgColoruxer {
+      padding: 0px;
+    }
+
+    .menu-block {
+      padding: 5px;
+    }
   }
 }
