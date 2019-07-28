@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 import NavbarUxer from '../../components/utils/navbarUXer'
-import ProjectBlock from '../../components/EachProject/eachProject'
+import ProjectBlock from '../../components/uxer/eachProject'
 
 
 import '../../static/sass/uxer/experPage.scss'
