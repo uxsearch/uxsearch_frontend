@@ -35,7 +35,7 @@ class ExperPage extends React.Component {
           <Row className='all justify-content-center align-items-center' >
             <Col md={1}>
               <div className='logo-search'>
-                <FontAwesomeIcon icon={faSearch} size="x" color='#303030' />
+                <FontAwesomeIcon icon={faSearch} size="1x" color='#303030' />
               </div>
             </Col>
             <Col md={2}>
@@ -61,7 +61,7 @@ class ExperPage extends React.Component {
             </Col>
             <Col md={1}>
               <div className='faCopy'>
-                <FontAwesomeIcon icon={faCopy} size="x" color='#fff' className='icon-faCopy' />
+                <FontAwesomeIcon icon={faCopy} size="1x" color='#fff' className='icon-faCopy' />
               </div>
             </Col>
           </Row>

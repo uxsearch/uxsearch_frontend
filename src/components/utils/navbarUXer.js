@@ -55,11 +55,13 @@ class NavbarUxer extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    My Account
+                    <FontAwesomeIcon icon={faUserAlt} size='sm' className='space-icon' />
+                    <span>My Account</span>
                   </DropdownItem>
                   <DropdownItem divider />
                   <DropdownItem>
-                    Sign out
+                    <FontAwesomeIcon icon={faSignOutAlt} size='sm' className='space-icon' />
+                    <span>Sign out</span>
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
@@ -87,12 +89,12 @@ class NavbarUxer extends React.Component {
                 	</DropdownToggle>
                   <DropdownMenu right>
                     <DropdownItem>
-                      <FontAwesomeIcon icon={faUserAlt} size='md' className='space-icon' />
+                      <FontAwesomeIcon icon={faUserAlt} size='sm' className='space-icon' />
                       <span>My Account</span>
                     </DropdownItem>
                     <DropdownItem divider />
                     <DropdownItem>
-                      <FontAwesomeIcon icon={faSignOutAlt} size='md' className='space-icon' />
+                      <FontAwesomeIcon icon={faSignOutAlt} size='sm' className='space-icon' />
                       <span>Sign out</span>
                     </DropdownItem>
                   </DropdownMenu>
