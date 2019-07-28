@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Row, Col, Input, Label, Form, FormGroup } from 'reactstrap'
+import { Container, Row, Col, Input, Label } from 'reactstrap'
 import { TextField, withStyles } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faCopy, faShare } from '@fortawesome/free-solid-svg-icons'
