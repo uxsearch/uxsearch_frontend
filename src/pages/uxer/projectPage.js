@@ -7,7 +7,6 @@ import { faSearch, faSortDown } from '@fortawesome/free-solid-svg-icons'
 import NavbarUxer from '../../components/utils/navbarUXer'
 import ProjectBlock from '../../components/uxer/projectBlock'
 
-import '../../static/sass/uxer/experPage.scss'
 import '../../static/sass/uxer/projectPage.scss'
 
 const SearchField = withStyles({
@@ -57,7 +56,6 @@ class ProjectPage extends React.Component {
 		return (
 			<section id='project-page'>
 				<NavbarUxer />
-
 				<Container>
 					<Row className='space-head-block justify-content-center align-items-end'>
 						<Col xs={8}>
