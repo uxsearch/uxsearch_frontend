@@ -5,12 +5,16 @@
     margin: 0px !important;
   }
 
-  .all {
-    margin-top: 60px;
+  .space-head-block {
+    margin-top: 50px;
   }
 
-  .link-text{
-    color:$black;
+  .search-form {
+    color: $dark;
+  }
+  
+  .dropdown-btn {
+    cursor: pointer;
   }
 
   .project {
@@ -20,7 +24,6 @@
     background-color: $white;
     border-radius: 10px;
     border-collapse: collapse;
-    cursor: pointer;
   }
 
   .cover-block {
@@ -39,11 +42,16 @@
     padding: 10px;
   }
 
-  .link {
-    color: $dark;
-  }
-
   .space-icon {
     margin-right: 10px;
   }
+
+  .delete-text {
+    color: #D42B2B;
+  }
+
+  .link {
+    color: $dark;
+  }
+  
 }

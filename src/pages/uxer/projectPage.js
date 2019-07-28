@@ -1,65 +1,111 @@
 import React from 'react'
-import { Container, Row, Col, Input, Label, Form, FormGroup, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
+import { Container, Row, Col, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
+import { TextField, withStyles } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faSortDown } from '@fortawesome/free-solid-svg-icons'
 
 import NavbarUxer from '../../components/utils/navbarUXer'
-import ProjectBlock from '../../components/uxer/eachProject'
+import ProjectBlock from '../../components/uxer/projectBlock'
 
-
-import '../../static/sass/uxer/experPage.scss'
 import '../../static/sass/uxer/projectPage.scss'
 
+const SearchField = withStyles({
+	root: {
+		'& label.Mui-focused': {
+			color: '#28a1f2',
+		},
+		'& .MuiInput-underline:after': {
+			borderBottomColor: '#28a1f2',
+		},
+		'& .MuiOutlinedInput-root': {
+			'&.Mui-focused fieldset': {
+				borderColor: '#28a1f2',
+			},
+		},
+	},
+})(TextField);
+
 class ProjectPage extends React.Component {
-	state = {
-		object: [
-			{ title: 'test1', img_url: 'https://picsum.photos/200/300' },
-			{ title: 'test2', img_url: 'https://picsum.photos/200/300' },
-			{ title: 'test3', img_url: 'https://picsum.photos/200/300' },
-			{ title: 'test4', img_url: 'https://picsum.photos/200/300' },
-			{ title: 'test5', img_url: 'https://picsum.photos/200/300' },
-			{ title: 'test6', img_url: 'https://picsum.photos/200/300' },
-			{ title: 'test7', img_url: 'https://picsum.photos/200/300' },
-			{ title: 'test8', img_url: 'https://picsum.photos/200/300' },
-			{ title: 'test9', img_url: 'https://picsum.photos/200/300' },
-			{ title: 'test10', img_url: 'https://picsum.photos/200/300' }
-		]
-	};
+	constructor(props) {
+		super(props);
+		this.toggleSort = this.toggleSort.bind(this);
+		this.state = {
+			object: [
+				{ title: 'Web Development', img_url: 'https://picsum.photos/200/300' },
+				{ title: 'test2', img_url: 'https://picsum.photos/200/300' },
+				{ title: 'test3', img_url: 'https://picsum.photos/200/300' },
+				{ title: 'test4', img_url: 'https://picsum.photos/200/300' },
+				{ title: 'test5', img_url: 'https://picsum.photos/200/300' },
+				{ title: 'test6', img_url: 'https://picsum.photos/200/300' },
+				{ title: 'test7', img_url: 'https://picsum.photos/200/300' },
+				{ title: 'test8', img_url: 'https://picsum.photos/200/300' },
+				{ title: 'test9', img_url: 'https://picsum.photos/200/300' },
+				{ title: 'test10', img_url: 'https://picsum.photos/200/300' }
+			],
+			sortDropdownOpen: false
+		};
+	}
+
+	toggleSort() {
+		this.setState(prevState => ({
+			sortDropdownOpen: !prevState.sortDropdownOpen
+		}));
+	}
 
 	render() {
 		return (
 			<section id='project-page'>
 				<NavbarUxer />
-
 				<Container>
-					<Row className='all justify-content-center align-items-center' >
-						<Col md={1}>
-							<div className='logo-search'>
-								<FontAwesomeIcon icon={faSearch} size="1x" color='#303030' />
-							</div>
+					<Row className='space-head-block justify-content-center align-items-end'>
+						<Col xs={8}>
+							<form utoComplete='on'>
+								<Row className='align-items-end no-gutters'>
+									<Col xs={2} sm={1} className='text-center'>
+										<FontAwesomeIcon icon={faSearch} size='1x' color='#303030' />
+									</Col>
+									<Col xs={10} sm={11}>
+										<SearchField
+											id='standard-search'
+											label='Search Projects'
+											type='search'
+											className='w-100 search-form no-margin'
+											margin='normal'
+										/>
+									</Col>
+								</Row>
+							</form>
 						</Col>
-						<Col md={8} className='justify-content-center align-items-center' >
-							<Form>
-								<FormGroup className='no-margin'>
-									<Label className='w-100 no-margin'>
-										<Input type='text' id='search' name='search' placeholder='Search Result' className='search' />
-									</Label>
-								</FormGroup>
-							</Form>
-						</Col>
-
-						<Col md={2} className='justify-content-center align-items-center' >
-							<DropdownToggle nav caret className='link-text'>
-								Recent
-							</DropdownToggle>
-							<DropdownMenu >
-								<DropdownItem>
-									<span>wait...</span>
-								</DropdownItem>
-								<DropdownItem>
-									<span>wait...</span>
-								</DropdownItem>
-							</DropdownMenu>
+						<Col xs={4} sm={3} md={2}>
+							<Row className='justify-content-center align-items-center'>
+								<Col xs={12} className='text-center'>
+									<Dropdown
+										isOpen={this.state.sortDropdownOpen}
+										toggle={() => { this.setState({ sortDropdownOpen: !this.state.sortDropdownOpen }); }}
+										>
+										<DropdownToggle caret
+											tag="span"
+											onClick={this.toggleSort}
+											data-toggle="dropdown"
+											aria-expanded={this.state.sortDropdownOpen}
+											className='dropdown-btn'
+										>
+											<span>Recent</span>
+										</DropdownToggle>
+										<DropdownMenu>
+											<DropdownItem>
+												<span>Recent</span>
+											</DropdownItem>
+											<DropdownItem>
+												<span>A to Z</span>
+											</DropdownItem>
+											<DropdownItem>
+												<span>Z to A</span>
+											</DropdownItem>
+										</DropdownMenu>
+									</Dropdown>
+								</Col>
+							</Row>
 						</Col>
 					</Row>
 				</Container>
