@@ -76,7 +76,7 @@ class ProjectPage extends React.Component {
 								</Row>
 							</form>
 						</Col>
-						<Col xs={4} sm={3} md={2} className='justify-content-center align-items-center' >
+						<Col xs={4} sm={3} md={2}>
 							<Row className='justify-content-center align-items-center'>
 								<Col xs={12} className='text-center'>
 									<Dropdown
