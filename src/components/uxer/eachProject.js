@@ -1,38 +1,76 @@
 import React from 'react'
-import { Container, Row, Col, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Collapse } from 'reactstrap'
+import { Row, Col, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisV, faTrash, faShare } from '@fortawesome/free-solid-svg-icons'
 
 import '../../static/sass/uxer/projectPage.scss'
 
-const ProjectBlock = (props) => {
-	return (
-		<div className='project'>
-			<a href='/uxer/project/experiments' className='link'>
+class ProjectBlock extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.toggle = this.toggle.bind(this);
+		this.state = {
+			dropdownOpen: false
+		};
+	}
+
+	toggle() {
+		this.setState({
+			dropdownOpen: !this.state.dropdownOpen
+		});
+	}
+
+	render(props) {
+		return (
+			<div className='project'>
 				<Row className='justify-content-center'>
 					<Col xs={12}>
 						<Row>
 							<Col xs={12} className='cover-block'>
-								<img
-									src={props.imgUrl}
-									className="cover-img d-inline-block"
-									alt="Project Cover"
-								/>
+								<a href='/uxer/project/experiments' className='link'>
+									<img
+										src={this.props.imgUrl}
+										className="cover-img d-inline-block"
+										alt="Project Cover"
+									/>
+								</a>
 							</Col>
 						</Row>
 						<Row className='justify-content-center align-items-center'>
 							<Col xs={10} className=''>
-								<p className='no-margin project-text'>{props.title}</p>
+								<a href='/uxer/project/experiments' className='link'>
+									<p className='no-margin project-text'>{this.props.title}</p>
+								</a>
 							</Col>
 							<Col xs={2} className='text-center'>
-								<FontAwesomeIcon icon={faEllipsisV} size="1x" color='#303030' />
+								<Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+									<DropdownToggle
+										tag="span"
+										onClick={this.toggle}
+										data-toggle="dropdown"
+										aria-expanded={this.state.dropdownOpen}
+									>
+										<FontAwesomeIcon icon={faEllipsisV} size="1x" color='#303030' />
+									</DropdownToggle>
+									<DropdownMenu>
+										<DropdownItem>
+											<FontAwesomeIcon icon={faShare} color='#303030' size='sm' className='space-icon' />
+											<span>Send link to experimenter</span>
+										</DropdownItem>
+										<DropdownItem>
+											<FontAwesomeIcon icon={faTrash} color='#D42B2B' size='sm' className='space-icon' />
+											<span className='delete-text'>Delete Project</span>
+										</DropdownItem>
+									</DropdownMenu>
+								</Dropdown>
 							</Col>
 						</Row>
 					</Col>
 				</Row>
-			</a>
-		</div >
-	)
+			</div >
+		)
+	}
 }
 
 export default ProjectBlock;

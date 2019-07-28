@@ -13,7 +13,7 @@ import '../../static/sass/uxer/projectPage.scss'
 class ProjectPage extends React.Component {
 	state = {
 		object: [
-			{ title: 'test1', img_url: 'https://picsum.photos/200/300' },
+			{ title: 'Web Development', img_url: 'https://picsum.photos/200/300' },
 			{ title: 'test2', img_url: 'https://picsum.photos/200/300' },
 			{ title: 'test3', img_url: 'https://picsum.photos/200/300' },
 			{ title: 'test4', img_url: 'https://picsum.photos/200/300' },
