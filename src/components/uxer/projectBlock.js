@@ -25,7 +25,7 @@ class ProjectBlock extends React.Component {
 		return (
 			<div className='project'>
 				<Row className='justify-content-center'>
-					<Col xs={12}>
+					<Col xs={12} className='each-block'>
 						<Row>
 							<Col xs={12} className='cover-block'>
 								<a href='/uxer/project/experiments' className='link'>
@@ -51,7 +51,7 @@ class ProjectBlock extends React.Component {
 										data-toggle="dropdown"
 										aria-expanded={this.state.dropdownOpen}
 									>
-										<FontAwesomeIcon icon={faEllipsisV} size="1x" color='#303030' />
+										<FontAwesomeIcon icon={faEllipsisV} size="1x" color='#303030' className='dropdown-btn' />
 									</DropdownToggle>
 									<DropdownMenu>
 										<DropdownItem>
