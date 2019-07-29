@@ -2,7 +2,7 @@ import React from 'react'
 
 import '../../static/sass/navbar.scss'
 
-import { Navbar,Nav,Col,Container } from 'reactstrap'
+import { Navbar } from 'reactstrap'
 
 class NavbarExp extends React.Component {
   render() {

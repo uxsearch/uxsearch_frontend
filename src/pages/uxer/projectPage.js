@@ -2,7 +2,7 @@ import React from 'react'
 import { Container, Row, Col, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import { TextField, withStyles } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faSortDown } from '@fortawesome/free-solid-svg-icons'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
 import NavbarUxer from '../../components/utils/navbarUXer'
 import ProjectBlock from '../../components/uxer/projectBlock'

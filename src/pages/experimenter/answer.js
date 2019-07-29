@@ -7,7 +7,6 @@ import NavbarExp from '../../components/utils/navbarExperimenter'
 import NotSupport from '../../components/utils/notSupport'
 
 import '../../static/sass/experimenter/answer.scss'
-import { fontFamily } from '@material-ui/system';
 
 const RadioButton = withStyles({
   root: {
