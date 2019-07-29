@@ -20,10 +20,41 @@
     height: 200px;
   }
 
-  .bt-testnote{  
-    background-color: $white;
-    padding: 200px;
-    margin-block-end: 500px;
+  .space-bottom-video {
+    margin-top: 50px;
+  }
+
+  .profile-block {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 100%;
+  }
+
+  .profile-img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .exper-name {
+    font-size: 25px;
+  }
+
+  .space-btn-mobile {
+    margin-top: 5px;
+  }
+
+  .btn-usability-test {
+    width: auto;
+    color: $light;
+    background-color: $blue;
+    border: 2px solid $blue;
+    border-radius: 10px;
+
+    &:hover {
+      background-color: $blue-hover;
+      border-color: $blue-hover;
+    }
   }
 
   .bg-experprofile{
@@ -60,6 +91,10 @@
     .play-video{
       height: 300px;
     }
+
+    .exper-name {
+      font-size: 30px;
+    }
   }
 
   @media (min-width: 992px) {
@@ -73,16 +108,4 @@
       height: 500px;
     }
   }
-}
-
-.user{
-  padding-top: 15px;
-}
-
-.btn-usability-test {
-  background-color: $blue !important;
-  border: 2px solid $blue !important;
-  color: $light !important;
-  width: 100%;
-  border-radius: 10px !important;
 }

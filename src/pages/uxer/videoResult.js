@@ -1,7 +1,5 @@
 import React from 'react'
-import { Container, Row, Col, Button, ButtonToolbar } from 'reactstrap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserAlt } from '@fortawesome/free-solid-svg-icons'
+import { Container, Row, Col, Button } from 'reactstrap'
 
 import NavbarUXer from '../../components/utils/navbarUXer'
 import PlayVideo from '../../components/uxer/videoresult/video'
@@ -18,24 +16,36 @@ class VideoResult extends React.Component {
         <Container fluid>
           <PlayVideo />
         </Container>
-        <Container fluid>
-          <Row>
-            <Col xs={2}>
-              <img
-                src='https://picsum.photos/200/300'
-                width='auto'
-                height='40px'
-                className="d-inline-block align-top"
-                alt="UX Search Logo"
-              />
+        <Container fluid className='space-bottom-video'>
+          <Row className='justify-content-center align-items-center'>
+            <Col xs={12} sm={8} md={6} lg={5}>
+              <Row className='align-items-center justify-content-center'>
+                <Col xs={3} sm={4} xl={3}>
+                  <div className='profile-block'>
+                    <img
+                      src='https://picsum.photos/200/300'
+                      alt='Profile Picture'
+                      className='profile-img'
+                    />
+                  </div>
+                </Col>
+                <Col xs={9} sm={8} xl={9}>
+                  <Row>
+                    <Col xs={12}>
+                      <p className='no-margin exper-name'>Leroy Romero</p>
+                    </Col>
+                  </Row>
+                  <Row className='d-sm-none space-btn-mobile'>
+                    <Col xs={12}>
+                      <Button href='#' className='btn-usability-test'>Usability Test Note</Button>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
             </Col>
-            <Col xs={3}>
-              <h3> Leroy Romero</h3>
-            </Col>
-            <Col xs={2}>
-              <Row>
-                <Button size='lg' href="/testing/record" className='btn-usability-test'>Usability Test note </Button>
-              </Row >
+            <Col md={3} xl={4} className='d-none d-md-block' />
+            <Col xs={12} sm={4} md={3} xl={2} className='d-none d-sm-block'>
+              <Button href='#' className='btn-usability-test w-100'>Usability Test Note</Button>
             </Col>
           </Row>
         </Container>
