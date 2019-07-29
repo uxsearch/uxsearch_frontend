@@ -4,11 +4,9 @@
   .no-margin {
     margin: 0px !important;
   }
-  
-  .video-block{
-    width: 1920pt;
-    height: 450px;
-    background: $black;
+
+  .space-block {
+    margin: 50px auto;
   }
 
   /* experimentprofile */
@@ -48,16 +46,19 @@
   .input-field {
     background-color: $white;
     border-radius: 10px;
+    font-size: 18px;
   }
 
   .bg-questionnaire{
+    width: 100%;
+    height: auto;
+    padding: 30px;
     background-color: $white;
-    width: 992px;
-    height: 465px;
-    padding-top: 27px;
-    padding-left: 54px;
-    margin-top: 50px;
-    border-radius: 20px; 
+    border-radius: 20px;
+  }
+
+  .question-text {
+    font-weight: 900;
   }
 
   .card-video{

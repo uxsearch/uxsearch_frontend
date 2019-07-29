@@ -6,10 +6,9 @@ import { faUserAlt } from '@fortawesome/free-solid-svg-icons'
 import NavbarUXer from '../../components/utils/navbarUXer'
 import PlayVideo from '../../components/uxer/videoresult/video'
 import ExperProfile from '../../components/uxer/videoresult/profileBlock'
-import ResultQuestion from '../../components/uxer/videoresult/resultQuestionnaire'
+import ResultQuestion from '../../components/uxer/videoresult/resultBlock'
 
 import '../../static/sass/uxer/videoResult.scss'
-
 
 class VideoResult extends React.Component {
   render() {
@@ -35,12 +34,12 @@ class VideoResult extends React.Component {
               <Row>
                 <Button size='lg' href="/testing/record" className='btn-usability-test'>Usability Test note </Button>
               </Row >
-
             </Col>
           </Row>
         </Container>
-        <Container>
+        <Container className='space-block'>
           <ExperProfile />
+          <br />
           <ResultQuestion />
         </Container>
       </section>
