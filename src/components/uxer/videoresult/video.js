@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, Row, Col } from 'reactstrap'
 
-import '../../static/sass/uxer/videoResult.scss'
+import '../../../static/sass/uxer/videoResult.scss'
 
 class PlayVideo extends React.Component {
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col, Container, Button, Input } from 'reactstrap'
 
-import '../../static/sass/uxer/videoResult.scss'
+import '../../../static/sass/uxer/videoResult.scss'
 
 class ResultQuestion extends React.Component {
     render() {

@@ -1,6 +1,10 @@
 @import '../variables';
 
 #video-result {
+  .no-margin {
+    margin: 0px !important;
+  }
+  
   .video-block{
     width: 1920pt;
     height: 450px;
@@ -30,13 +34,20 @@
   }
 
   .bg-experprofile{
+    width: 100%;
+    height: auto;
+    padding: 30px;
     background-color: $white;
-    width: 992px;
-    height: 465px;
-    padding-top: 27px;
-    padding-left: 54px;
-    margin-top: 100px;
     border-radius: 20px; 
+  }
+
+  .topic-text {
+    font-weight: 900;
+  }
+
+  .input-field {
+    background-color: $white;
+    border-radius: 10px;
   }
 
   .bg-questionnaire{
