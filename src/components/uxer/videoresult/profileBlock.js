@@ -1,8 +1,6 @@
 import React from 'react'
 import { Row, Col, Label, Input } from 'reactstrap'
 
-import '../../../static/sass/uxer/videoResult.scss'
-
 class ExperProfile extends React.Component {
 	render() {
 		return (
