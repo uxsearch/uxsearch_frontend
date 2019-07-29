@@ -15,7 +15,9 @@ class VideoResult extends React.Component {
     return (
       <section id='video-result'>
         <NavbarUXer />
-        <PlayVideo />
+        <Container fluid>
+          <PlayVideo />
+        </Container>
         <Container fluid>
           <Row>
             <Col xs={2}>
