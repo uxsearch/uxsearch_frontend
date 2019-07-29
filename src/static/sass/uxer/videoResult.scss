@@ -38,6 +38,7 @@
 
   .exper-name {
     font-size: 25px;
+    font-weight: 600;
   }
 
   .space-btn-mobile {
@@ -66,13 +67,14 @@
   }
 
   .topic-text {
-    font-weight: 900;
+    font-weight: 700;
   }
 
   .input-field {
     background-color: $white;
     border-radius: 10px;
     font-size: 18px;
+    color: $dark;
   }
 
   .bg-questionnaire{
@@ -84,7 +86,7 @@
   }
 
   .question-text {
-    font-weight: 900;
+    font-weight: 700;
   }
 
   @media (min-width: 768px) {
