@@ -2,11 +2,19 @@
 
 #exper-page {
   .no-margin {
-    margin: 0px;
+    margin: 0px !important;
   }
 
-  .all {
+  .no-padding {
+    padding: 0px !important;
+  }
+
+  .space-head-block {
     margin-top: 50px;
+  }
+
+  .search-form {
+    color: $dark;
   }
 
   .logo-search {
@@ -24,26 +32,40 @@
     background: $white;
   }
 
-  .editShare {
-    padding-left: 1px;
-    width: 250px;
-  }
-
   .share {
+    padding: 10px 20px 10px 10px;    
     border-radius: 10px;
     background: $white;
   }
 
-  .faCopy {
+  .copy-block {
     position: relative;
-    background-color: $blue;
     width: 40px;
     height: 40px;
-    justify-content: center;
+    background-color: $blue;
+    border-radius: 100%;
+    right: 20px;
+    z-index: 1;
+  }
+
+  .copy-icon {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    z-index: 2;
+    right: 100px;
+  }
+
+  .share-block {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background-color: $blue;
     border-radius: 100%;
   }
 
-  .icon-faCopy {
+  .share-icon {
     position: absolute;
     transform: translate(-50%, -50%);
     left: 50%;
@@ -85,4 +107,4 @@
   .link {
     color: $dark;
   }
-  }
+}

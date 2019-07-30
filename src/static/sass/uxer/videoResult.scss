@@ -1,52 +1,12 @@
 @import '../variables';
 
 #video-result {
-  .video-block{
-    width: 1920pt;
-    height: 450px;
-    background: $black;
+  .no-margin {
+    margin: 0px !important;
   }
 
-  /* experimentprofile */
-  .experprofile{
-    align-items: center;
-    width: 992px;
-    height: 465px;
-    background: $white;
-    position: sticky
-  }
-
-  .play-video{
-    width: 100%;
-    height: 300px;
-    display: flex
-  }
-
-  /* ปุ่ม usability testnote */
-  .bt-testnote{  
-    background-color: $white;
-    padding: 200px;
-    margin-block-end: 500px;
-  }
-
-  .bg-experprofile{
-    background-color: $white;
-    width: 992px;
-    height: 465px;
-    padding-top: 27px;
-    padding-left: 54px;
-    margin-top: 100px;
-    border-radius: 20px; 
-  }
-
-  .bg-questionnaire{
-    background-color: $white;
-    width: 992px;
-    height: 465px;
-    padding-top: 27px;
-    padding-left: 54px;
-    margin-top: 50px;
-    border-radius: 20px; 
+  .space-block {
+    margin: 50px auto;
   }
 
   .card-video{
@@ -54,16 +14,100 @@
     padding: 10px;
     margin-top: 0px;
   }
-}
 
-.user{
-  padding-top: 15px;
-}
+  .play-video{
+    width: 100%;
+    height: 200px;
+  }
 
-.btn-usability-test {
-  background-color: $blue !important;
-  border: 2px solid $blue !important;
-  color: $light !important;
-  width: 100%;
-  border-radius: 10px !important;
+  .space-bottom-video {
+    margin-top: 50px;
+  }
+
+  .profile-block {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 100%;
+  }
+
+  .profile-img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .exper-name {
+    font-size: 25px;
+    font-weight: 600;
+  }
+
+  .space-btn-mobile {
+    margin-top: 5px;
+  }
+
+  .btn-usability-test {
+    width: auto;
+    color: $light;
+    background-color: $blue;
+    border: 2px solid $blue;
+    border-radius: 10px;
+
+    &:hover {
+      background-color: $blue-hover;
+      border-color: $blue-hover;
+    }
+  }
+
+  .bg-experprofile{
+    width: 100%;
+    height: auto;
+    padding: 30px;
+    background-color: $white;
+    border-radius: 20px; 
+  }
+
+  .topic-text {
+    font-weight: 700;
+  }
+
+  .input-field {
+    background-color: $white;
+    border-radius: 10px;
+    font-size: 18px;
+    color: $dark;
+  }
+
+  .bg-questionnaire{
+    width: 100%;
+    height: auto;
+    padding: 30px;
+    background-color: $white;
+    border-radius: 20px;
+  }
+
+  .question-text {
+    font-weight: 700;
+  }
+
+  @media (min-width: 768px) {
+    .play-video{
+      height: 300px;
+    }
+
+    .exper-name {
+      font-size: 30px;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .play-video{
+      height: 400px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .play-video{
+      height: 500px;
+    }
+  }
 }

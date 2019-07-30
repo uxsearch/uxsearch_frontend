@@ -45,7 +45,7 @@ class MyProject extends React.Component {
                     <Row className='all justify-content-center align-items-center' >
                         <Col md={1}>
                             <div >
-                                <FontAwesomeIcon icon={faSearch} size="x" color='#303030' />
+                                <FontAwesomeIcon icon={faSearch} size="1x" color='#303030' />
                             </div>
                         </Col>
                         <Col md={8} className='justify-content-center align-items-center' >
