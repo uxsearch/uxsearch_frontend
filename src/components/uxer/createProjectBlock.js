@@ -1,66 +1,45 @@
 import React from 'react'
-import { Container, Row, Col, Form, Modal, ModalHeader, ModalBody, Input, ModalFooter, Button } from 'reactstrap'
+import { Container, Row, Col, Form, Modal, ModalHeader, ModalBody, Input, ModalFooter, Button, button } from 'reactstrap'
+
 
 import '../../static/sass/uxer/myProject.scss'
 
 class CreateProjectBlock extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            modal: false,
-            unmountOnClose: true
-        };
-
-        this.toggle = this.toggle.bind(this);
-        this.changeUnmountOnClose = this.changeUnmountOnClose.bind(this);
-    }
-
-    toggle() {
-        this.setState(prevState => ({
-            modal: !prevState.modal
-        }));
-    }
-
-    changeUnmountOnClose(e) {
-        let value = e.target.value;
-        this.setState({ unmountOnClose: JSON.parse(value) });
-    }
 
 
 
     render() {
         return (
             <Container>
-                <div>
-                    <Row>
-                        <Col md={12} classNames='block'>
-                            <Form inline onSubmit={(e) => e.preventDefault()}> {' '}
-                            </Form>
-
-                            <Button color="danger" onClick={this.toggle}>{this.props.buttonLabel}</Button>
-                            <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} unmountOnClose={this.state.unmountOnClose}>
-                                <img
-                                    src={require('../../static/img/1.jpg')}
-                                    width='100%'
-                                    height='200px'
-                                    className="img d-inline-block align-top"
-                                    alt="Profile"
-                                />
-
-                                <ModalBody>
-                                    <Input type="projectName" placeholder="Project Name" rows={5} /><br />
-                                    <Input type="Link Path" placeholder="Link Path" rows={5} />
-                                </ModalBody>
-
-                                <ModalFooter>
-                                    <Button color="primary" onClick={this.toggle}>Create Project</Button>{' '}
-                                </ModalFooter>
-                            </Modal>
-                        </Col>
-                    </Row>
-                </div>
+                <Modal>
+                    <Modal-hide >
+                        <Modal-header>
+                            <Button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</Button>
+                            <h3>Modal header</h3>
+                        </Modal-header>
+                        <Modal-body>
+                            <p>One fine body…</p>
+                        </Modal-body>
+                        <Modal-footer>
+                            <a href="#" class="btn">Close</a>
+                            <a href="#" class="btn btn-primary">Save changes</a>
+                        </Modal-footer>
+                    </Modal-hide>
+                </Modal>
             </Container>
+            <div>
+                <Button color="danger" onClick={this.toggle}>{this.props.buttonLabel}</Button>
+                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                    <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+                    <ModalBody>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+               </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
+                        <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                    </ModalFooter>
+                </Modal>
+            </div>
         )
     }
 }

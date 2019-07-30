@@ -76,8 +76,8 @@ class MyProject extends React.Component {
 
                     <Row className='all justify-content-center align-items-center'>
                         <div className='text'>
-                            <span>You don't have any project. You can </span>
-                            <span ><a className='createProject' href='/uxer/project/experiment/modal' color="link" >create a project.</a></span>
+                            <p>You don't have any project. You can 
+                            <a className='createProject' href='/uxer/project/experiment/modal' color="link" >create a project.</a></p>
                         </div>
                     </Row>
                 </Container>
