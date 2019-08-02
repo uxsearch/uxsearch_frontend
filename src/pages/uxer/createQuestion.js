@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Row, Col, Button, Form, FormGroup, Label, Input } from 'reactstrap'
+import { Container, Row, Col, Button, Form, FormGroup, Label, Input,DropdownItem } from 'reactstrap'
 import { Checkbox, Radio, RadioGroup, FormControlLabel, withStyles } from '@material-ui/core'
 
 import NavbarUXer from '../../components/utils/navbarUXer'
@@ -41,25 +41,27 @@ class CreateQuestion extends React.Component {
     this.state = {
       object: [
         { type: 'textbox', question: '1. What you expect in this program?' },
-        {
-          type: 'multiple',
-          question: '2. What is the overall feeling of this application?',
-          option: [
-            { text: 'Happy' },
-            { text: 'Unconcern' },
-            { text: 'Unhappy' }
-          ]
-        },
-        {
-          type: 'checkbox',
-          question: '3. Something Questionnaire?',
-          option: [
-            { text: 'Choice 1' },
-            { text: 'Choice 2' },
-            { text: 'Choice 3' }
-          ]
-        },
-        { type: 'textbox', question: '4. Something Questionnaire?' },
+        // {
+        //   type: 'multiple',
+        //   question: '2. What is the overall feeling of this application?',
+        //   option: [
+        //     { text: 'Wonderful' },
+        //     { text: 'Happy' },
+        //     { text: 'Unconcern' },
+        //     { text: 'UnHappy' },
+        //     { text: 'Terrible' }
+        //   ]
+        // },
+        // {
+        //   type: 'checkbox',
+        //   question: '3. Something Questionnaire?',
+        //   option: [
+        //     { text: 'Choice 1' },
+        //     { text: 'Choice 2' },
+        //     { text: 'Choice 3' }
+        //   ]
+        // },
+        // { type: 'textbox', question: '4. Something Questionnaire?' },
       ]
     }
   }
@@ -70,22 +72,25 @@ class CreateQuestion extends React.Component {
         <SubNavbar />
         <div>
           <NotSupport className='d-md-none' />
-          <section id='answer' className='d-none d-md-block'>
+          <section id='questionnaire' className='d-none d-md-block'>
             <Container>
-              <Row>
+              <Row className='questionnaire-block'>
                 <Col xs={12}>
-                  <Row className='space-head-block'>
+                  
+                  <Row>
                     <Col xs={12}>
                       <p className='title'>Web Development Questionnaire </p>
                     </Col>
                   </Row>
                   <Row>
+                    <Col xs={10}>
+                      <p className='title-2'>Your feedback is important for us. thank you very much. from “UX Search” (Description on questionnaire)</p> 
+                    </Col>
                     <Col xs={12}>
-                      <p>Your feedback is important for us. thank you very much. from “UX Search” (Description on questionnaire)</p>
+                      <hr className='black-line'  />
                     </Col>
                   </Row>
                   <br />
-                  <Row>
                     <Col xs={12} className='answer-block'>
                       <Form>
                         {this.state.object.map(data => (
@@ -102,7 +107,7 @@ class CreateQuestion extends React.Component {
                                     <Row>
                                       <Col xs={12}>
                                         {data.type === 'textbox' &&
-                                          <Input type='textarea' name='answer1' rows="4" className='text-style' />
+                                          <Input type='textbox' name='answer1' rows="4" className='text-style ' />
                                         }
                                         {data.type === 'multiple' &&
                                           <>
@@ -143,14 +148,14 @@ class CreateQuestion extends React.Component {
                         ))}
                       </Form>
                     </Col>
-                  </Row>
-                  <Row className='justify-content-center space-btn'>
-                    <Col xs={12} md={4} className='text-center'>
-                      <Button className='btn-submit-test'>Submit</Button>
-                    </Col>
-                  </Row>
+                  
                 </Col>
               </Row>
+                  <Row className='justify-content-center space-btn'>
+                    <Col xs={12} md={4} className='text-center'>
+                      <Button className='btn-save-questionnaire' size='lg'>Save Questionnaire</Button>
+                    </Col>
+                  </Row>
             </Container>
           </section>
         </div>
