@@ -105,8 +105,8 @@ class MyProject extends React.Component {
 				</section>
 				<section id='create-modal'>
 					<Modal isOpen={this.state.modal} toggle={this.toggle} className='modal-dialog-centered'>
-						<ModalBody className='eiei'>
-							<Row className='eiei justify-content-center '>
+						<ModalBody className='body'>
+							<Row className='justify-content-center '>
 								<Col xs={12} className='text-center no-margin'>
 									<img
 										src={require('../../static/img/1.jpg')}
@@ -156,7 +156,7 @@ class MyProject extends React.Component {
 										</Col>
 									</Row>
 									<br />
-									<Row className='justify-content-center'>
+									<Row className='under-bt justify-content-center'>
 										<Col xs={10}>
 											<Button className='w-100 create-project' onClick={this.toggle} size="md">Create Project</Button>
 										</Col>

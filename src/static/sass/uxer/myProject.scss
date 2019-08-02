@@ -42,8 +42,6 @@
     background-color:$blue;
     
   }
-
-  
 }
 
 .create-project{ 
@@ -54,9 +52,11 @@
   border-radius: 10px !important;
 }
 
-.eiei{
-padding-top: 0px;
-padding-bottom: 50px;
+.body{
+padding: 0px;
 border-radius: 20px !important;
+}
 
+.under-bt{
+  padding-bottom: 30px;
 }
