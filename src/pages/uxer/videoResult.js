@@ -58,7 +58,7 @@ class VideoResult extends React.Component {
                 <Col xs={9} sm={8} xl={9}>
                   <Row>
                     <Col xs={12}>
-                      <p className='no-margin exper-name'>Leroy Romero</p>
+                      <p className='no-margin exper-name'>{experiment && `${experiment.firstname}` + ` ` + `${experiment.lastname}` }</p>
                     </Col>
                   </Row>
                   <Row className='d-sm-none space-btn-mobile'>
@@ -80,7 +80,7 @@ class VideoResult extends React.Component {
             <>
               {console.log(experiment)}
               <ExperProfile
-                name={`${experiment.firstname}` + ' ' + `${experiment.lastname}`} 
+                name={`${experiment.firstname}` + ` ` + `${experiment.lastname}`} 
                 age={`${experiment.age}`} 
                 gender={`${experiment.gender}`} 
                 tel={`${experiment.tel}`} 
