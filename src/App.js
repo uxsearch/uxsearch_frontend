@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
+import { Route, Link, BrowserRouter as Router, Switch, withRouter } from 'react-router-dom'
 import Test from './pages/experimenter/test'
 import IndexExperiment from './pages/experimenter/index'
 import Answer from './pages/experimenter/answer'
@@ -34,7 +34,7 @@ const UXer = ({ match }) => {
       <Switch>
         <Route exact path={`${match.path}/projects`} component={ProjectPage} />
         <Route exact path={`${match.path}/project/experiments`} component={ExperPage} />
-        <Route exact path={`${match.path}/project/experiment/result`} component={VideoResult} />
+        <Route exact path={`${match.path}/project/experiment/:experId/result`} component={(VideoResult)} />
         <Route exact path={`${match.path}/project/experiment/home`} component={MyProject} />
         <Route exact path={`${match.path}/project/experiment/question`} component={CreateQuestion} />
         <Route component={NotFound} />

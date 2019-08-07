@@ -2,7 +2,11 @@ import React from 'react'
 import { Row, Col, Label, Input } from 'reactstrap'
 
 class ExperProfile extends React.Component {
-	render() {
+	constructor(props) {
+		super(props);
+	}
+
+	render(props) {
 		return (
 			<Row>
 				<Col xs={12} className='bg-experprofile'>
@@ -20,9 +24,9 @@ class ExperProfile extends React.Component {
 								</Col>
 								<Col xs={12} md={9} lg={8}>
 									<Label className='w-100 d-md-none'>
-										<Input type='text' value='Leroy Romero' className='input-field' disabled />
+										<Input type='text' value={this.props.name || 'none'} className='input-field' disabled />
 									</Label>
-									<p className='d-none d-md-block'>Leroy Romero</p>
+									<p className='d-none d-md-block'>{this.props.name || 'none'}</p>
 								</Col>
 							</Row>
 							<Row>
@@ -31,9 +35,9 @@ class ExperProfile extends React.Component {
 								</Col>
 								<Col xs={12} md={9} lg={8}>
 									<Label className='w-100 d-md-none'>
-										<Input type='text' value='23' className='input-field' disabled />
+										<Input type='text' value={this.props.age || 'none'} className='input-field' disabled />
 									</Label>
-									<p className='d-none d-md-block'>23</p>
+									<p className='d-none d-md-block'>{this.props.age || 'none'}</p>
 								</Col>
 							</Row>
 							<Row>
@@ -42,9 +46,9 @@ class ExperProfile extends React.Component {
 								</Col>
 								<Col xs={12} md={9} lg={8}>
 									<Label className='w-100 d-md-none'>
-										<Input type='text' value='Male' className='input-field' disabled />
+										<Input type='text' value={this.props.gender || 'none'} className='input-field' disabled />
 									</Label>
-									<p className='d-none d-md-block'>Male</p>
+									<p className='d-none d-md-block'>{this.props.gender || 'none'}</p>
 								</Col>
 							</Row>
 							<Row>
@@ -53,9 +57,9 @@ class ExperProfile extends React.Component {
 								</Col>
 								<Col xs={12} md={9} lg={8}>
 									<Label className='w-100 d-md-none'>
-										<Input type='text' value='0813499490' className='input-field' disabled />
+										<Input type='text' value={this.props.tel || 'none'} className='input-field' disabled />
 									</Label>
-									<p className='d-none d-md-block'>816-349-9490</p>
+									<p className='d-none d-md-block'>{this.props.tel || 'none'}</p>
 								</Col>
 							</Row>
 							<Row>
@@ -64,9 +68,9 @@ class ExperProfile extends React.Component {
 								</Col>
 								<Col xs={12} md={9} lg={8}>
 									<Label className='w-100 d-md-none'>
-										<Input type='email' value='example@gmail.com' className='input-field' disabled />
+										<Input type='email' value={this.props.email || 'none'} className='input-field' disabled />
 									</Label>
-									<p className='d-none d-md-block'>example@gmail.com</p>
+									<p className='d-none d-md-block'>{this.props.email || 'none'}</p>
 								</Col>
 							</Row>
 							<Row>
@@ -75,9 +79,9 @@ class ExperProfile extends React.Component {
 								</Col>
 								<Col xs={12} md={9} lg={8}>
 									<Label className='w-100 d-md-none'>
-										<Input type='text' value='Kansas City' className='input-field' disabled />
+										<Input type='text' value={this.props.city || 'none'} className='input-field' disabled />
 									</Label>
-									<p className='d-none d-md-block'>Kansas City</p>
+									<p className='d-none d-md-block'>{this.props.city || 'none'}</p>
 								</Col>
 							</Row>
 							<Row>
@@ -86,9 +90,9 @@ class ExperProfile extends React.Component {
 								</Col>
 								<Col xs={12} md={9} lg={8}>
 									<Label className='w-100 d-md-none'>
-										<Input type='text' value='United States' className='input-field' disabled />
+										<Input type='text' value={this.props.country || 'none'} className='input-field' disabled />
 									</Label>
-									<p className='d-none d-md-block'>United States</p>
+									<p className='d-none d-md-block'>{this.props.country || 'none'}</p>
 								</Col>
 							</Row>
 						</Col>
@@ -99,9 +103,9 @@ class ExperProfile extends React.Component {
 								</Col>
 								<Col xs={12} md={9} lg={8}>
 									<Label className='w-100 d-md-none'>
-										<Input type='text' value='National Taiwan University' className='input-field' disabled />
+										<Input type='text' value={this.props.educate || 'none'} className='input-field' disabled />
 									</Label>
-									<p className='d-none d-md-block'>National Taiwan University</p>
+									<p className='d-none d-md-block'>{this.props.educate || 'none'}</p>
 								</Col>
 							</Row>
 							<Row>
@@ -110,9 +114,9 @@ class ExperProfile extends React.Component {
 								</Col>
 								<Col xs={12} md={9} lg={8}>
 									<Label className='w-100 d-md-none'>
-										<Input type='text' value='Freelance' className='input-field' disabled />
+										<Input type='text' value={this.props.job || 'none'} className='input-field' disabled />
 									</Label>
-									<p className='d-none d-md-block'>Freelance</p>
+									<p className='d-none d-md-block'>{this.props.job || 'none'}</p>
 								</Col>
 							</Row>
 							<Row>
@@ -121,9 +125,9 @@ class ExperProfile extends React.Component {
 								</Col>
 								<Col xs={12} md={9} lg={8}>
 									<Label className='w-100 d-md-none'>
-										<Input type='textarea' value='Shopping, See movies, Photoshoot, Travel, Sport' className='input-field' disabled />
+										<Input type='textarea' value={this.props.lifestyle || 'none'} className='input-field' disabled />
 									</Label>
-									<p className='d-none d-md-block'>Shopping, See movies, Photoshoot, Travel, Sport</p>
+									<p className='d-none d-md-block'>{this.props.lifestyle || 'none'}</p>
 								</Col>
 							</Row>
 						</Col>
