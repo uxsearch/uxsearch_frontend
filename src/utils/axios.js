@@ -2,7 +2,7 @@ import axios from 'axios'
 
 function createApiInstance(headers) {
   return axios.create({
-    baseURL: 'http://localhost:3001/api/',
+    baseURL: 'http://localhost:3000/api/',
     headers
   })
 }
@@ -33,13 +33,13 @@ function catchError(error) {
 }
 
 export default {
-  get: (path, headers = {}) => {
+  get: (path, headers = {}) => (
     createApiInstance(headers)
       .get(path)
       .then(handleResponse)
       .catch(catchError)
-  },
-  post: (path, body = {}, headers = {}) => {
+  ),
+  post: (path, body = {}, headers = {}) => (
     createApiInstance(headers)
       .request({
         url: path,
@@ -49,25 +49,25 @@ export default {
       })
       .then(handleResponse)
       .catch(catchError)
-  },
-  put: (path, body = {}) => {
+  ),
+  put: (path, body = {}) => (
     createApiInstance()
       .request({
         url: path,
         method: 'PUT',
-        data: body
+        data: body,
       })
       .then(handleResponse)
       .catch(catchError)
-  },
-  delete: (path, body = {}) => {
+  ),
+  delete: (path, body = {}) => (
     createApiInstance()
       .request({
         url: path,
         method: 'DELETE',
-        data: body
+        data: body,
       })
       .then(handleResponse)
       .catch(catchError)
-  }
+  )
 }

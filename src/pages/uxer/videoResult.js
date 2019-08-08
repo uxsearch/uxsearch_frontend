@@ -1,6 +1,9 @@
 import React from 'react'
 import { Container, Row, Col, Button } from 'reactstrap'
 
+import axios from '../../utils/axios'
+import APIURI from '../../utils/apiuri'
+
 import NavbarUXer from '../../components/utils/navbarUXer'
 import PlayVideo from '../../components/uxer/videoresult/video'
 import ExperProfile from '../../components/uxer/videoresult/profileBlock'
@@ -9,7 +12,30 @@ import ResultQuestion from '../../components/uxer/videoresult/resultBlock'
 import '../../static/sass/uxer/videoResult.scss'
 
 class VideoResult extends React.Component {
+  constructor(props) {
+    super(props);
+    const { match } = props
+    this.state = {
+      experId: match.params.experId,
+      experiment: undefined
+    }
+  }
+
+  async componentDidMount() {
+    try {
+      const response = await axios.get(`${APIURI.EXPERIMENTER}${this.state.experId}/`)
+      if (response.status !== 200) {
+        throw new Error('CANNOT GET EXPERIMENT PROFILE')
+      }
+      this.setState({ experiment: response.data.data })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   render() {
+    const experiment = this.state.experiment
+
     return (
       <section id='video-result'>
         <NavbarUXer />
@@ -32,7 +58,7 @@ class VideoResult extends React.Component {
                 <Col xs={9} sm={8} xl={9}>
                   <Row>
                     <Col xs={12}>
-                      <p className='no-margin exper-name'>Leroy Romero</p>
+                      <p className='no-margin exper-name'>{experiment && `${experiment.firstname}` + ` ` + `${experiment.lastname}` }</p>
                     </Col>
                   </Row>
                   <Row className='d-sm-none space-btn-mobile'>
@@ -50,7 +76,23 @@ class VideoResult extends React.Component {
           </Row>
         </Container>
         <Container className='space-block'>
-          <ExperProfile />
+          {experiment &&
+            <>
+              {console.log(experiment)}
+              <ExperProfile
+                name={`${experiment.firstname}` + ` ` + `${experiment.lastname}`} 
+                age={`${experiment.age}`} 
+                gender={`${experiment.gender}`} 
+                tel={`${experiment.tel}`} 
+                email={`${experiment.email}`} 
+                city={`${experiment.province}`} 
+                country={`${experiment.country}`} 
+                educate={`${experiment.educate}`} 
+                job={`${experiment.job}`} 
+                lifestyle={`${experiment.lifestyle}`} 
+              />
+            </>
+          }
           <br />
           <ResultQuestion />
         </Container>
