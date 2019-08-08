@@ -1,36 +1,62 @@
 @import "../variables";
 
 #myproject-page {
-.all{
+  .all {
     padding: 10px;
     background-color: $light;
     font-family: Muli;
     font-size: 20px;
     margin-top: 50px;
-}
+  }
 
-.createProject{
+  .createProject {
     font-family: Muli;
     font-size: 32px;
     text-decoration-line: underline;
     color: $blue;
-}
+  }
 
-.text{
+  .text {
     font-family: Muli;
     font-size: 32px;
     margin-top: 100pt;
     color: #858585;
-    font-weight:normal ;
-}
+    font-weight: normal;
+  }
 
-.block{
+  .block {
     width: 100%;
     height: 1000px;
+  }
+
 }
 
-.img{
-    background-color: aqua;
+#create-modal {
+  .space-bottom {
+    margin-bottom: 0px !important;
+  }
+  .create-form {
+    color: $dark;
+  }
+  .head{
+    background-color:$blue;
+    
+  }
 }
 
+.create-project{ 
+  background-color: $blue !important;
+  border: 2px solid $blue !important;
+  color: $light !important;
+  width: 100%;
+  border-radius: 10px !important;
+}
+
+.body{
+padding: 0px;
+border-radius: 20px !important;
+}
+
+.under-bt{
+  padding-bottom: 30px;
 }

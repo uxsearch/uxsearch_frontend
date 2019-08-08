@@ -35,10 +35,10 @@ class Test extends React.Component {
           </Button>
         </a>
 
-        <h1>modals</h1>
-        <a href='/uxer/project/experiment/modal'>
+        <h1>Create Questionnaire</h1>
+        <a href='/uxer/project/experiment/question'>
           <Button className='btn btn-success'>
-          modals
+            Create Questionnaire
           </Button>
         </a>
 
