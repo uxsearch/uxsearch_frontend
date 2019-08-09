@@ -1,8 +1,10 @@
 import React from 'react'
-import { Container, Row, Col, Button } from 'reactstrap';
+import { Container, Row, Col, Button } from 'reactstrap'
 import { Form, Field } from 'react-final-form'
 import swal from 'sweetalert'
 
+import axios from '../../utils/axios'
+import APIURI from '../../utils/apiuri'
 import NavbarExp from '../../components/utils/navbarExperimenter'
 import ProfileBlock from '../../components/experiment/profileBlock'
 import NotSupport from '../../components/utils/notSupport'
@@ -11,16 +13,16 @@ import '../../static/sass/experimenter/index.scss'
 
 const modalSubmit = () => {
   swal({
-    title: "Are you sure?",
-    icon: "warning",
+    title: 'Are you sure?',
+    icon: 'warning',
     buttons: {
       cancel: {
-        text: "Cancel",
+        text: 'Cancel',
         value: null,
         visible: true,
       },
       confirm: {
-        text: "Confirm",
+        text: 'Confirm',
         value: true,
         visible: true,
       }
@@ -29,9 +31,9 @@ const modalSubmit = () => {
   }).then((willSubmit) => {
     if (willSubmit) {
       swal({
-        title: "Thank you very much",
-        text: "If you complete test, press button to complete, please.",
-        icon: "success",
+        title: 'Thank you very much',
+        text: 'If you complete test, press button to complete, please.',
+        icon: 'success',
         timer: 2500,
         buttons: false
       });
@@ -43,13 +45,26 @@ class IndexExperiment extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      
+
     }
   }
 
   async submitProfile(values) {
     try {
-      console.log(values)
+      const newValue = {...values}
+      const prepareEducate = newValue.educate ? newValue.educate : ''
+      const prepareJob = newValue.job ? newValue.job : ''
+      const prepareLifestyle = newValue.lifestyle ? newValue.lifestyle : ''
+      newValue.educate = prepareEducate
+      newValue.job = prepareJob
+      newValue.lifestyle = prepareLifestyle
+
+      console.log(newValue)
+      const response = await axios.post(`${APIURI.EXPERIMENTER}add/`, newValue)
+      console.log(response)
+      if(response.status !== 201) {
+        throw new Error('CANNOT CREATE EXPERIMENTER')
+      }
     } catch (e) {
       console.error(e)
     }
@@ -66,7 +81,7 @@ class IndexExperiment extends React.Component {
               <Col xs={12}>
                 <Row className='space-head-block'>
                   <Col xs={12}>
-                    <p className='title'>Welcome to <span className='bold-text'>"UX Search Prototype"</span></p>
+                    <p className='title'>Welcome to <span className='bold-text'>'UX Search Prototype'</span></p>
                   </Col>
                 </Row>
                 <Row>
@@ -80,27 +95,27 @@ class IndexExperiment extends React.Component {
                   render={({
                     handleSubmit, form, submitting, pristine
                   }) => (
-                    <form onSubmit={handleSubmit}>
-                      <Row>
-                        <Col xs={12}>
-                          <ProfileBlock />
-                        </Col>
-                      </Row>
-                      <Row className='justify-content-center space-btn'>
-                        <Col xs={12} md={4} className='text-center'>
-                          <Button className='btn-start-test' type='submit'>Start Usability Testing</Button>
-                        </Col>
-                      </Row>
-                    </form>
-                  )}
+                      <form onSubmit={handleSubmit}>
+                        <Row>
+                          <Col xs={12}>
+                            <ProfileBlock />
+                          </Col>
+                        </Row>
+                        <Row className='justify-content-center space-btn'>
+                          <Col xs={12} md={4} className='text-center'>
+                            <Button className='btn-start-test' type='submit'>Start Usability Testing</Button>
+                          </Col>
+                        </Row>
+                      </form>
+                    )}
                 />
               </Col>
             </Row>
           </Container>
         </section>
       </div>
-        )
-      }
-    }
-    
+    )
+  }
+}
+
 export default IndexExperiment

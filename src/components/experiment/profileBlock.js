@@ -39,15 +39,15 @@ class ProfileBlock extends React.Component {
               <Col xs={12}>
                 <FormGroup>
                   <Row>
-                    <Col xs={6}>
+                    <Col xs={12} lg={6}>
                       <Field name='firstname' type='text'>
                         {({ input, meta }) => (
                           <>
                             <Row className='align-items-center'>
-                              <Col xs={6} lg={4}>
+                              <Col xs={12} lg={4}>
                                 <span>Firstname : </span>
                               </Col>
-                              <Col xs={6} lg={8}>
+                              <Col xs={12} lg={8}>
                                 <Label className='w-100'>
                                   <Input {...input} required />
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
@@ -58,15 +58,15 @@ class ProfileBlock extends React.Component {
                         )}
                       </Field>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12} lg={6}>
                       <Field name='lastname' type='text'>
                         {({ input, meta }) => (
                           <>
                             <Row className='align-items-center'>
-                              <Col xs={6} lg={4}>
+                              <Col xs={12} lg={4}>
                                 <span>Lastname : </span>
                               </Col>
-                              <Col xs={6} lg={8}>
+                              <Col xs={12} lg={8}>
                                 <Label className='w-100'>
                                   <Input {...input} required />
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
@@ -85,15 +85,15 @@ class ProfileBlock extends React.Component {
               <Col xs={12}>
                 <FormGroup>
                   <Row>
-                    <Col xs={6}>
+                    <Col xs={12} lg={6}>
                       <Field name='age' type='number'>
                         {({ input, meta }) => (
                           <>
                             <Row className='align-items-center'>
-                              <Col xs={6} lg={4}>
+                              <Col xs={12} lg={4}>
                                 <span>Age : </span>
                               </Col>
-                              <Col xs={6} lg={8}>
+                              <Col xs={12} lg={8}>
                                 <Label className='w-100'>
                                   <Input {...input} name='age' min='0' max='150' placeholder='0' required />
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
@@ -104,15 +104,15 @@ class ProfileBlock extends React.Component {
                         )}
                       </Field>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12} lg={6}>
                       <Field name='gender' type='text'>
                         {({ input, meta }) => (
                           <>
                             <Row className='align-items-center'>
-                              <Col xs={6} lg={4}>
+                              <Col xs={12} lg={4}>
                                 <span>Gender : </span>
                               </Col>
-                              <Col xs={6} lg={8}>
+                              <Col xs={12} lg={8}>
                                 <Label className='w-100'>
                                   <Label className='w-100'>
                                     <select {...input} id='gender' name='gender' placeholder='Choose Your Gender' className='form-control' required>
@@ -138,15 +138,15 @@ class ProfileBlock extends React.Component {
               <Col xs={12}>
                 <FormGroup>
                   <Row>
-                    <Col xs={6}>
+                    <Col xs={12} lg={6}>
                       <Field name='tel' type='tel' parse={normalizePhone}>
                         {({ input, meta }) => (
                           <>
                             <Row className='align-items-center'>
-                              <Col xs={6} lg={4}>
+                              <Col xs={12} lg={4}>
                                 <span>Tel : </span>
                               </Col>
-                              <Col xs={6} lg={8}>
+                              <Col xs={12} lg={8}>
                                 <Label className='w-100'>
                                   <Input {...input} placeholder='[Example] 999-999-9999' required />
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
@@ -157,15 +157,15 @@ class ProfileBlock extends React.Component {
                         )}
                       </Field>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12} lg={6}>
                       <Field name='email' type='email'>
                         {({ input, meta }) => (
                           <>
                             <Row className='align-items-center'>
-                              <Col xs={6} lg={4}>
+                              <Col xs={12} lg={4}>
                                 <span>Email : </span>
                               </Col>
-                              <Col xs={6} lg={8}>
+                              <Col xs={12} lg={8}>
                                 <Label className='w-100'>
                                   <Input {...input} placeholder='[Example] example@uxsearch.com' required />
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
@@ -184,15 +184,15 @@ class ProfileBlock extends React.Component {
               <Col xs={12}>
                 <FormGroup>
                   <Row>
-                    <Col xs={6}>
-                      <Field name='city' type='text'>
+                    <Col xs={12} lg={6}>
+                      <Field name='province' type='text'>
                         {({ input, meta }) => (
                           <>
                             <Row className='align-items-center'>
-                              <Col xs={6} lg={4}>
+                              <Col xs={12} lg={4}>
                                 <span>Province/City : </span>
                               </Col>
-                              <Col xs={6} lg={8}>
+                              <Col xs={12} lg={8}>
                                 <Label className='w-100'>
                                   <Input {...input} required />
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
@@ -203,15 +203,15 @@ class ProfileBlock extends React.Component {
                         )}
                       </Field>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12} lg={6}>
                       <Field name='country' type='text'>
                         {({ input, meta }) => (
                           <>
                             <Row className='align-items-center'>
-                              <Col xs={6} lg={4}>
+                              <Col xs={12} lg={4}>
                                 <span>Country : </span>
                               </Col>
-                              <Col xs={6} lg={8}>
+                              <Col xs={12} lg={8}>
                                 <Label className='w-100'>
                                   <Input {...input} required />
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
@@ -232,17 +232,17 @@ class ProfileBlock extends React.Component {
               <Col xs={12}>
                 <FormGroup>
                   <Row>
-                    <Col xs={6}>
-                      <Field name='educate'>
+                    <Col xs={12} lg={6}>
+                      <Field name='educate' type='text'>
                         {({ input, meta }) => (
                           <>
                             <Row className='align-items-center'>
-                              <Col xs={6} lg={4}>
+                              <Col xs={12} lg={4}>
                                 <span>Education : </span>
                               </Col>
-                              <Col xs={6} lg={8}>
+                              <Col xs={12} lg={8}>
                                 <Label className='w-100'>
-                                  <input type='text' {...input} className='form-control' required />
+                                  <Input {...input} />
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
                                 </Label>
                               </Col>
@@ -251,17 +251,17 @@ class ProfileBlock extends React.Component {
                         )}
                       </Field>
                     </Col>
-                    <Col xs={6}>
+                    <Col xs={12} lg={6}>
                       <Field name='job' type='text'>
                         {({ input, meta }) => (
                           <>
                             <Row className='align-items-center'>
-                              <Col xs={6} lg={4}>
+                              <Col xs={12} lg={4}>
                                 <span>Job : </span>
                               </Col>
-                              <Col xs={6} lg={8}>
+                              <Col xs={12} lg={8}>
                                 <Label className='w-100'>
-                                  <Input {...input} required />
+                                  <Input {...input} />
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
                                 </Label>
                               </Col>
@@ -288,7 +288,7 @@ class ProfileBlock extends React.Component {
                               </Col>
                               <Col xs={12} lg={10}>
                                 <Label className='w-100'>
-                                  <Input {...input} placeholder='[Example] Jazz Music, Creative' className='form-control' required />
+                                  <Input {...input} placeholder='[Example] Jazz Music, Creative' />
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
                                 </Label>
                               </Col>
