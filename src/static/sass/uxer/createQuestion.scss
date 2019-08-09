@@ -15,12 +15,16 @@
   .questionnaire-block {
     background-color: $white;
     border-radius: 20px;
-    
-    padding: 30px;
-    padding-bottom: 70px;
-    margin: 100px;
+    padding: 30px 0px;
     margin-top: 50px;
-    margin-bottom: 50px;
+  }
+
+  .space-side {
+    padding: 0px 60px;
+  }
+  
+  .space-side-2 {
+    padding: 0px 0px;
   }
 
   .title {
@@ -34,9 +38,8 @@
   }
 
   .black-line {
-    height: 10px;
-    border-right-width: 20px;
-
+    height: 0px;
+    border-right-width: 0px;
   }
 
   .question {
@@ -67,18 +70,26 @@
     font-weight: 600px;
   }
 
-  .btn-submit-test:hover {
-    background-color: $blue-hover !important;
-    border: 2px solid $blue-hover !important;
-  }
-
-  .btn-text {
+  .btn-secondary {
     background-color: $blue !important;
     border: 2px solid $blue !important;
     color: $light !important;
     width: 100%;
     border-radius: 10px !important;
     font-size: 20px;
+    padding: 10px;
+  }
+
+  .indropdown {
+    position: absolute;
+    transform: translate(-50%, -30%);
+    background-color: $light !important;
+    border: 2px solid $light !important;
+    color: $blue !important;
+    width: 100%;
+    border-radius: 10px !important;
+    font-size: 20px;
+    padding: 2px;
   }
 
   .question-block {
@@ -86,12 +97,8 @@
     height: auto;
     background-color: $white;
     border: 2px solid $white;
- 
-    margin:  0px;
-    padding: 10px;
-  padding-left: 42px;
-  padding-right: 42px;
-    padding-bottom: 0px;
+    padding: 10px 0px;
+    margin: 0px;
     cursor: pointer;
 
     &:hover {
@@ -101,12 +108,13 @@
     }
   }
 
-  .btn-add-question{
+  .btn-add-question {
     background-color: $white !important;
     border: 2px solid $white !important;
     color: $dark !important;
     width: 100%;
     border-radius: 10px !important;
     font-size: 20px;
+    cursor: pointer;
   }
 }
