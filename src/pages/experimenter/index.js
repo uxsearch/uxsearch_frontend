@@ -1,5 +1,6 @@
 import React from 'react'
 import { Container, Row, Col, Button } from 'reactstrap';
+import { Form, Field } from 'react-final-form'
 import swal from 'sweetalert'
 
 import NavbarExp from '../../components/utils/navbarExperimenter'
@@ -39,6 +40,21 @@ const modalSubmit = () => {
 }
 
 class IndexExperiment extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      
+    }
+  }
+
+  async submitProfile(values) {
+    try {
+      console.log(values)
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   render() {
     return (
       <div>
@@ -59,23 +75,32 @@ class IndexExperiment extends React.Component {
                   </Col>
                 </Row>
                 <hr className='black-line' />
-                <Row>
-                  <Col xs={12}>
-                    <ProfileBlock />
-                  </Col>
-                </Row>
-                <Row className='justify-content-center space-btn'>
-                  <Col xs={12} md={4} className='text-center'>
-                    <Button className='btn-start-test' onClick={modalSubmit}>Start Usability Testing</Button>
-                  </Col>
-                </Row>
+                <Form
+                  onSubmit={this.submitProfile}
+                  render={({
+                    handleSubmit, form, submitting, pristine
+                  }) => (
+                    <form onSubmit={handleSubmit}>
+                      <Row>
+                        <Col xs={12}>
+                          <ProfileBlock />
+                        </Col>
+                      </Row>
+                      <Row className='justify-content-center space-btn'>
+                        <Col xs={12} md={4} className='text-center'>
+                          <Button className='btn-start-test' type='submit'>Start Usability Testing</Button>
+                        </Col>
+                      </Row>
+                    </form>
+                  )}
+                />
               </Col>
             </Row>
           </Container>
         </section>
       </div>
-    )
-  }
-}
-
+        )
+      }
+    }
+    
 export default IndexExperiment
