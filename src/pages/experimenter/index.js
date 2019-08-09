@@ -5,6 +5,7 @@ import swal from 'sweetalert'
 
 import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
+
 import NavbarExp from '../../components/utils/navbarExperimenter'
 import ProfileBlock from '../../components/experiment/profileBlock'
 import NotSupport from '../../components/utils/notSupport'
@@ -58,10 +59,7 @@ class IndexExperiment extends React.Component {
       newValue.educate = prepareEducate
       newValue.job = prepareJob
       newValue.lifestyle = prepareLifestyle
-
-      console.log(newValue)
       const response = await axios.post(`${APIURI.EXPERIMENTER}add/`, newValue)
-      console.log(response)
       if(response.status !== 201) {
         throw new Error('CANNOT CREATE EXPERIMENTER')
       }

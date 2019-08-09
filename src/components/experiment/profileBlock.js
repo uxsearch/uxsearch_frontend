@@ -95,7 +95,7 @@ class ProfileBlock extends React.Component {
                               </Col>
                               <Col xs={12} lg={8}>
                                 <Label className='w-100'>
-                                  <Input {...input} name='age' min='0' max='150' placeholder='0' required />
+                                  <Input {...input} min='0' max='150' placeholder='0' required />
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
                                 </Label>
                               </Col>
@@ -115,7 +115,7 @@ class ProfileBlock extends React.Component {
                               <Col xs={12} lg={8}>
                                 <Label className='w-100'>
                                   <Label className='w-100'>
-                                    <select {...input} id='gender' name='gender' placeholder='Choose Your Gender' className='form-control' required>
+                                    <select {...input} name='gender' placeholder='Choose Your Gender' className='form-control' required>
                                       <option value='' disabled>Choose Your Gender</option>
                                       <option value='Male'>Male</option>
                                       <option value='Female'>Female</option>

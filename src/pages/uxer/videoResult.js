@@ -78,7 +78,6 @@ class VideoResult extends React.Component {
         <Container className='space-block'>
           {experiment &&
             <>
-              {console.log(experiment)}
               <ExperProfile
                 name={`${experiment.firstname}` + ` ` + `${experiment.lastname}`} 
                 age={`${experiment.age}`} 

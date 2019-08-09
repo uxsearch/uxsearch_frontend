@@ -1,11 +1,11 @@
 import React from 'react'
-import '../../../../node_modules/video.js/dist/video-js.css'
 import videojs from 'video.js'
-import 'webrtc-adapter'
 import RecordRTC from 'recordrtc'
-// register videojs-record plugin with this import
-import '../../../../node_modules/videojs-record/dist/css/videojs.record.css'
 import Record from 'videojs-record/dist/videojs.record'
+
+import 'webrtc-adapter'
+import '../../../../node_modules/videojs-record/dist/css/videojs.record.css'
+import '../../../../node_modules/video.js/dist/video-js.css'
 
 const CameraOptions = {
   controls: {
