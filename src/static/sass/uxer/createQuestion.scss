@@ -1,15 +1,8 @@
 @import "../variables";
 
 #questionnaire {
-  .bg-create-question {
-    background-color: aqua;
-  }
   .no-margin {
     margin: 0px;
-  }
-
-  .space-head-block {
-    margin-top: 85px;
   }
 
   .questionnaire-block {
@@ -22,19 +15,10 @@
   .space-side {
     padding: 0px 60px;
   }
-  
-  .space-side-2 {
-    padding: 0px 0px;
-  }
 
   .title {
     font-size: 40px;
     font-weight: 700;
-  }
-
-  .title-2 {
-    font-size: 20px;
-    font-weight: 400;
   }
 
   .black-line {
@@ -42,32 +26,20 @@
     border-right-width: 0px;
   }
 
-  .question {
-    font-size: 28px;
-    font-weight: 600;
-  }
-
-  .text-style {
-    font-size: 18px !important;
-    background-color: $light;
-    height: 90px;
-    border-radius: 10px;
-    margin-top: 20px;
-  }
-
-  .space-btn {
-    margin-top: 50px;
-    margin-bottom: 50px;
-  }
-
-  .btn-save-questionnaire {
-    background-color: $blue !important;
-    border: 2px solid $blue !important;
-    color: $light !important;
+  .question-block {
     width: 100%;
-    border-radius: 10px !important;
-    font-size: 20px;
-    font-weight: 600px;
+    height: auto;
+    background-color: $white;
+    border: 2px solid $white;
+    padding: 10px 0px;
+    margin: 0px;
+    cursor: pointer;
+    
+    &:hover {
+      box-shadow: 1px 2px 10px $blue;
+      border: 2px solid $blue;
+      justify-self: center;
+    }
   }
 
   .btn-secondary {
@@ -80,11 +52,19 @@
     padding: 10px;
   }
 
+  .textHeight {
+    margin-right: 10px;
+  }
+
+  .sortdown {
+    margin: 0px 0px 3px 85px;
+  }
+
   .indropdown {
     position: absolute;
     transform: translate(-50%, -30%);
-    background-color: $light !important;
-    border: 2px solid $light !important;
+    background-color: $white !important;
+    border: 2px solid $white !important;
     color: $blue !important;
     width: 100%;
     border-radius: 10px !important;
@@ -92,20 +72,37 @@
     padding: 2px;
   }
 
-  .question-block {
-    width: 100%;
-    height: auto;
-    background-color: $white;
-    border: 2px solid $white;
-    padding: 10px 0px;
-    margin: 0px;
-    cursor: pointer;
+  .text-style {
+    font-size: 18px !important;
+    background-color: $light;
+    height: 90px;
+    border-radius: 10px;
+    margin-top: 20px;
+  }
 
-    &:hover {
-      box-shadow: 1px 2px 10px $blue;
-      border: 2px solid $blue;
-      justify-self: center;
-    }
+  .btn-multiple {
+    background-color: $blue !important;
+    border: 2px solid $blue !important;
+    color: $light !important;
+    width: 100%;
+    border-radius: 10px !important;
+    font-size: 20px;
+    padding: 6px 10px 11px 10px;
+  }
+
+  .sortdown-multiple {
+    margin: 5px 5px 3px 40px;
+    padding-top: 0px;
+  }
+
+  .space-side-2 {
+    padding: 0px 15px 0px 2px;
+  }
+
+  .choice{
+    background-color: $white;
+    padding: 0px;
+    border-radius: 10px;
   }
 
   .btn-add-question {
@@ -116,5 +113,36 @@
     border-radius: 10px !important;
     font-size: 20px;
     cursor: pointer;
+  }
+
+  .btn-save-questionnaire {
+    background-color: $blue !important;
+    border: 2px solid $blue !important;
+    color: $light !important;
+    width: 100%;
+    border-radius: 10px !important;
+    font-size: 20px;
+    font-weight: 600px;
+  }
+
+  .space-btn {
+    margin: 50px 0px 50px 0px;
+  }
+
+  .icon-multiple{
+    padding: 5px  0px;
+    margin: 17px;
+    position: absolute;
+    left: 17px;
+    bottom: 0px;
+  }
+
+  .icon-checkbox{
+    padding: 5px  0px;
+    margin: 17px;
+    position: absolute;
+    left: 20px;
+    right: 0%;
+    bottom: 0px;
   }
 }
