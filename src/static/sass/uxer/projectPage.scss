@@ -53,5 +53,53 @@
   .link {
     color: $dark;
   }
-  
+
+  // Not have any project
+  .text {
+    font-size: 30px;
+    margin-top: 100pt;
+    color: #858585;
+    font-weight: 300;
+    cursor: default;
+  }
+
+  .createProject {
+    color: $blue;
+    text-decoration: underline $blue;
+    cursor: pointer;
+  }
+}
+
+// Modal Create Project
+.cover-size {
+  width: 100% !important;
+  height: 150px !important;
+}
+
+.space-bottom {
+  margin-bottom: 0px !important;
+}
+
+.create-form {
+  color: $dark;
+}
+
+.create-project-btn {
+  background-color: $blue !important;
+  border: 2px solid $blue !important;
+  color: $light !important;
+  width: 100%;
+  border-radius: 10px !important;
+}
+
+@media (min-width: 768px) {
+  .cover-size {
+    height: 200px !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .cover-size {
+    height: 250px !important;
+  }
 }
