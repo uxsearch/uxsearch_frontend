@@ -9,10 +9,10 @@ import VideoResult from './pages/uxer/videoResult'
 import ExperPage from './pages/uxer/experimenterPage'
 import ProjectPage from './pages/uxer/projectPage'
 import NotFound from './pages/error/not_found.js'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import CreateQuestion from './pages/uxer/createQuestion'
+
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './static/sass/customAll.scss'
-import MyProject from './pages/uxer/myProject';
-import CreateQuestion from './pages/uxer/createQuestion';
 
 const Experimenter = ({ match }) => {
   return (
@@ -35,7 +35,6 @@ const UXer = ({ match }) => {
         <Route exact path={`${match.path}/projects`} component={ProjectPage} />
         <Route exact path={`${match.path}/project/experiments`} component={ExperPage} />
         <Route exact path={`${match.path}/project/experiment/:experId/result`} component={(VideoResult)} />
-        <Route exact path={`${match.path}/project/experiment/home`} component={MyProject} />
         <Route exact path={`${match.path}/project/experiment/question`} component={CreateQuestion} />
         <Route component={NotFound} />
       </Switch>
