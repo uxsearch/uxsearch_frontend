@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from "react-router"
 import { Container, Row, Col, Button } from 'reactstrap'
 import { Form, Field } from 'react-final-form'
 import swal from 'sweetalert'
@@ -43,14 +44,8 @@ const modalSubmit = () => {
 }
 
 class IndexExperiment extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
 
-    }
-  }
-
-  async submitProfile(values) {
+   submitProfile = async (values) => {
     try {
       const newValue = {...values}
       const prepareEducate = newValue.educate ? newValue.educate : ''
@@ -60,9 +55,12 @@ class IndexExperiment extends React.Component {
       newValue.job = prepareJob
       newValue.lifestyle = prepareLifestyle
       const response = await axios.post(`${APIURI.EXPERIMENTER}add/`, newValue)
+      console.log(response)
       if(response.status !== 201) {
         throw new Error('CANNOT CREATE EXPERIMENTER')
       }
+
+      this.props.history.push(`/experimenter/${response.data.experimenter.id}/record`)
     } catch (e) {
       console.error(e)
     }
@@ -116,4 +114,4 @@ class IndexExperiment extends React.Component {
   }
 }
 
-export default IndexExperiment
+export default withRouter(IndexExperiment)
