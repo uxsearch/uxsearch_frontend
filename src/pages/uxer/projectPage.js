@@ -53,18 +53,6 @@ class ProjectPage extends React.Component {
 		this.state = {
 			uxerId: match.params.id,
 			projectList: [],
-			object: [
-				{ title: 'Web Development', img_url: 'https://picsum.photos/200/300' },
-				{ title: 'test2', img_url: 'https://picsum.photos/200/300' },
-				{ title: 'test3', img_url: 'https://picsum.photos/200/300' },
-				{ title: 'test4', img_url: 'https://picsum.photos/200/300' },
-				{ title: 'test5', img_url: 'https://picsum.photos/200/300' },
-				{ title: 'test6', img_url: 'https://picsum.photos/200/300' },
-				{ title: 'test7', img_url: 'https://picsum.photos/200/300' },
-				{ title: 'test8', img_url: 'https://picsum.photos/200/300' },
-				{ title: 'test9', img_url: 'https://picsum.photos/200/300' },
-				{ title: 'test10', img_url: 'https://picsum.photos/200/300' }
-			],
 			sortDropdownOpen: false,
 			modal: false,
 		};
