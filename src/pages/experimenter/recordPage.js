@@ -3,6 +3,9 @@ import { withRouter } from 'react-router-dom'
 import { Container, Row, Col, Button } from 'reactstrap'
 import swal from 'sweetalert'
 
+import axios from '../../utils/axios'
+import APIURI from '../../utils/apiuri'
+
 import Camera from '../../components/experiment/record/camera'
 import Screen from '../../components/experiment/record/screen'
 import NavbarExp from '../../components/utils/navbarExperimenter'
@@ -40,7 +43,33 @@ const modalSubmit = () => {
 }
 
 class RecordPage extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      uxerId: '8t6UN47Z749qacrEvZ8O',
+      projectId: 'a89OdndRvNEoasnHXfhu',
+      project: undefined
+    }
+  }
+
+  async componentDidMount() {
+    this.getProject()
+  }
+
+  getProject = async (props) => {
+    try {
+      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}`)
+      if (response.status !== 200) {
+        throw new Error('CANNOT GET PROJECT')
+      }
+      this.setState({ project: response.data.data })
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   render() {
+    const project = this.state.project
     return (
       <div>
         <NotSupport className='d-md-none' />
@@ -51,7 +80,7 @@ class RecordPage extends React.Component {
               <Col xs={12}>
                 <Row className='space-head-block'>
                   <Col xs={12}>
-                    <p className='title'><span className='bold-text'>"UX Search Prototype"</span> Usability Test Record</p>
+                    <p className='title'><span className='bold-text'>'{project && `${project.name}`}'</span> Usability Test Record</p>
                   </Col>
                 </Row>
                 <Row>
