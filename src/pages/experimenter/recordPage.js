@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 import { Container, Row, Col, Button } from 'reactstrap'
 import swal from 'sweetalert'
 
@@ -80,4 +81,4 @@ class RecordPage extends React.Component {
   }
 }
 
-export default RecordPage
+export default withRouter(RecordPage)

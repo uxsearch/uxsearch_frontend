@@ -19,7 +19,7 @@ const Experimenter = ({ match }) => {
     <Router>
       <Switch>
         <Route exact path={`${match.path}`} component={IndexExperiment} />
-        <Route exact path={`${match.path}/record`} component={RecordPage} />
+        <Route exact path={`${match.path}/:experId/record`} component={RecordPage} />
         <Route exact path={`${match.path}/answer`} component={Answer} />
         <Route exact path={`${match.path}/thanks`} component={ThanksPage} />
         <Route component={NotFound} />
