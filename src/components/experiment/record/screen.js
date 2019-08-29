@@ -55,6 +55,7 @@ class Screen extends React.Component {
       // recordedData is a blob object containing the recorded data that
       // can be downloaded by the user, stored on server etc.
       console.log('finished recording: ', this.player.recordedData);
+      this.player.record().saveAs({'video': 'screen_video.webm'});
     });
     // error handling
     this.player.on('error', (element, error) => {

@@ -4,6 +4,9 @@ import { TextField, withStyles } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faCopy, faShare } from '@fortawesome/free-solid-svg-icons'
 
+import axios from '../../utils/axios'
+import APIUPI from '../../utils/apiuri'
+
 import NavbarUxer from '../../components/utils/navbarUXer'
 import SubNavbar from '../../components/utils/subNavbar';
 import ExperBlock from '../../components/uxer/experimentBlock'
@@ -27,25 +30,52 @@ const SearchField = withStyles({
 })(TextField);
 
 class ExperPage extends React.Component {
-  state = {
-    object: [
-      { firstname: 'test1', lastname: 'experiment1', img_url: 'https://picsum.photos/200/300' },
-      { firstname: 'test2', lastname: 'experiment2', img_url: 'https://picsum.photos/200/300' },
-      { firstname: 'test3', lastname: 'experiment3', img_url: 'https://picsum.photos/200/300' },
-      { firstname: 'test4', lastname: 'experiment4', img_url: 'https://picsum.photos/200/300' },
-      { firstname: 'test5', lastname: 'experiment5', img_url: 'https://picsum.photos/200/300' },
-      { firstname: 'test6', lastname: 'experiment6', img_url: 'https://picsum.photos/200/300' },
-      { firstname: 'test7', lastname: 'experiment7', img_url: 'https://picsum.photos/200/300' },
-      { firstname: 'test8', lastname: 'experiment8', img_url: 'https://picsum.photos/200/300' },
-      { firstname: 'test9', lastname: 'experiment9', img_url: 'https://picsum.photos/200/300' },
-      { firstname: 'test10', lastname: 'experiment10', img_url: 'https://picsum.photos/200/300' }
-    ]
-  };
+  constructor(props) {
+    super(props)
+    const { match } = props
+    this.state = {
+      uxerId: match.params.id,
+      projectId: match.params.projId,
+      project: undefined,
+      experList: [],
+    }
+  }
+
+  componentDidMount() {
+    this.getAllExperiment()
+    this.getProject()
+  }
+
+  getProject = async () => {
+    try {
+      const response = await axios.get(`${APIUPI.UXER}${this.state.uxerId}/${APIUPI.ONE_PROJECT}${this.state.projectId}`)
+      if (response.status !== 200) {
+        throw new Error('CANNOT GET PROJECT')
+      }
+      this.setState({ project: response.data.data })
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  getAllExperiment = async () => {
+    try {
+      const response = await axios.get(`${APIUPI.UXER}${this.state.uxerId}/${APIUPI.ONE_PROJECT}${this.state.projectId}/experimenters`)
+      if (response.status !== 200) {
+        throw new Error('CANNOT GET ALL EXPERIMENT OF THIS PROJECT')
+      }
+      this.setState({ experList: response.data })
+    } catch (e) {
+      console.error(e)
+    }
+  }
 
   render() {
+    const project = this.state.project
+    const experList = this.state.experList
     return (
       <section id='exper-page'>
-        <NavbarUxer />
+        <NavbarUxer title={`${project && project.name}`} />
         <SubNavbar />
         <Container>
           <Row className='space-head-block justify-content-center align-items-end'>
@@ -80,7 +110,7 @@ class ExperPage extends React.Component {
                 </Col>
                 <Col md={5} lg={6} className='no-padding'>
                   <Label className='no-margin w-100' >
-                    <Input type='text' id='share' name='share_url' value='https://uxsearch.io/2Ri5jP' className='share' alt='https://uxsearch.io/2Ri5jP' readOnly />
+                    <Input type='text' id='share' name='share_url' value={`${project && project.link_url}`} className='share' alt={`${project && project.link_url}`} readOnly />
                   </Label>
                 </Col>
                 <Col md={1} className='no-padding'>
@@ -95,14 +125,14 @@ class ExperPage extends React.Component {
         <br />
         <Container>
           <Row>
-            {this.state.object.map(data => (
+            {experList.map(experiment => (
               <>
                 <Col xs={6} md={4} lg={3}>
                   <ExperBlock
-                    link='/uxer/project/experiment/result'
-                    imgUrl={data.img_url}
-                    firstname={data.firstname}
-                    lastname={data.lastname}
+                    link={`/uxer/${this.state.uxerId}/project/${this.state.projectId}/experiment/${experiment.data.experimenter_key}/result`}
+                    imgUrl={'https://picsum.photos/200/300'}
+                    firstname={experiment.data.firstname}
+                    lastname={experiment.data.lastname}
                   />
                 </Col>
               </>

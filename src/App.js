@@ -19,9 +19,9 @@ const Experimenter = ({ match }) => {
     <Router>
       <Switch>
         <Route exact path={`${match.path}`} component={IndexExperiment} />
-        <Route exact path={`${match.path}/record`} component={RecordPage} />
-        <Route exact path={`${match.path}/answer`} component={Answer} />
-        <Route exact path={`${match.path}/thanks`} component={ThanksPage} />
+        <Route exact path={`${match.path}/:experId/record`} component={RecordPage} />
+        <Route exact path={`${match.path}/:experId/answer`} component={Answer} />
+        <Route exact path={`${match.path}/:experId/thanks`} component={ThanksPage} />
         <Route component={NotFound} />
       </Switch>
     </Router>
@@ -32,9 +32,9 @@ const UXer = ({ match }) => {
   return (
     <Router>
       <Switch>
-        <Route exact path={`${match.path}/projects`} component={ProjectPage} />
-        <Route exact path={`${match.path}/project/experiments`} component={ExperPage} />
-        <Route exact path={`${match.path}/project/experiment/:experId/result`} component={(VideoResult)} />
+        <Route exact path={`${match.path}/:id/projects`} component={ProjectPage} />
+        <Route exact path={`${match.path}/:id/project/:projId/experiments`} component={ExperPage} />
+        <Route exact path={`${match.path}/:id/project/:projId/experiment/:experId/result`} component={(VideoResult)} />
         <Route exact path={`${match.path}/project/experiment/question`} component={CreateQuestion} />
         <Route component={NotFound} />
       </Switch>

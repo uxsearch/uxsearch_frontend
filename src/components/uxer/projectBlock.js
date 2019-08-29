@@ -28,7 +28,7 @@ class ProjectBlock extends React.Component {
 					<Col xs={12} className='each-block'>
 						<Row>
 							<Col xs={12} className='cover-block'>
-								<a href='/uxer/project/experiments' className='link'>
+								<a href={this.props.url} className='link'>
 									<img
 										src={this.props.imgUrl}
 										className="cover-img d-inline-block"
