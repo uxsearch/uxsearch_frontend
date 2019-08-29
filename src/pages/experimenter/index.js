@@ -44,10 +44,35 @@ const modalSubmit = () => {
 }
 
 class IndexExperiment extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      uxerId: '8t6UN47Z749qacrEvZ8O',
+      projectId: 'a89OdndRvNEoasnHXfhu',
+      project: undefined
+    }
+  }
 
-   submitProfile = async (values) => {
+  async componentDidMount() {
+    this.getProject()
+  }
+
+  getProject = async (props) => {
     try {
-      const newValue = {...values}
+      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}`)
+      if (response.status !== 200) {
+        throw new Error('CANNOT GET PROJECT')
+      }
+      console.log(response.data.data)
+      this.setState({ project: response.data.data })
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  submitProfile = async (values) => {
+    try {
+      const newValue = { ...values }
       const prepareEducate = newValue.educate ? newValue.educate : ''
       const prepareJob = newValue.job ? newValue.job : ''
       const prepareLifestyle = newValue.lifestyle ? newValue.lifestyle : ''
@@ -55,11 +80,9 @@ class IndexExperiment extends React.Component {
       newValue.job = prepareJob
       newValue.lifestyle = prepareLifestyle
       const response = await axios.post(`${APIURI.EXPERIMENTER}add/`, newValue)
-      console.log(response)
-      if(response.status !== 201) {
+      if (response.status !== 201) {
         throw new Error('CANNOT CREATE EXPERIMENTER')
       }
-
       this.props.history.push(`/experimenter/${response.data.experimenter.id}/record`)
     } catch (e) {
       console.error(e)
@@ -67,6 +90,7 @@ class IndexExperiment extends React.Component {
   }
 
   render() {
+    const project = this.state.project
     return (
       <div>
         <NotSupport className='d-md-none' />
@@ -77,12 +101,12 @@ class IndexExperiment extends React.Component {
               <Col xs={12}>
                 <Row className='space-head-block'>
                   <Col xs={12}>
-                    <p className='title'>Welcome to <span className='bold-text'>'UX Search Prototype'</span></p>
+                    <p className='title'>Welcome to <span className='bold-text'>'{project && `${project.name}`}'</span></p>
                   </Col>
                 </Row>
                 <Row>
                   <Col xs={12}>
-                    <p>Hi, we are thank you for entry to make usability testing. In addition, every usability and recommends of you are very important for us.</p>
+                    <p>{project && `${project.description}`}</p>
                   </Col>
                 </Row>
                 <hr className='black-line' />
