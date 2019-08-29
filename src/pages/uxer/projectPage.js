@@ -154,12 +154,12 @@ class ProjectPage extends React.Component {
 					<Container>
 						<Row>
 							{
-								this.state.object.length !== 0 ? (
+								projectList.length !== 0 ? (
 									<>
 										{projectList.map(project => (
 											<>
 												<Col xs={12} sm={6} md={4} lg={3}>
-													<ProjectBlock title={project.data.name} imgUrl={project.data.cover_url} />
+													<ProjectBlock url={`/uxer/${this.state.uxerId}/project/${project.id}/experiments`} title={project.data.name} imgUrl={project.data.cover_url} />
 												</Col>
 											</>
 										))}
