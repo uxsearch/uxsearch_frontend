@@ -18,10 +18,10 @@ const ExperBlock = (props) => {
                 />
               </Col>
             </Row>
+            <br />
             <Row className='justify-content-center'>
               <Col xs={12}>
-                <p className='no-margin'>{props.firstname}</p>
-                <p className='no-margin'>{props.lastname}</p>
+                <p className='no-margin'>{props.firstname} {props.lastname}</p>
               </Col>
             </Row>
           </Col>
