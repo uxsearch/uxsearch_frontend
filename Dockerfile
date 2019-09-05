@@ -8,10 +8,12 @@ ENV API_URL=http://localhost:3000/api
 ENV PORT=http://localhost:3001
 
 COPY package.json /app
+RUN npm install
+RUN npm install react-scripts -g
 
 EXPOSE 3000
 
-CMD npm start
+CMD ["npm", "start"]
 
 #RUN npm install
 
