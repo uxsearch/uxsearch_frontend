@@ -13,12 +13,7 @@
   }
 
   .space-side {
-    padding: 0px 60px;
-  }
-
-  .title {
-    font-size: 40px;
-    font-weight: 700;
+    padding: 0px 100px;
   }
 
   .black-line {
@@ -34,12 +29,33 @@
     padding: 10px 0px;
     margin: 0px;
     cursor: pointer;
-    
+
     &:hover {
       box-shadow: 1px 2px 10px $blue;
       border: 2px solid $blue;
       justify-self: center;
     }
+  }
+
+  .space-top-btn {
+    padding: 15px 0px 0px 0px;
+  }
+
+  .btn-multiple {
+    background-color: $blue !important;
+    border: 2px solid $blue !important;
+    color: $light !important;
+    border-radius: 10px !important;
+    font-size: 18px;
+    padding: 10px 10px 11px 10px;
+  }
+
+  .textHeight {
+    margin-right: 10px;
+  }
+
+  .sortdown {
+    margin: 0px 0px 3px 70px;
   }
 
   .btn-secondary {
@@ -52,14 +68,6 @@
     padding: 10px;
   }
 
-  .textHeight {
-    margin-right: 10px;
-  }
-
-  .sortdown {
-    margin: 0px 0px 3px 85px;
-  }
-
   .indropdown {
     position: absolute;
     transform: translate(-50%, -30%);
@@ -68,7 +76,7 @@
     color: $blue !important;
     width: 100%;
     border-radius: 10px !important;
-    font-size: 20px;
+    font-size: 18px;
     padding: 2px;
   }
 
@@ -77,32 +85,34 @@
     background-color: $light;
     height: 90px;
     border-radius: 10px;
-    margin-top: 20px;
+    margin: 0px 0px 20px 0px;
   }
 
-  .btn-multiple {
-    background-color: $blue !important;
-    border: 2px solid $blue !important;
-    color: $light !important;
-    width: 100%;
-    border-radius: 10px !important;
-    font-size: 20px;
-    padding: 6px 10px 11px 10px;
+  .sortdown-mul {
+    margin: 0px 0px 2px 20px;
   }
 
-  .sortdown-multiple {
-    margin: 5px 5px 3px 40px;
-    padding-top: 0px;
+  .icon-mul-check {
+    padding: 5px 0px;
+    margin: 17px 0px;
+    position: absolute;
+    bottom: 0px;
   }
 
-  .space-side-2 {
-    padding: 0px 15px 0px 2px;
-  }
-
-  .choice{
+  .choice {
     background-color: $white;
-    padding: 0px;
     border-radius: 10px;
+  }
+
+  .icon-delete {
+    padding: 5px 0px;
+    margin: 17px 0px;
+    position: absolute;
+    bottom: 0px;
+  }
+
+  .sortdown-check {
+    margin: 0px 0px 2px 50px;
   }
 
   .btn-add-question {
@@ -115,6 +125,10 @@
     cursor: pointer;
   }
 
+  .space-btn {
+    margin: 50px 0px 50px 0px;
+  }
+
   .btn-save-questionnaire {
     background-color: $blue !important;
     border: 2px solid $blue !important;
@@ -123,26 +137,5 @@
     border-radius: 10px !important;
     font-size: 20px;
     font-weight: 600px;
-  }
-
-  .space-btn {
-    margin: 50px 0px 50px 0px;
-  }
-
-  .icon-multiple{
-    padding: 5px  0px;
-    margin: 17px;
-    position: absolute;
-    left: 17px;
-    bottom: 0px;
-  }
-
-  .icon-checkbox{
-    padding: 5px  0px;
-    margin: 17px;
-    position: absolute;
-    left: 20px;
-    right: 0%;
-    bottom: 0px;
   }
 }

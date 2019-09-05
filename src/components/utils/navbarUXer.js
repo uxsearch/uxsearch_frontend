@@ -109,7 +109,7 @@ class NavbarUxer extends React.Component {
               </NavbarBrand>
             </Col>
             <Col md={10}>
-              <h1>Project Name</h1>
+              <h1>{this.props.title}</h1>
             </Col>
           </Row>
         </Navbar>

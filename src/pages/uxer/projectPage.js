@@ -4,6 +4,9 @@ import { TextField, withStyles } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faBook, faLink } from '@fortawesome/free-solid-svg-icons'
 
+import axios from '../../utils/axios'
+import APIURI from '../../utils/apiuri'
+
 import NavbarUxer from '../../components/utils/navbarUXer'
 import ProjectBlock from '../../components/uxer/projectBlock'
 
@@ -44,21 +47,12 @@ const TextInput = withStyles({
 class ProjectPage extends React.Component {
 	constructor(props) {
 		super(props);
+		const { match } = props
 		this.toggleSort = this.toggleSort.bind(this);
 		this.toggleModal = this.toggleModal.bind(this);
 		this.state = {
-			object: [
-				{ title: 'Web Development', img_url: 'https://picsum.photos/200/300' },
-				{ title: 'test2', img_url: 'https://picsum.photos/200/300' },
-				{ title: 'test3', img_url: 'https://picsum.photos/200/300' },
-				{ title: 'test4', img_url: 'https://picsum.photos/200/300' },
-				{ title: 'test5', img_url: 'https://picsum.photos/200/300' },
-				{ title: 'test6', img_url: 'https://picsum.photos/200/300' },
-				{ title: 'test7', img_url: 'https://picsum.photos/200/300' },
-				{ title: 'test8', img_url: 'https://picsum.photos/200/300' },
-				{ title: 'test9', img_url: 'https://picsum.photos/200/300' },
-				{ title: 'test10', img_url: 'https://picsum.photos/200/300' }
-			],
+			uxerId: match.params.id,
+			projectList: [],
 			sortDropdownOpen: false,
 			modal: false,
 		};
@@ -76,16 +70,33 @@ class ProjectPage extends React.Component {
 		}));
 	}
 
+	componentDidMount() {
+		this.getProject()
+	}
+
 	changeUnmountOnClose(e) {
 		let value = e.target.value;
 		this.setState({ unmountOnClose: JSON.parse(value) });
 	}
 
+	getProject = async () => {
+		try {
+			const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.PROJECT}`)
+			if(response.status !== 200) {
+				throw new Error('CANNOT GET ALL PROJECT')
+			}
+			this.setState({ projectList: response.data })
+		} catch (e) {
+			console.error(e)
+		}
+	}
+
 	render() {
+		const projectList = this.state.projectList
 		return (
 			<div>
 				<section id='project-page'>
-					<NavbarUxer />
+					<NavbarUxer title='My Projects' />
 					<Container>
 						<Row className='space-head-block justify-content-center align-items-end'>
 							<Col xs={8}>
@@ -143,12 +154,12 @@ class ProjectPage extends React.Component {
 					<Container>
 						<Row>
 							{
-								this.state.object.length !== 0 ? (
+								projectList.length !== 0 ? (
 									<>
-										{this.state.object.map(data => (
+										{projectList.map(project => (
 											<>
 												<Col xs={12} sm={6} md={4} lg={3}>
-													<ProjectBlock title={data.title} imgUrl={data.img_url} />
+													<ProjectBlock url={`/uxer/${this.state.uxerId}/project/${project.id}/experiments`} title={project.data.name} imgUrl={project.data.cover_url} />
 												</Col>
 											</>
 										))}
