@@ -6923,6 +6923,11 @@ neo-async@^2.5.0, neo-async@^2.6.0:
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha512-iyam8fBuCUpWeKPGpaNMetEocMt364qkCsfL9JuhjXX6dRnguRVOfk2GZaDpPjcOKiiXCPINZC1GczQ7iTq3Zw==
 
+nginx-conf@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/nginx-conf/-/nginx-conf-1.5.0.tgz#30de1a0a0a195ed906b9cfb130ed7b950cda416d"
+  integrity sha512-bzVqdmATU1U9dNn9T9NVoczRJArydh6rGMxg9f8gLhzsPdQkGDqD8H1EcERgeKoLH3UC9mPiDTR6eyi2uDn/kQ==
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
