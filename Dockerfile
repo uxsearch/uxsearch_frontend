@@ -3,9 +3,11 @@ FROM node:12.9.1-alpine as build-test
 
 WORKDIR /app
 
+ENV NODE_ENV=develop
+
 ENV API_URL=http://localhost:3000/api
 
-ENV PORT=http://localhost:3001
+ENV PORT=3001
 
 COPY package.json /app
 RUN npm install
