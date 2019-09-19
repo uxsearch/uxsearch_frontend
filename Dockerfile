@@ -1,32 +1,32 @@
 # Dockerfile
-FROM node:12.9.1-alpine as build-test
+FROM node:12.6.0-alpine
 
 WORKDIR /app
 
 ENV NODE_ENV=develop
 
-ENV API_URL=http://localhost:3000/api
+ENV API_URL=http://18.139.82.118:3000/api
 
 ENV PORT=3001
 
-COPY package.json /app
+COPY . /app
 RUN npm install
 RUN npm install react-scripts -g
 
-EXPOSE 3000
+EXPOSE 3001
 
 CMD ["npm", "start"]
 
-#RUN npm install
+# RUN npm install
 
-#COPY . /app
+# COPY . /app
 
-#RUN npm build
+# RUN npm build
 
-#FROM nginx:1.17.3-alpine
+# FROM nginx:1.17.3-alpine
 
-#COPY --from=build-test /usr/src/app/build /usr/share/nginx/html
+# COPY --from=build-test /usr/src/app/build /usr/share/nginx/html
 
-#EXPOSE 80
+# EXPOSE 80
 
-#CMD ["nginx", "-g", "daemon off;"]
+# CMD ["nginx", "-g", "daemon off;"]
