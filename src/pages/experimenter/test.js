@@ -18,30 +18,12 @@ class Test extends React.Component {
         </a>
         <FontAwesomeIcon icon={faUserAlt} size="lg" /> <br></br>
 
-
-
         <h1>Project Page</h1>
-        <a href='/uxer/projects'>
+        <a href='/uxer/8t6UN47Z749qacrEvZ8O/projects'>
           <Button className='btn btn-success'>
             Project Page
           </Button>
         </a>
-
-
-        <h1>MyProject</h1>
-        <a href='/uxer/project/experiment/home'>
-          <Button className='btn btn-success'>
-            MyProject
-          </Button>
-        </a>
-
-        <h1>Create Questionnaire</h1>
-        <a href='/uxer/project/experiment/question'>
-          <Button className='btn btn-success'>
-            Create Questionnaire
-          </Button>
-        </a>
-
       </div>
     )
   }
