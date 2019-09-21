@@ -45,9 +45,12 @@ const modalSubmit = () => {
 class RecordPage extends React.Component {
   constructor(props) {
     super(props)
+    const { match } = props
+    console.log(match)
     this.state = {
       uxerId: '8t6UN47Z749qacrEvZ8O',
       projectId: 'a89OdndRvNEoasnHXfhu',
+      experId: match.params.experId,
       project: undefined
     }
   }
@@ -87,10 +90,10 @@ class RecordPage extends React.Component {
                   <Col xs={12} className='video-block'>
                     <Row>
                       <Col xs={12} md={6} className='text-center'>
-                        <Camera />
+                        <Camera uxerId={`${this.state.uxerId}`} projectId={`${this.state.projectId}`} />
                       </Col>
                       <Col xs={12} md={6} className='text-center'>
-                        <Screen />
+                        <Screen uxerId={`${this.state.uxerId}`} projectId={`${this.state.projectId}`} />
                       </Col>
                     </Row>
                     <br />

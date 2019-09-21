@@ -2,10 +2,12 @@ import React from 'react'
 import videojs from 'video.js'
 import RecordRTC from 'recordrtc'
 import Record from 'videojs-record/dist/videojs.record'
-
 import 'webrtc-adapter'
 import '../../../../node_modules/videojs-record/dist/css/videojs.record.css'
 import '../../../../node_modules/video.js/dist/video-js.css'
+
+import axios from '../../../utils/axios'
+import APIURI from '../../../utils/apiuri'
 
 const CameraOptions = {
   controls: {
@@ -30,6 +32,9 @@ const recordAuto = () => {
 }
 
 class Screen extends React.Component {
+  constructor(props) {
+    super(props)
+  }
 
   async componentDidMount() {
     this.player = videojs(this.videoNode, CameraOptions, () => {
@@ -41,31 +46,43 @@ class Screen extends React.Component {
       this.player.children_[1].setAttribute('onLoad', recordAuto())
     });
 
-    // device is ready
     this.player.on('deviceReady', () => {
-      console.log('device is ready!');
       this.player.record().start()
     });
-    // user clicked the record button and started recording
+
     this.player.on('startRecord', () => {
       console.log('started recording!');
     });
-    // user completed recording and stream is available
+
     this.player.on('finishRecord', () => {
-      // recordedData is a blob object containing the recorded data that
-      // can be downloaded by the user, stored on server etc.
-      console.log('finished recording: ', this.player.recordedData);
-      this.player.record().saveAs({'video': 'screen_video.webm'});
+      this.uploadVideo(this.player.recordedData);
     });
-    // error handling
+
     this.player.on('error', (element, error) => {
       console.warn(error);
     });
+
     this.player.on('deviceError', () => {
       console.error('device error:', this.player.deviceErrorCode);
     });
   }
-  // destroy player on unmount
+
+  async uploadVideo(blob) {
+    console.log(blob)
+    var formData = new FormData();
+    formData.append('file', blob, blob.name);
+    console.log('formData', formData)
+    console.log('upload recording ' + blob.name + ' to storage');
+    try {
+      const response = await axios.post(`${APIURI.UXER}${this.props.uxerId}/${APIURI.ONE_PROJECT}${this.props.projectId}/upload`, formData)
+      if (response.status !== 200) {
+        throw new Error('CANNOT UPLOAD VIDEO FILE')
+      }
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   componentWillUnmount() {
     if (this.player) {
       this.player.dispose();
