@@ -86,12 +86,12 @@ class ProfileBlock extends React.Component {
                 <FormGroup>
                   <Row>
                     <Col xs={12} lg={6}>
-                      <Field name='age' type='number'>
+                      <Field name='birthdate' type='date'>
                         {({ input, meta }) => (
                           <>
                             <Row className='align-items-center'>
                               <Col xs={12} lg={4}>
-                                <span>Age : </span>
+                                <span>Birthdate : </span>
                               </Col>
                               <Col xs={12} lg={8}>
                                 <Label className='w-100'>
