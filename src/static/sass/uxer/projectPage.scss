@@ -12,7 +12,7 @@
   .search-form {
     color: $dark;
   }
-  
+
   .dropdown-btn {
     cursor: pointer;
   }
@@ -32,7 +32,7 @@
     overflow: hidden;
   }
 
-  .cover-img{
+  .cover-img {
     width: 100%;
     height: 100%;
     border-radius: 10px 10px 0px 0px;
@@ -47,7 +47,7 @@
   }
 
   .delete-text {
-    color: #D42B2B;
+    color: #d42b2b;
   }
 
   .link {
@@ -66,6 +66,24 @@
   .createProject {
     color: $blue;
     text-decoration: underline $blue;
+    cursor: pointer;
+  }
+
+  .circle {
+    position: absolute;
+    z-index: 1;
+    left: 45%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+  }
+
+  .plus {
+    position: absolute;
+    z-index: 2;
+    left: 45%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     cursor: pointer;
   }
 }
