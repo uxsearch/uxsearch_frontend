@@ -1,4 +1,5 @@
 # Dockerfile
+
 FROM node:12.10.0-alpine
 
 RUN mkdir -p /app
