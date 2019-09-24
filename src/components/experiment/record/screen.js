@@ -1,4 +1,6 @@
 import React from 'react'
+import { Field } from 'react-final-form'
+
 import videojs from 'video.js'
 import RecordRTC from 'recordrtc'
 import Record from 'videojs-record/dist/videojs.record'
@@ -21,7 +23,7 @@ const CameraOptions = {
       autoPlay: true,
       audio: false,
       screen: true,
-      maxLength: 10, //1200 seconds
+      maxLength: 1200, //1200 seconds
       debug: true
     }
   }
@@ -34,14 +36,18 @@ const recordAuto = () => {
 class Screen extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      screenDuration: undefined,
+      screenURL: undefined
+    }
   }
 
   async componentDidMount() {
     this.player = videojs(this.videoNode, CameraOptions, () => {
-      var version_info = 'Using video.js ' + videojs.VERSION +
-        ' with videojs-record ' + videojs.getPluginVersion('record') +
-        ' and recordrtc ' + RecordRTC.version;
-      videojs.log(version_info)
+      // var version_info = 'Using video.js ' + videojs.VERSION +
+      //   ' with videojs-record ' + videojs.getPluginVersion('record') +
+      //   ' and recordrtc ' + RecordRTC.version;
+      // videojs.log(version_info)
       this.player.children_[1].setAttribute('id', 'screenButton')
       this.player.children_[1].setAttribute('onLoad', recordAuto())
     });
@@ -50,11 +56,15 @@ class Screen extends React.Component {
       this.player.record().start()
     });
 
-    this.player.on('startRecord', () => {
-      console.log('started recording!');
-    });
+    this.player.on('progressRecord', () => {
+      if (this.props.stopStatus === true) {
+        this.player.record().stop()
+      }
+    })
 
     this.player.on('finishRecord', () => {
+      this.setState({ screenDuration: this.player.record().getDuration() })
+      this.player.recordedData.name = 'screen_' + this.player.recordedData.name
       this.uploadVideo(this.player.recordedData);
     });
 
@@ -68,16 +78,14 @@ class Screen extends React.Component {
   }
 
   async uploadVideo(blob) {
-    console.log(blob)
     var formData = new FormData();
     formData.append('file', blob, blob.name);
-    console.log('formData', formData)
-    console.log('upload recording ' + blob.name + ' to storage');
     try {
       const response = await axios.post(`${APIURI.UXER}${this.props.uxerId}/${APIURI.ONE_PROJECT}${this.props.projectId}/upload`, formData)
-      if (response.status !== 200) {
+      if (response.status !== 201) {
         throw new Error('CANNOT UPLOAD VIDEO FILE')
       }
+      this.setState({ screenURL: response.data })
     } catch (e) {
       console.error(e)
     }
@@ -90,8 +98,12 @@ class Screen extends React.Component {
   }
   render() {
     return (
-      <div data-vjs-player>
-        <video id="myVideo" ref={node => this.videoNode = node} className="video-js vjs-default-skin myVideo-dimension" playsInline></video>
+      <div>
+        <Field component='input' type='hidden' name='screen_time' initialValue={this.state.screenDuration && this.state.screenDuration} />
+        <Field component='input' type='hidden' name='screen_url' initialValue={this.state.screenURL && this.state.screenURL.video_url} />
+        <div data-vjs-player>
+          <video id="myVideo" ref={node => this.videoNode = node} className="video-js vjs-default-skin myVideo-dimension" playsInline></video>
+        </div>
       </div>
     );
   }
