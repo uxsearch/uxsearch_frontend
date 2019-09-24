@@ -181,47 +181,46 @@ class Question extends React.Component {
                         </Row>
                         <br />
                         {this.state.choice.map((choice, index) => (
-                            <Row className='no-margin w-100' key={index}>
-                              <Col xs={1}>
-                                <FontAwesomeIcon icon={faCircle} size='2x' color='#ced4da' className='icon-mul-check' />
-                              </Col>
-
-                              {type === 'Multiple choice' && (
-                                <>
-                                  <Col xs={10} className='choice'>
-                                    <Form>
-                                      <FormGroup>
-                                        <Input
-                                          type='multiple'
-                                          name={choice.name}
-                                          placeholder='AddOption'
-                                          value={choice.value}
-                                          onChange={e => {
-                                            this.state.choice[index].value = e.target.value
-                                            this.setState({
-                                              choice: [...this.state.choice]
-                                            })
-                                          }} />
-                                      </FormGroup>
-                                    </Form>
-                                  </Col>
-                                </>
-                              )}
-                              <Col xs={1}>
-                                <FontAwesomeIcon
-                                  icon={faTimesCircle}
-                                  size='2x'
-                                  color='#909090'
-                                  className='icon-delete'
-                                  onClick={() => {
-                                    this.state.choice.splice(index, 1)
-                                    this.setState({
-                                      choice: [...this.state.choice]
-                                    })
-                                  }}
-                                />
-                              </Col>
-                            </Row>
+                          <Row className='no-margin w-100' key={index}>
+                            <Col xs={1}>
+                              <FontAwesomeIcon icon={faCircle} size='2x' color='#ced4da' className='icon-mul-check' />
+                            </Col>
+                            {type === 'Multiple choice' && (
+                              <>
+                                <Col xs={10} className='choice'>
+                                  <Form>
+                                    <FormGroup>
+                                      <Input
+                                        type='multiple'
+                                        name={choice.name}
+                                        placeholder='AddOption'
+                                        value={choice.value}
+                                        onChange={e => {
+                                          this.state.choice[index].value = e.target.value
+                                          this.setState({
+                                            choice: [...this.state.choice]
+                                          })
+                                        }} />
+                                    </FormGroup>
+                                  </Form>
+                                </Col>
+                              </>
+                            )}
+                            <Col xs={1}>
+                              <FontAwesomeIcon
+                                icon={faTimesCircle}
+                                size='2x'
+                                color='#909090'
+                                className='icon-delete'
+                                onClick={() => {
+                                  this.state.choice.splice(index, 1)
+                                  this.setState({
+                                    choice: [...this.state.choice]
+                                  })
+                                }}
+                              />
+                            </Col>
+                          </Row>
                         ))}
                         <span onClick={() => this.addOption()} >AddOption</span>
                       </Col>
@@ -297,7 +296,6 @@ class Question extends React.Component {
                               </FormGroup>
                             </Form>
                           </Col>
-
                           <Col xs={1}>
                             <FontAwesomeIcon icon={faTimesCircle} size='2x' color='#909090' className='icon-delete' />
                           </Col>
