@@ -80,7 +80,7 @@ class ExperPage extends React.Component {
         <Container>
           <Row className='space-head-block justify-content-center align-items-end'>
             <Col xs={10} md={4}>
-              <form utoComplete='on'>
+              <form autoComplete='on'>
                 <Row className='align-items-end no-gutters'>
                   <Col xs={2} sm={1} md={2} className='text-center'>
                     <FontAwesomeIcon icon={faSearch} size='1x' color='#303030' />
