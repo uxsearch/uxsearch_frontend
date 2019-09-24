@@ -53,7 +53,8 @@ class RecordPage extends React.Component {
       projectId: 'a89OdndRvNEoasnHXfhu',
       experId: match.params.experId,
       experiment: undefined,
-      project: undefined
+      project: undefined,
+      stopStatus: false
     }
   }
 
@@ -99,6 +100,10 @@ class RecordPage extends React.Component {
     }
   }
 
+  stopRecord(value) {
+    this.setState({stopStatus: value})
+  }
+
   render() {
     const project = this.state.project
     return (
@@ -127,16 +132,16 @@ class RecordPage extends React.Component {
                             <Field component='input' type='hidden' name='lastname' initialValue={this.state.experiment ? this.state.experiment.lastname : undefined} />
                             <Row>
                               <Col xs={12} md={6} className='text-center'>
-                                <Camera uxerId={`${this.state.uxerId}`} projectId={`${this.state.projectId}`} />
+                                <Camera uxerId={`${this.state.uxerId}`} projectId={`${this.state.projectId}`} stopStatus={this.state.stopStatus} />
                               </Col>
                               <Col xs={12} md={6} className='text-center'>
-                                <Screen uxerId={`${this.state.uxerId}`} projectId={`${this.state.projectId}`} />
+                                <Screen uxerId={`${this.state.uxerId}`} projectId={`${this.state.projectId}`} stopStatus={this.state.stopStatus} />
                               </Col>
                             </Row>
                             <br />
                             <Row className='justify-content-center'>
                               <Col xs={12} md={3} className='text-center'>
-                                <Button type='submit' className='btn-finish-test'>Finish Testing</Button>
+                                <Button onClick={() => this.stopRecord(true)} type='submit' className='btn-finish-test'>Finish Testing</Button>
                               </Col>
                             </Row>
                           </Col>

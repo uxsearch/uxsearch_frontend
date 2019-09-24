@@ -44,10 +44,10 @@ class Screen extends React.Component {
 
   async componentDidMount() {
     this.player = videojs(this.videoNode, CameraOptions, () => {
-      var version_info = 'Using video.js ' + videojs.VERSION +
-        ' with videojs-record ' + videojs.getPluginVersion('record') +
-        ' and recordrtc ' + RecordRTC.version;
-      videojs.log(version_info)
+      // var version_info = 'Using video.js ' + videojs.VERSION +
+      //   ' with videojs-record ' + videojs.getPluginVersion('record') +
+      //   ' and recordrtc ' + RecordRTC.version;
+      // videojs.log(version_info)
       this.player.children_[1].setAttribute('id', 'screenButton')
       this.player.children_[1].setAttribute('onLoad', recordAuto())
     });
@@ -56,8 +56,14 @@ class Screen extends React.Component {
       this.player.record().start()
     });
 
+    this.player.on('progressRecord', () => {
+      if (this.props.stopStatus === true) {
+        this.player.record().stop()
+      }
+    })
+
     this.player.on('finishRecord', () => {
-      this.setState({screenDuration: this.player.record().getDuration()})
+      this.setState({ screenDuration: this.player.record().getDuration() })
       this.player.recordedData.name = 'screen_' + this.player.recordedData.name
       this.uploadVideo(this.player.recordedData);
     });
@@ -72,17 +78,14 @@ class Screen extends React.Component {
   }
 
   async uploadVideo(blob) {
-    console.log(blob)
     var formData = new FormData();
     formData.append('file', blob, blob.name);
-    console.log('formData', formData)
-    console.log('upload recording ' + blob.name + ' to storage');
     try {
       const response = await axios.post(`${APIURI.UXER}${this.props.uxerId}/${APIURI.ONE_PROJECT}${this.props.projectId}/upload`, formData)
       if (response.status !== 201) {
         throw new Error('CANNOT UPLOAD VIDEO FILE')
       }
-      this.setState({screenURL: response.data})
+      this.setState({ screenURL: response.data })
     } catch (e) {
       console.error(e)
     }

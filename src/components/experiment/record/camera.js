@@ -44,20 +44,26 @@ class Camera extends React.Component {
 
   async componentDidMount() {
     this.player = videojs(this.videoNode, CameraOptions, () => {
-      var version_info = 'Using video.js ' + videojs.VERSION +
-        ' with videojs-record ' + videojs.getPluginVersion('record') +
-        ' and recordrtc ' + RecordRTC.version;
-      videojs.log(version_info)
+      // var version_info = 'Using video.js ' + videojs.VERSION +
+      //   ' with videojs-record ' + videojs.getPluginVersion('record') +
+      //   ' and recordrtc ' + RecordRTC.version;
+      // videojs.log(version_info)
       this.player.children_[1].setAttribute('id', 'cameraButton')
       this.player.children_[1].setAttribute('onLoad', recordAuto())
-    });
+    })
 
     this.player.on('deviceReady', () => {
       this.player.record().start()
-    });
+    })
+
+    this.player.on('progressRecord', () => {
+      if (this.props.stopStatus === true) {
+        this.player.record().stop()
+      }
+    })
 
     this.player.on('finishRecord', () => {
-      this.setState({cameraDuration: this.player.record().getDuration()})
+      this.setState({ cameraDuration: this.player.record().getDuration() })
       this.player.recordedData.name = 'video_' + this.player.recordedData.name
       this.uploadVideo(this.player.recordedData);
     });
@@ -72,17 +78,14 @@ class Camera extends React.Component {
   }
 
   async uploadVideo(blob) {
-    console.log(blob)
     var formData = new FormData();
     formData.append('file', blob, blob.name);
-    console.log('formData', formData)
-    console.log('upload recording ' + blob.name + ' to storage');
     try {
       const response = await axios.post(`${APIURI.UXER}${this.props.uxerId}/${APIURI.ONE_PROJECT}${this.props.projectId}/upload`, formData)
       if (response.status !== 201) {
         throw new Error('CANNOT UPLOAD VIDEO FILE')
       }
-      this.setState({videoURL: response.data})
+      this.setState({ videoURL: response.data })
     } catch (e) {
       console.error(e)
     }
@@ -93,15 +96,15 @@ class Camera extends React.Component {
       this.player.dispose();
     }
   }
-  
+
   render() {
     return (
       <div>
         <Field component='input' type='hidden' name='video_time' initialValue={this.state.cameraDuration && this.state.cameraDuration} />
         <Field component='input' type='hidden' name='video_url' initialValue={this.state.videoURL && this.state.videoURL.video_url} />
-          <div data-vjs-player>
-            <video id="myVideo" ref={node => this.videoNode = node} className="video-js vjs-default-skin myVideo-dimension" playsInline></video>
-          </div>
+        <div data-vjs-player>
+          <video id="myVideo" ref={node => this.videoNode = node} className="video-js vjs-default-skin myVideo-dimension" playsInline></video>
+        </div>
       </div>
     );
   }
