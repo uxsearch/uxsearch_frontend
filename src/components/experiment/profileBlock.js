@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Row, Col, FormGroup, Label, Input } from 'reactstrap'
 import { Field } from 'react-final-form'
 import countries from './cities.json'
+
 import universities from './universities.json'
 
 const normalizePhone = value => {

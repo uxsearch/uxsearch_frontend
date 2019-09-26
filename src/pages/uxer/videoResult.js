@@ -33,6 +33,12 @@ class VideoResult extends React.Component {
     }
   }
 
+  getAge(birthdate) {
+    const today = new Date()
+    const age = today.getFullYear() - birthdate.getFullYear()
+    return age + ' years'
+  }
+
   render() {
     const experiment = this.state.experiment
 
@@ -58,7 +64,7 @@ class VideoResult extends React.Component {
                 <Col xs={9} sm={8} xl={9}>
                   <Row>
                     <Col xs={12}>
-                      <p className='no-margin exper-name'>{experiment && `${experiment.firstname}` + ` ` + `${experiment.lastname}` }</p>
+                      <p className='no-margin exper-name'>{experiment && `${experiment.firstname}` + ` ` + `${experiment.lastname}`}</p>
                     </Col>
                   </Row>
                   <Row className='d-sm-none space-btn-mobile'>
@@ -79,16 +85,16 @@ class VideoResult extends React.Component {
           {experiment &&
             <>
               <ExperProfile
-                name={`${experiment.firstname}` + ` ` + `${experiment.lastname}`} 
-                age={`${experiment.age}`} 
-                gender={`${experiment.gender}`} 
-                tel={`${experiment.tel}`} 
-                email={`${experiment.email}`} 
-                city={`${experiment.province}`} 
-                country={`${experiment.country}`} 
-                educate={`${experiment.educate}`} 
-                job={`${experiment.job}`} 
-                lifestyle={`${experiment.lifestyle}`} 
+                name={`${experiment.firstname}` + ` ` + `${experiment.lastname}`}
+                age={this.getAge(new Date(experiment.birthdate.seconds * 1000))}
+                gender={`${experiment.gender}`}
+                tel={`${experiment.tel}`}
+                email={`${experiment.email}`}
+                city={`${experiment.province}`}
+                country={`${experiment.country}`}
+                educate={`${experiment.educate}`}
+                job={`${experiment.job}`}
+                lifestyle={`${experiment.lifestyle}`}
               />
             </>
           }
