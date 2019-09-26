@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Row, Col, FormGroup, Label, Input } from 'reactstrap'
 import { Field } from 'react-final-form'
+import countries from './cities.json'
+import universities from './universities.json'
 
 const normalizePhone = value => {
   if (!value) {
@@ -15,13 +17,20 @@ const normalizePhone = value => {
   if (onlyNums.length <= 7) {
     return `${onlyNums.slice(0, 3)}-${onlyNums.slice(3, 7)}`
   }
-  return `${onlyNums.slice(0, 3)}-${onlyNums.slice(3, 6)}-${onlyNums.slice(6,10)}`
+  return `${onlyNums.slice(0, 3)}-${onlyNums.slice(3, 6)}-${onlyNums.slice(6, 10)}`
 };
-
 
 class ProfileBlock extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      country: '',
+      university: ''
+    }
+  }
+
+  componentDidUpdate() {
+    console.log('state : ', this.state)
   }
 
   render() {
@@ -185,25 +194,6 @@ class ProfileBlock extends React.Component {
                 <FormGroup>
                   <Row>
                     <Col xs={12} lg={6}>
-                      <Field name='province' type='text'>
-                        {({ input, meta }) => (
-                          <>
-                            <Row className='align-items-center'>
-                              <Col xs={12} lg={4}>
-                                <span>Province/City : </span>
-                              </Col>
-                              <Col xs={12} lg={8}>
-                                <Label className='w-100'>
-                                  <Input {...input} required />
-                                  {meta.touched && meta.error && <span>{meta.error}</span>}
-                                </Label>
-                              </Col>
-                            </Row>
-                          </>
-                        )}
-                      </Field>
-                    </Col>
-                    <Col xs={12} lg={6}>
                       <Field name='country' type='text'>
                         {({ input, meta }) => (
                           <>
@@ -213,7 +203,53 @@ class ProfileBlock extends React.Component {
                               </Col>
                               <Col xs={12} lg={8}>
                                 <Label className='w-100'>
-                                  <Input {...input} required />
+                                  <Label className='w-100'>
+                                    <select
+                                      value={this.state.country}
+                                      onChange={event => {
+                                        this.setState({
+                                          country: event.target.value
+                                        })
+                                      }}
+                                      name='country'
+                                      placeholder='Choose Your Country'
+                                      className='form-control'
+                                      required
+                                    >
+                                      <option value='' disabled>Choose Your Country</option>
+                                      {countries.map(country => (
+                                        <option value={country.country_name}>{country.country_name}</option>
+                                      ))}
+                                    </select>
+                                  </Label>
+                                  {meta.touched && meta.error && <span>{meta.error}</span>}
+                                </Label>
+                              </Col>
+                            </Row>
+                          </>
+                        )}
+                      </Field>
+                    </Col>
+                    <Col xs={12} lg={6}>
+                      <Field name='province' type='text'>
+                        {({ input, meta }) => (
+                          <>
+                            <Row className='align-items-center'>
+                              <Col xs={12} lg={4}>
+                                <span>Province/City : </span>
+                              </Col>
+                              <Col xs={12} lg={8}>
+                                <Label className='w-100'>
+                                  <Label className='w-100'>
+                                    <select {...input} name='city' placeholder='Choose Your Province/City' className='form-control' required>
+                                      <option value='' disabled>Choose Your Province/City</option>
+                                      {this.state.country && countries.filter(country => {
+                                        return country.country_name === this.state.country
+                                      })[0].cities.map(city => (
+                                        <option>{city}</option>
+                                      ))}
+                                    </select>
+                                  </Label>
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
                                 </Label>
                               </Col>
@@ -242,7 +278,25 @@ class ProfileBlock extends React.Component {
                               </Col>
                               <Col xs={12} lg={8}>
                                 <Label className='w-100'>
-                                  <Input {...input} />
+                                  <Label className='w-100'>
+                                    <select
+                                      value={this.state.university}
+                                      onChange={event => {
+                                        this.setState({
+                                          university: event.target.value
+                                        })
+                                      }}
+                                      name='university'
+                                      placeholder='Choose Your university'
+                                      className='form-control'
+                                      required
+                                    >
+                                      <option value='' disabled>Choose Your university</option>
+                                      {universities.map(university => (
+                                        <option value={university.name}>{university.name}</option>
+                                      ))}
+                                    </select>
+                                  </Label>
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
                                 </Label>
                               </Col>
