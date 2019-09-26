@@ -23,7 +23,7 @@ const CameraOptions = {
       autoPlay: true,
       audio: true,
       video: true,
-      maxLength: 1200, //1200 seconds
+      maxLength: 1800,
       debug: true
     }
   }
@@ -44,10 +44,6 @@ class Camera extends React.Component {
 
   async componentDidMount() {
     this.player = videojs(this.videoNode, CameraOptions, () => {
-      // var version_info = 'Using video.js ' + videojs.VERSION +
-      //   ' with videojs-record ' + videojs.getPluginVersion('record') +
-      //   ' and recordrtc ' + RecordRTC.version;
-      // videojs.log(version_info)
       this.player.children_[1].setAttribute('id', 'cameraButton')
       this.player.children_[1].setAttribute('onLoad', recordAuto())
     })
@@ -65,7 +61,7 @@ class Camera extends React.Component {
     this.player.on('finishRecord', () => {
       this.setState({ cameraDuration: this.player.record().getDuration() })
       this.player.recordedData.name = 'video_' + this.player.recordedData.name
-      this.uploadVideo(this.player.recordedData);
+      this.props.setParentCameraState(this.player.recordedData, this.state.cameraDuration)
     });
 
     this.player.on('error', (element, error) => {
@@ -77,20 +73,6 @@ class Camera extends React.Component {
     });
   }
 
-  async uploadVideo(blob) {
-    var formData = new FormData();
-    formData.append('file', blob, blob.name);
-    try {
-      const response = await axios.post(`${APIURI.UXER}${this.props.uxerId}/${APIURI.ONE_PROJECT}${this.props.projectId}/upload`, formData)
-      if (response.status !== 201) {
-        throw new Error('CANNOT UPLOAD VIDEO FILE')
-      }
-      this.setState({ videoURL: response.data })
-    } catch (e) {
-      console.error(e)
-    }
-  }
-
   componentWillUnmount() {
     if (this.player) {
       this.player.dispose();
@@ -100,8 +82,6 @@ class Camera extends React.Component {
   render() {
     return (
       <div>
-        <Field component='input' type='hidden' name='video_time' initialValue={this.state.cameraDuration && this.state.cameraDuration} />
-        <Field component='input' type='hidden' name='video_url' initialValue={this.state.videoURL && this.state.videoURL.video_url} />
         <div data-vjs-player>
           <video id="myVideo" ref={node => this.videoNode = node} className="video-js vjs-default-skin myVideo-dimension" playsInline></video>
         </div>

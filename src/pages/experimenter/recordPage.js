@@ -14,7 +14,7 @@ import NavbarExp from '../../components/utils/navbarExperimenter'
 import NotSupport from '../../components/utils/notSupport'
 
 import '../../static/sass/experimenter/record.scss'
-
+import { delay } from '../../utils/delay'
 const modalSubmit = () => {
   swal({
     title: "Are you sure?",
@@ -54,7 +54,15 @@ class RecordPage extends React.Component {
       experId: match.params.experId,
       experiment: undefined,
       project: undefined,
-      stopStatus: false
+      stopStatus: false,
+      cameraBlob: {
+        timeDuration: null,
+        blob: null
+      },
+      screenBlob: {
+        timeDuration: null,
+        blob: null
+      },
     }
   }
 
@@ -63,10 +71,51 @@ class RecordPage extends React.Component {
     this.getExperimenter()
   }
 
-  submitResult = async (value) => {
-    console.log(value)
+  setParentCameraState = (cameraBlob, timeDuration) => {
+    const Childcamara = {
+      timeDuration: timeDuration,
+      blob: cameraBlob
+    }
+    this.setState({ cameraBlob: Childcamara})
+    console.log(this.state.cameraBlob)
+  }
+
+  setParentScreenState = (screenBlob, timeDuration) => {
+    const Childscreen = {
+      timeDuration: timeDuration,
+      blob: screenBlob
+    }
+    this.setState({ screenBlob: Childscreen })
+    console.log(this.state.screenBlob)
+  }
+
+  async uploadVideo(blob) {
+    var formData = new FormData();
+    formData.append('file', blob, blob.name);
     try {
-      const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/record`, value)
+      const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/upload`, formData)
+      if (response.status !== 201) {
+        throw new Error('CANNOT UPLOAD VIDEO FILE')
+      }
+      return response.data.video_url
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  submitResult = async (value) => {
+    await delay(100)
+    const cameraUploadURL = await this.uploadVideo(this.state.cameraBlob.blob)
+    const screenUploadURL = await this.uploadVideo(this.state.screenBlob.blob)
+    const newValue = {
+      ...value,
+      video_time: this.state.cameraBlob.timeDuration,
+      video_url: cameraUploadURL,
+      screen_time: this.state.screenBlob.timeDuration,
+      screen_url: screenUploadURL,
+    }
+    try {
+      const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/record`, newValue)
       if (response.status !== 201) {
         throw new Error('CANNOT CREATE FORM RECORD')
       }
@@ -101,7 +150,7 @@ class RecordPage extends React.Component {
   }
 
   stopRecord(value) {
-    this.setState({stopStatus: value})
+    this.setState({ stopStatus: value })
   }
 
   render() {
@@ -128,14 +177,14 @@ class RecordPage extends React.Component {
                         <Row>
                           <Col xs={12} className='video-block'>
                             <Field component='input' type='hidden' name='experimenter_key' initialValue={this.state.experId} />
-                            <Field component='input' type='hidden' name='firstname' initialValue={this.state.experiment ? this.state.experiment.firstname : undefined } />
+                            <Field component='input' type='hidden' name='firstname' initialValue={this.state.experiment ? this.state.experiment.firstname : undefined} />
                             <Field component='input' type='hidden' name='lastname' initialValue={this.state.experiment ? this.state.experiment.lastname : undefined} />
                             <Row>
                               <Col xs={12} md={6} className='text-center'>
-                                <Camera uxerId={`${this.state.uxerId}`} projectId={`${this.state.projectId}`} stopStatus={this.state.stopStatus} />
+                                <Camera uxerId={`${this.state.uxerId}`} projectId={`${this.state.projectId}`} stopStatus={this.state.stopStatus} setParentCameraState={this.setParentCameraState} />
                               </Col>
                               <Col xs={12} md={6} className='text-center'>
-                                <Screen uxerId={`${this.state.uxerId}`} projectId={`${this.state.projectId}`} stopStatus={this.state.stopStatus} />
+                                <Screen uxerId={`${this.state.uxerId}`} projectId={`${this.state.projectId}`} stopStatus={this.state.stopStatus} setParentScreenState={this.setParentScreenState} />
                               </Col>
                             </Row>
                             <br />
