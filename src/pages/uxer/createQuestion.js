@@ -31,14 +31,19 @@ const SearchField = withStyles({
 class CreateQuestion extends React.Component {
   constructor(props) {
     super(props)
+    const { match } = props
     this.state = {
       questions: [
         'Text box',
       ],
       option: [
         'AddOption',
-      ]
-    };
+      ],
+      uxerId: match.params.id,
+      projectId: match.params.projId,
+      project: undefined,
+      experList: [],
+    }
   }
 
   addQuestion() {
@@ -50,23 +55,18 @@ class CreateQuestion extends React.Component {
     }
   }
 
-  // addOption() {
-  //   if (this.state.option) {
-  //     console.log('test function add')
-  //     const option = 'AddOption'
-  //     const options = this.state.options
-  //     // options.push(option)
-  //     // this.setState({ option })
-  //   }
-  // }
-
   render() {
+    const project = this.state.project
+    const experList = this.state.experList
+    const uxerId = this.state.uxerId
+    const projId = this.state.projectId
+
     return (
       <div>
         <NotSupport className='d-md-none' />
         <section id='questionnaire' className='d-none d-md-block'>
-          <NavbarUXer />
-          <SubNavbar />
+          <NavbarUXer title={`${project && project.name}`} />
+          <SubNavbar uxerId={`${uxerId}`} projId={`${projId}`} />
           <Container>
             <Row>
             </Row>
@@ -123,7 +123,7 @@ class CreateQuestion extends React.Component {
             ))} */}
 
 
-            
+
 
             <Row className='justify-content-center space-btn'>
               <Col xs={12} md={4} className='text-center'>
