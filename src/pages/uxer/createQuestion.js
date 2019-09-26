@@ -29,11 +29,20 @@ const SearchField = withStyles({
 
 class CreateQuestion extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
+    const { match } = props
     this.state = {
-      questions: ["Text box"],
-      option: ["AddOption"]
-    };
+      questions: [
+        'Text box',
+      ],
+      option: [
+        'AddOption',
+      ],
+      uxerId: match.params.id,
+      projectId: match.params.projId,
+      project: undefined,
+      experList: [],
+    }
   }
 
   addQuestion() {
@@ -46,12 +55,17 @@ class CreateQuestion extends React.Component {
   }
 
   render() {
+    const project = this.state.project
+    const experList = this.state.experList
+    const uxerId = this.state.uxerId
+    const projId = this.state.projectId
+
     return (
       <div>
-        <NotSupport className="d-md-none" />
-        <section id="questionnaire" className="d-none d-md-block">
-          <NavbarUXer />
-          <SubNavbar />
+        <NotSupport className='d-md-none' />
+        <section id='questionnaire' className='d-none d-md-block'>
+          <NavbarUXer title={`${project && project.name}`} />
+          <SubNavbar uxerId={`${uxerId}`} projId={`${projId}`} />
           <Container>
             <Row></Row>
             <Row className="questionnaire-block no-gutters">
@@ -105,12 +119,17 @@ class CreateQuestion extends React.Component {
                   </Col>
                 </Row>
               </Col>
-            </Row>
-            <Row className="justify-content-center space-btn">
-              <Col xs={12} md={4} className="text-center">
-                <Button className="btn-save-questionnaire" size="lg">
-                  Save Questionnaire
-                </Button>
+            </Row >
+
+            {/* {this.state.option.map(option => (
+              <>
+                <Option type={option} />
+              </>
+            ))} */}
+
+            <Row className='justify-content-center space-btn'>
+              <Col xs={12} md={4} className='text-center'>
+                <Button className='btn-save-questionnaire' size='lg'>Save Questionnaire</Button>
               </Col>
             </Row>
           </Container>

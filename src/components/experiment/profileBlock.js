@@ -4,6 +4,8 @@ import { Row, Col, FormGroup, Label, Input } from 'reactstrap'
 import { Field } from 'react-final-form'
 import countries from './cities.json'
 
+import universities from './universities.json'
+
 const normalizePhone = value => {
   if (!value) {
     return value
@@ -23,7 +25,8 @@ class ProfileBlock extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      country: ''
+      country: '',
+      university: ''
     }
   }
 
@@ -277,10 +280,22 @@ class ProfileBlock extends React.Component {
                               <Col xs={12} lg={8}>
                                 <Label className='w-100'>
                                   <Label className='w-100'>
-                                    <select {...input} name='gender' placeholder='Choose Your Gender' className='form-control' required>
-                                      <option value='' disabled>Choose Your Education</option>
-                                      <option value='School'>School</option>
-                                      <option value='University'>University</option>
+                                    <select
+                                      value={this.state.university}
+                                      onChange={event => {
+                                        this.setState({
+                                          university: event.target.value
+                                        })
+                                      }}
+                                      name='university'
+                                      placeholder='Choose Your university'
+                                      className='form-control'
+                                      required
+                                    >
+                                      <option value='' disabled>Choose Your university</option>
+                                      {universities.map(university => (
+                                        <option value={university.name}>{university.name}</option>
+                                      ))}
                                     </select>
                                   </Label>
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
