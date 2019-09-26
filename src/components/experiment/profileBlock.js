@@ -242,7 +242,12 @@ class ProfileBlock extends React.Component {
                               <Col xs={12} lg={8}>
                                 <Label className='w-100'>
                                   <Label className='w-100'>
-                                    <select {...input} name='city' placeholder='Choose Your Province/City' className='form-control' required>
+                                    <select {...input}
+                                      name='city'
+                                      placeholder='Choose Your Province/City'
+                                      className='form-control'
+                                      required
+                                    >
                                       <option value='' disabled>Choose Your Province/City</option>
                                       {this.state.country && countries.filter(country => {
                                         return country.country_name === this.state.country
