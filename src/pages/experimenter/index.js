@@ -49,8 +49,22 @@ class IndexExperiment extends React.Component {
     this.state = {
       uxerId: '8t6UN47Z749qacrEvZ8O',
       projectId: 'a89OdndRvNEoasnHXfhu',
-      project: undefined
+      project: undefined,
+      country: '',
+      university: ''
     }
+  }
+
+  setCountry(value) {
+    this.setState({
+      country: value
+    })
+  }
+
+  setUniversity(value) {
+    this.setState({
+      university: value
+    })
   }
 
   async componentDidMount() {
@@ -76,18 +90,20 @@ class IndexExperiment extends React.Component {
       const prepareEducate = newValue.educate ? newValue.educate : ''
       const prepareJob = newValue.job ? newValue.job : ''
       const prepareLifestyle = newValue.lifestyle ? newValue.lifestyle : ''
-     
+
       newValue.educate = prepareEducate
       newValue.job = prepareJob
       newValue.lifestyle = prepareLifestyle
       newValue.country = this.state.country
       newValue.university = this.state.university
+      console.log('value : ', newValue)
 
       const response = await axios.post(`${APIURI.EXPERIMENTER}add/`, newValue)
       if (response.status !== 201) {
         throw new Error('CANNOT CREATE EXPERIMENTER')
       }
       this.props.history.push(`/experimenter/${response.data.experimenter.id}/record`)
+   
     } catch (e) {
       console.error(e)
     }
@@ -122,7 +138,12 @@ class IndexExperiment extends React.Component {
                       <form onSubmit={handleSubmit}>
                         <Row>
                           <Col xs={12}>
-                            <ProfileBlock />
+                            <ProfileBlock
+                              country={this.state.country}
+                              setCountry={value => this.setCountry(value)}
+                              university={this.state.university}
+                              setUniversity={value => this.setUniversity(value)}
+                            />
                           </Col>
                         </Row>
                         <Row className='justify-content-center space-btn'>

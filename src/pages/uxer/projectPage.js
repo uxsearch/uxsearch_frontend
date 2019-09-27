@@ -91,6 +91,29 @@ class ProjectPage extends React.Component {
     }
   }
 
+  submitCreateProject = async (values) => {
+    try {
+      const newValue = { ...values }
+      const prepareName = newValue.Name ? newValue.Name : ''
+      const prepareFile_url = newValue.File_url ? newValue.File_url : ''
+    
+      newValue.Name  = prepareName 
+      newValue.File_url = prepareFile_url
+    
+      const response = await axios.post(`${APIURI.UXER}add/`, newValue)
+      if (response.status !== 201) {
+        throw new Error('CANNOT CREATE UXER')
+      }
+      this.props.history.push(`/projects/${response.uxerId}/record`)
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+
+
+
+
   render() {
     const projectList = this.state.projectList
     return (
@@ -238,7 +261,7 @@ class ProjectPage extends React.Component {
                       <br />
                       <Row className='justify-content-center'>
                         <Col xs={12}>
-                          <Button className='w-100 create-project-btn'>Create Project</Button>
+                          <Button className='w-100 create-project-btn'  >Create Project</Button>
                         </Col>
                       </Row>
                     </Col>

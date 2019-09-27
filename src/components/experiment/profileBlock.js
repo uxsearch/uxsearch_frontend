@@ -22,18 +22,6 @@ const normalizePhone = value => {
 };
 
 class ProfileBlock extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      country: '',
-      university: ''
-    }
-  }
-
-  componentDidUpdate() {
-    console.log('state : ', this.state)
-  }
-
   render() {
     return (
       <div className='profile-block'>
@@ -206,11 +194,9 @@ class ProfileBlock extends React.Component {
                                 <Label className='w-100'>
                                   <Label className='w-100'>
                                     <select
-                                      value={this.state.country}
+                                      value={this.props.country}
                                       onChange={event => {
-                                        this.setState({
-                                          country: event.target.value
-                                        })
+                                        this.props.setCountry(event.target.value)
                                       }}
                                       name='country'
                                       placeholder='Choose Your Country'
@@ -249,8 +235,8 @@ class ProfileBlock extends React.Component {
                                       required
                                     >
                                       <option value='' disabled>Choose Your Province/City</option>
-                                      {this.state.country && countries.filter(country => {
-                                        return country.country_name === this.state.country
+                                      {this.props.country && countries.filter(country => {
+                                        return country.country_name === this.props.country
                                       })[0].cities.map(city => (
                                         <option>{city}</option>
                                       ))}
@@ -286,11 +272,9 @@ class ProfileBlock extends React.Component {
                                 <Label className='w-100'>
                                   <Label className='w-100'>
                                     <select
-                                      value={this.state.university}
+                                      value={this.props.university}
                                       onChange={event => {
-                                        this.setState({
-                                          university: event.target.value
-                                        })
+                                        this.props.setUniversity(event.target.value)
                                       }}
                                       name='university'
                                       placeholder='Choose Your university'
