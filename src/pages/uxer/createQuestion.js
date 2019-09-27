@@ -120,13 +120,6 @@ class CreateQuestion extends React.Component {
                 </Row>
               </Col>
             </Row >
-
-            {/* {this.state.option.map(option => (
-              <>
-                <Option type={option} />
-              </>
-            ))} */}
-
             <Row className='justify-content-center space-btn'>
               <Col xs={12} md={4} className='text-center'>
                 <Button className='btn-save-questionnaire' size='lg'>Save Questionnaire</Button>

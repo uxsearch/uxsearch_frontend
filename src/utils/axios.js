@@ -1,8 +1,9 @@
 import axios from 'axios'
+require('dotenv').config()
 
 function createApiInstance(headers) {
   return axios.create({
-    baseURL: 'http://localhost:3000/api/',
+    baseURL: process.env.REACT_APP_API_URL,
     headers
   })
 }
