@@ -1,8 +1,10 @@
 import React from 'react'
-import { Container, Row, Col, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalBody, Button } from 'reactstrap'
+import { Redirect } from 'react-router'
+import { Form, Field } from 'react-final-form'
+import { Container, Row, Col, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalBody, Button, Label } from 'reactstrap'
 import { TextField, withStyles } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faBook, faLink, faPlusCircle, faCircle, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faBook, faLink, faCircle, faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
@@ -55,6 +57,7 @@ class ProjectPage extends React.Component {
       projectList: [],
       sortDropdownOpen: false,
       modal: false,
+      redirect: false
     };
   }
 
@@ -92,30 +95,29 @@ class ProjectPage extends React.Component {
   }
 
   submitCreateProject = async (values) => {
+    console.log('value', values)
     try {
-      const newValue = { ...values }
-      const prepareName = newValue.Name ? newValue.Name : ''
-      const prepareFile_url = newValue.File_url ? newValue.File_url : ''
-    
-      newValue.Name  = prepareName 
-      newValue.File_url = prepareFile_url
-    
-      const response = await axios.post(`${APIURI.UXER}add/`, newValue)
+      const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}add/`, values)
+        .then(result => {
+          this.setState({ redirect: true })
+          return result
+        })
+      console.log(response)
       if (response.status !== 201) {
         throw new Error('CANNOT CREATE UXER')
       }
-      this.props.history.push(`/projects/${response.uxerId}/record`)
+      this.props.history.push(`/${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${response.data.projects.id}/experiments`)
     } catch (e) {
       console.error(e)
     }
   }
 
-
-
-
-
   render() {
     const projectList = this.state.projectList
+    const redirect = this.state.redirect;
+
+    // if (redirect) return <Redirect to={`/${APIURI.UXER}${this.state.uxerId}/${APIURI.PROJECT}`} />
+
     return (
       <div>
         <section id='project-page'>
@@ -124,9 +126,9 @@ class ProjectPage extends React.Component {
             <Row>
               <Col xs={11} sm={10} md={11}>
               </Col>
-              <Col xs={1} sm={2} md={1}>
-                <FontAwesomeIcon onClick={this.toggleModal} icon={faCircle} size='3x' color='#28a1f2' className='circle' />
-                <FontAwesomeIcon onClick={this.toggleModal} icon={faPlus} size='1x' color='#fff' className='plus' />
+              <Col xs={1} sm={2} md={1} onClick={this.toggleModal}>
+                <FontAwesomeIcon icon={faCircle} size='3x' color='#28a1f2' className='circle' />
+                <FontAwesomeIcon icon={faPlus} size='1x' color='#fff' className='plus' />
               </Col>
             </Row>
             <Row className='space-head-block justify-content-center align-items-end'>
@@ -209,65 +211,105 @@ class ProjectPage extends React.Component {
         <section id='create-modal'>
           <Modal isOpen={this.state.modal} toggle={this.toggleModal} className='modal-dialog-centered'>
             <ModalBody>
-              <Row>
-                <Col xs={12}>
-                  <Row className='justify-content-center'>
-                    <Col xs={12} className='text-center img-block'>
-                      <img
-                        src='https://picsum.photos/500/300'
-                        className='cover-size'
-                        alt='Project Cover'
-                      ></img>
-                    </Col>
-                  </Row>
-                  <Row className='justify-content-center'>
-                    <Col xs={12}>
-                      <Row className='justify-content-center'>
-                        <Col xs={12} md={11}>
-                          <Row className='justify-content-center align-items-end no-gutters'>
-                            <Col xs={2} className='text-center'>
-                              <FontAwesomeIcon icon={faBook} size='1x' color='#303030' />
-                            </Col>
-                            <Col xs={10}>
-                              <TextInput
-                                id='standard-name'
-                                label='Project Name'
-                                type='text'
-                                className='w-100 create-form space-bottom'
-                                margin='normal'
-                              />
-                            </Col>
-                          </Row>
-                        </Col>
-                      </Row>
-                      <Row className='justify-content-center'>
-                        <Col xs={12} md={11}>
-                          <Row className='justify-content-center align-items-end no-gutters'>
-                            <Col xs={2} className='text-center'>
-                              <FontAwesomeIcon icon={faLink} size='1x' color='#303030' />
-                            </Col>
-                            <Col xs={10}>
-                              <TextInput
-                                id='standard-link'
-                                label='Link Path'
-                                type='text'
-                                className='w-100 create-form space-bottom'
-                                margin='normal'
-                              />
-                            </Col>
-                          </Row>
-                        </Col>
-                      </Row>
-                      <br />
-                      <Row className='justify-content-center'>
+              <Form
+                onSubmit={this.submitCreateProject}
+                render={({
+                  handleSubmit, form, submitting, pristine
+                }) => (
+                    <form onSubmit={handleSubmit}>
+                      <Row>
                         <Col xs={12}>
-                          <Button className='w-100 create-project-btn'  >Create Project</Button>
+                          <Field component='input' type='hidden' name='cover_url' initialValue={`https://picsum.photos/500/300`} />
+                          <Row className='justify-content-center'>
+                            <Col xs={12} className='text-center img-block'>
+                              <img
+                                src='https://picsum.photos/500/300'
+                                className='cover-size'
+                                alt='Project Cover'
+                              ></img>
+                            </Col>
+                          </Row>
+                          <Row className='justify-content-center'>
+                            <Col xs={12}>
+                              <Row className='justify-content-center'>
+                                <Col xs={12} md={11}>
+                                  <Row className='justify-content-center align-items-end no-gutters'>
+                                    <Col xs={2} className='text-center'>
+                                      <FontAwesomeIcon icon={faBook} size='1x' color='#303030' />
+                                    </Col>
+                                    <Col xs={10} className='text-center'>
+                                      <Field name='name' type='text'>
+                                        {({ input, meta }) => (
+                                          <>
+                                            <Row className='align-items-center'>
+
+                                              <Col xs={12}>
+                                                <Label className='w-100'>
+                                                  <TextInput {...input}
+                                                    id='standard-name'
+                                                    label='Project Name'
+                                                    type='text'
+                                                    className='w-100 create-form space-bottom'
+                                                    margin='normal'
+                                                    required
+                                                  />
+                                                  {meta.touched && meta.error && <span>{meta.error}</span>}
+                                                </Label>
+                                              </Col>
+                                            </Row>
+                                          </>
+                                        )}
+                                      </Field>
+                                    </Col>
+                                  </Row>
+                                </Col>
+                              </Row>
+                              <Row className='justify-content-center'>
+                                <Col xs={12} md={11}>
+                                  <Row className='justify-content-center align-items-end no-gutters'>
+                                    <Col xs={2} className='text-center'>
+                                      <FontAwesomeIcon icon={faLink} size='1x' color='#303030' />
+                                    </Col>
+                                    <Col xs={10} className='text-center'>
+                                      <Field name='file_url' type='text'>
+                                        {({ input, meta }) => (
+                                          <>
+                                            <Row className='align-items-center'>
+
+                                              <Col xs={12}>
+                                                <Label className=' w-100'>
+                                                  <TextInput {...input}
+                                                    id='standard-link'
+                                                    label='Link Path'
+                                                    type='text'
+                                                    className='w-100 create-form space-bottom'
+                                                    margin='normal'
+                                                    required
+                                                  />
+                                                  {meta.touched && meta.error && <span>{meta.error}</span>}
+                                                </Label>
+                                              </Col>
+                                            </Row>
+                                          </>
+                                        )}
+                                      </Field>
+                                    </Col>
+                                  </Row>
+                                </Col>
+                              </Row>
+                              <br />
+                              <Row className='justify-content-center'>
+                                <Col xs={12}>
+                                  <Button className='w-100 create-project-btn' type='submit' >Create Project</Button>
+                                </Col>
+                              </Row>
+                            </Col>
+                          </Row>
                         </Col>
                       </Row>
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
+                    </form>
+                  )}
+              />
             </ModalBody>
           </Modal>
         </section>
