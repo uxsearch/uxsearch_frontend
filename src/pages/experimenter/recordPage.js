@@ -1,7 +1,6 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { Container, Row, Col, Button } from 'reactstrap'
-import { Input } from 'reactstrap'
 import { Form, Field } from 'react-final-form'
 import swal from 'sweetalert'
 
@@ -15,6 +14,7 @@ import NotSupport from '../../components/utils/notSupport'
 
 import '../../static/sass/experimenter/record.scss'
 import { delay } from '../../utils/delay'
+
 const modalSubmit = () => {
   swal({
     title: "Are you sure?",

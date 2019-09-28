@@ -54,17 +54,13 @@ class VideoResult extends React.Component {
               <Row className='align-items-center justify-content-center'>
                 <Col xs={3} sm={4} xl={3}>
                   <div className='profile-block'>
-                    <img
-                      src='https://picsum.photos/200/300'
-                      alt='Profile Picture'
-                      className='profile-img'
-                    />
+                    <img src='https://picsum.photos/200/300' alt='Profile Picture' className='profile-img' />
                   </div>
                 </Col>
                 <Col xs={9} sm={8} xl={9}>
                   <Row>
                     <Col xs={12}>
-                      <p className='no-margin exper-name'>{experiment && `${experiment.firstname}` + ` ` + `${experiment.lastname}`}</p>
+                      <p className='no-margin exper-name'>{experiment && `${experiment.firstname} ${experiment.lastname}`}</p>
                     </Col>
                   </Row>
                   <Row className='d-sm-none space-btn-mobile'>
@@ -85,7 +81,7 @@ class VideoResult extends React.Component {
           {experiment &&
             <>
               <ExperProfile
-                name={`${experiment.firstname}` + ` ` + `${experiment.lastname}`}
+                name={`${experiment.firstname} ${experiment.lastname}`}
                 age={this.getAge(new Date(experiment.birthdate.seconds * 1000))}
                 gender={`${experiment.gender}`}
                 tel={`${experiment.tel}`}

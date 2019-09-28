@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, NavbarToggler, Nav, NavItem, NavLink } from 'reactstrap'
+import { Nav, NavItem, NavLink } from 'reactstrap'
 import { Container, Row, Col } from 'reactstrap'
 
 class SubNavbar extends React.Component {

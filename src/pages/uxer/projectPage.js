@@ -95,14 +95,12 @@ class ProjectPage extends React.Component {
   }
 
   submitCreateProject = async (values) => {
-    console.log('value', values)
     try {
       const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}add/`, values)
         .then(result => {
           this.setState({ redirect: true })
           return result
         })
-      console.log(response)
       if (response.status !== 201) {
         throw new Error('CANNOT CREATE UXER')
       }
