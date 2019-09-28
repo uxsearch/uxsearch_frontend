@@ -3,10 +3,10 @@ import { Row, Col, Label, Input } from 'reactstrap'
 
 class ExperProfile extends React.Component {
 	constructor(props) {
-		super(props);
+		super(props)
 	}
 
-	render(props) {
+	render() {
 		return (
 			<Row>
 				<Col xs={12} className='bg-experprofile'>

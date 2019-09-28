@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter } from "react-router"
 import { Container, Row, Col, Button } from 'reactstrap'
-import { Form, Field } from 'react-final-form'
+import { Form } from 'react-final-form'
 import swal from 'sweetalert'
 
 import axios from '../../utils/axios'

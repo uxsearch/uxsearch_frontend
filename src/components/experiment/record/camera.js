@@ -1,5 +1,4 @@
 import React from 'react'
-import { Field } from 'react-final-form'
 
 import videojs from 'video.js'
 import RecordRTC from 'recordrtc'
@@ -7,9 +6,6 @@ import Record from 'videojs-record/dist/videojs.record'
 import 'webrtc-adapter'
 import '../../../../node_modules/videojs-record/dist/css/videojs.record.css'
 import '../../../../node_modules/video.js/dist/video-js.css'
-
-import axios from '../../../utils/axios'
-import APIURI from '../../../utils/apiuri'
 
 const CameraOptions = {
   controls: {
