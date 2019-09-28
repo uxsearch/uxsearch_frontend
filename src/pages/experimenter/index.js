@@ -94,16 +94,12 @@ class IndexExperiment extends React.Component {
       newValue.educate = prepareEducate
       newValue.job = prepareJob
       newValue.lifestyle = prepareLifestyle
-      newValue.country = this.state.country
-      newValue.university = this.state.university
       console.log('value : ', newValue)
-
       const response = await axios.post(`${APIURI.EXPERIMENTER}add/`, newValue)
       if (response.status !== 201) {
         throw new Error('CANNOT CREATE EXPERIMENTER')
       }
       this.props.history.push(`/experimenter/${response.data.experimenter.id}/record`)
-   
     } catch (e) {
       console.error(e)
     }
@@ -141,8 +137,6 @@ class IndexExperiment extends React.Component {
                             <ProfileBlock
                               country={this.state.country}
                               setCountry={value => this.setCountry(value)}
-                              university={this.state.university}
-                              setUniversity={value => this.setUniversity(value)}
                             />
                           </Col>
                         </Row>
