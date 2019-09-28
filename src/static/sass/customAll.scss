@@ -8,6 +8,18 @@ body {
   background-color: $light;
 }
 
+.no-margin{
+  margin: 0px;
+}
+
+.space{
+  margin-bottom: 10px;
+}
+
+::placeholder {
+  color:#ccc !important;
+}
+
 // Swal
 
 .swal-footer {
