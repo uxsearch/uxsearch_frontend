@@ -3,7 +3,7 @@ import { Row, Col, FormGroup, Label, Input } from 'reactstrap'
 import { Field } from 'react-final-form'
 import countries from './cities.json'
 
-import '../../static/sass/customAll.scss'
+import '../../static/sass/experimenter/index.scss'
 
 const normalizePhone = value => {
   if (!value) {
