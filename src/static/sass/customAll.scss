@@ -6,6 +6,10 @@ body {
   font-weight: 400;
   font-family: $font !important;
   background-color: $light;
+
+  ::placeholder {
+    color:#ccc !important;
+  }
 }
 
 .no-margin{
@@ -16,12 +20,7 @@ body {
   margin-bottom: 10px;
 }
 
-::placeholder {
-  color:#ccc !important;
-}
-
 // Swal
-
 .swal-footer {
   text-align: center;
 }
