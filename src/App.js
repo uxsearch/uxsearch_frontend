@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Link, BrowserRouter as Router, Switch, withRouter } from 'react-router-dom'
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import Test from './pages/experimenter/test'
 import IndexExperiment from './pages/experimenter/index'
 import Answer from './pages/experimenter/answer'

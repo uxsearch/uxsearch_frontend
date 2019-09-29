@@ -41,7 +41,6 @@ class CreateQuestion extends React.Component {
       uxerId: match.params.id,
       projectId: match.params.projId,
       project: undefined,
-      experList: [],
     }
   }
 
@@ -56,7 +55,6 @@ class CreateQuestion extends React.Component {
 
   render() {
     const project = this.state.project
-    const experList = this.state.experList
     const uxerId = this.state.uxerId
     const projId = this.state.projectId
 
