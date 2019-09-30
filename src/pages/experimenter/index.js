@@ -91,6 +91,7 @@ class IndexExperiment extends React.Component {
       const prepareJob = newValue.job ? newValue.job : ''
       const prepareLifestyle = newValue.lifestyle ? newValue.lifestyle : ''
 
+      newValue.country = this.state.country
       newValue.educate = prepareEducate
       newValue.job = prepareJob
       newValue.lifestyle = prepareLifestyle
