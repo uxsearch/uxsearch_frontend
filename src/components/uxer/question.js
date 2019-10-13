@@ -206,6 +206,7 @@ class Question extends React.Component {
                                 </Col>
                               </>
                             )}
+
                             <Col xs={1}>
                               <FontAwesomeIcon
                                 icon={faTimesCircle}
@@ -222,7 +223,19 @@ class Question extends React.Component {
                             </Col>
                           </Row>
                         ))}
-                        <span onClick={() => this.addOption()} >AddOption</span>
+
+                        <Row className='no-margin w-100 '>
+                          <Col xs={1}>
+                            <FontAwesomeIcon icon={faCircle} size='2x' color='#ced4da' className='icon-mul-check' />
+                          </Col>
+                          <Col xs={10}>
+                            <Form>
+                              <FormGroup>
+                                <span onClick={() => this.addOption()} className='underline'>AddOption</span>
+                              </FormGroup>
+                            </Form>
+                          </Col>
+                        </Row>
                       </Col>
                     </Row>
                   </FormGroup>
@@ -232,97 +245,99 @@ class Question extends React.Component {
           </>
         }
 
-        {type === 'Check box' && (
-          <>
-            <Row className='question-block'>
-              <Col xs={12}>
-                <Form>
-                  <FormGroup>
-                    <Row className='justify-content-center'>
-                      <Col xs={12} className='text-center'>
-                        <FontAwesomeIcon icon={faGripLines} size='2x' color='#efefef' />
-                      </Col>
-                    </Row>
-                    <br />
-                    <Row>
-                      <Col xs={12}>
-                        <Row className='no-margin w-100'>
-                          <Col xs={12} md={6} lg={8}>
-                            <SearchField
-                              id='standard-search'
-                              label='Question'
-                              type='search'
-                              className='w-100 no-margin'
-                              margin='normal'
-                            />
-                          </Col>
-                          <Col xs={12} md={6} lg={4} className='text-center space-top-btn'>
-                            <Dropdown
-                              isOpen={this.state.isOpen}
-                              toggle={() => { this.setState({ isOpen: !this.state.isOpen }); }}
-                            >
-                              <DropdownToggle
-                                tag='Dropdown'
-                                onClick={this.toggleSort}
-                                data-toggle='dropdown'
-                                aria-expanded={this.state.isOpen}
+        {
+          type === 'Check box' && (
+            <>
+              <Row className='question-block'>
+                <Col xs={12}>
+                  <Form>
+                    <FormGroup>
+                      <Row className='justify-content-center'>
+                        <Col xs={12} className='text-center'>
+                          <FontAwesomeIcon icon={faGripLines} size='2x' color='#efefef' />
+                        </Col>
+                      </Row>
+                      <br />
+                      <Row>
+                        <Col xs={12}>
+                          <Row className='no-margin w-100'>
+                            <Col xs={12} md={6} lg={8}>
+                              <SearchField
+                                id='standard-search'
+                                label='Question'
+                                type='search'
+                                className='w-100 no-margin'
+                                margin='normal'
+                              />
+                            </Col>
+                            <Col xs={12} md={6} lg={4} className='text-center space-top-btn'>
+                              <Dropdown
+                                isOpen={this.state.isOpen}
+                                toggle={() => { this.setState({ isOpen: !this.state.isOpen }); }}
                               >
-                                <Col xs={12} md={12}>
-                                  <Dropdown className='btn-multiple'><FontAwesomeIcon icon={faSquare} size='1x' color='#efefef' className='textHeight' />CheckBox
+                                <DropdownToggle
+                                  tag='Dropdown'
+                                  onClick={this.toggleSort}
+                                  data-toggle='dropdown'
+                                  aria-expanded={this.state.isOpen}
+                                >
+                                  <Col xs={12} md={12}>
+                                    <Dropdown className='btn-multiple'><FontAwesomeIcon icon={faSquare} size='1x' color='#efefef' className='textHeight' />CheckBox
                                   <FontAwesomeIcon icon={faSortDown} size='1x' color='#efefef' className='sortdown-check' />
-                                  </Dropdown>
-                                </Col>
-                              </DropdownToggle>
-                              <DropdownMenu className='btn-secondary indropdown text-center '>
-                                <DropdownItem onClick={() => this.setState({ type: 'Text box' })}>
-                                  <Dropdown>Text box</Dropdown>
-                                </DropdownItem>
-                                <DropdownItem onClick={() => this.setState({ type: 'Multiple choice' })}>
-                                  <Dropdown>Multiple Choice</Dropdown>
-                                </DropdownItem>
-                              </DropdownMenu>
-                            </Dropdown>
-                          </Col>
-                        </Row>
-                        <br />
-                        <Row className='no-margin w-100'>
-                          <Col xs={1}>
-                            <FontAwesomeIcon icon={faSquare} size='2x' color='#ced4da' className='icon-mul-check' />
-                          </Col>
-                          <Col xs={10} className='choice'>
-                            <Form>
-                              <FormGroup>
-                                <Input type='multiple' name='choice1' id='exampleMultiple' placeholder='Choice1' />
-                              </FormGroup>
-                            </Form>
-                          </Col>
-                          <Col xs={1}>
-                            <FontAwesomeIcon icon={faTimesCircle} size='2x' color='#909090' className='icon-delete' />
-                          </Col>
-                        </Row>
-                        <Row className='no-margin w-100'>
-                          <Col xs={1}>
-                            <FontAwesomeIcon icon={faSquare} size='2x' color='#ced4da' className='icon-mul-check' />
-                          </Col>
-                          <Col xs={10} className='choice'>
-                            <Form>
-                              <FormGroup>
-                                <Input type='multiple' name='choice5' id='exampleMultiple' placeholder='AddOption' />
-                              </FormGroup>
-                            </Form>
-                          </Col>
-                          <Col xs={1}>
-                            <FontAwesomeIcon icon={faTimesCircle} size='2x' color='#909090' className='icon-delete' />
-                          </Col>
-                        </Row>
-                      </Col>
-                    </Row>
-                  </FormGroup>
-                </Form>
-              </Col>
-            </Row>
-          </>
-        )}
+                                    </Dropdown>
+                                  </Col>
+                                </DropdownToggle>
+                                <DropdownMenu className='btn-secondary indropdown text-center '>
+                                  <DropdownItem onClick={() => this.setState({ type: 'Text box' })}>
+                                    <Dropdown>Text box</Dropdown>
+                                  </DropdownItem>
+                                  <DropdownItem onClick={() => this.setState({ type: 'Multiple choice' })}>
+                                    <Dropdown>Multiple Choice</Dropdown>
+                                  </DropdownItem>
+                                </DropdownMenu>
+                              </Dropdown>
+                            </Col>
+                          </Row>
+                          <br />
+                          <Row className='no-margin w-100'>
+                            <Col xs={1}>
+                              <FontAwesomeIcon icon={faSquare} size='2x' color='#ced4da' className='icon-mul-check' />
+                            </Col>
+                            <Col xs={10} className='choice'>
+                              <Form>
+                                <FormGroup>
+                                  <Input type='multiple' name='choice1' id='exampleMultiple' placeholder='Choice1' />
+                                </FormGroup>
+                              </Form>
+                            </Col>
+                            <Col xs={1}>
+                              <FontAwesomeIcon icon={faTimesCircle} size='2x' color='#909090' className='icon-delete' />
+                            </Col>
+                          </Row>
+                          <Row className='no-margin w-100'>
+                            <Col xs={1}>
+                              <FontAwesomeIcon icon={faSquare} size='2x' color='#ced4da' className='icon-mul-check' />
+                            </Col>
+                            <Col xs={10} className='choice'>
+                              <Form>
+                                <FormGroup>
+                                  <Input type='multiple' name='choice5' id='exampleMultiple' placeholder='AddOption' />
+                                </FormGroup>
+                              </Form>
+                            </Col>
+                            <Col xs={1}>
+                              <FontAwesomeIcon icon={faTimesCircle} size='2x' color='#909090' className='icon-delete' />
+                            </Col>
+                          </Row>
+                        </Col>
+                      </Row>
+                    </FormGroup>
+                  </Form>
+                </Col>
+              </Row>
+            </>
+          )
+        }
       </>
     )
   }
