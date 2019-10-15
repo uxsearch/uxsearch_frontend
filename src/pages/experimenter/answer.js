@@ -1,7 +1,10 @@
 import React from 'react'
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
+import { withRouter } from 'react-router-dom'
+import { Container, Row, Col, Button, Label, Input } from 'reactstrap'
+import { Form, Field } from 'react-final-form'
+import { FieldArray } from 'react-final-form-arrays'
+import arrayMutators from 'final-form-arrays'
 import { Checkbox, Radio, RadioGroup, FormControlLabel, withStyles } from '@material-ui/core'
-import { Container, Row, Col } from 'reactstrap'
 
 import NavbarExp from '../../components/utils/navbarExperimenter'
 import NotSupport from '../../components/utils/notSupport'
@@ -19,7 +22,7 @@ const RadioButton = withStyles({
     fontFamily: 'Muli'
   },
   checked: {},
-})(props => <Radio color="default" {...props} />);
+})(props => <Radio color='default' {...props} />);
 
 const CheckboxButton = withStyles({
   root: {
@@ -27,9 +30,32 @@ const CheckboxButton = withStyles({
     '&$checked': {
       color: '#28a1f2',
     },
+    fontFamily: 'Muli'
   },
   checked: {},
-})(props => <Checkbox color="default" classes='radio-text' {...props} />);
+})(props => <Checkbox color='default' className='MuiFormControlLabel-root no-margin-right' {...props} />)
+
+const CheckboxGroup = ({ fields, options }) => {
+  const toggle = (event, option) => {
+    if (event.target.checked) fields.push(option);
+    else fields.remove(option);
+  }
+
+  return (
+    <div>
+      <>
+        {options.map(option => (
+          <div key={option.id} className=''>
+            <Label className='no-margin w-100'>
+              <CheckboxButton value={option.data.option} onChange={event => toggle(event, option.data.option)} />
+              <span className='text-checkbox'>{option.data.option}</span>
+            </Label>
+          </div>
+        ))}
+      </>
+    </div>
+  );
+}
 
 class Answer extends React.Component {
   constructor(props) {
@@ -39,17 +65,31 @@ class Answer extends React.Component {
       uxerId: '8t6UN47Z749qacrEvZ8O',
       projectId: 'a89OdndRvNEoasnHXfhu',
       experId: match.params.experId,
+      project: undefined,
       questionnaire: [],
     }
   }
 
   async componentDidMount() {
+    this.getProject()
     this.getQuestionnaire()
+  }
+
+  submitQuestionnaire = async (values) => {
+    try {
+      const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.EXPERIMENTER}${this.state.experId}/answer-question/update/`, values)
+      if(response.status !== 200) {
+        throw new Error('CANNOT SUBMIT QUESTIONNAIRE')
+      }
+      this.props.history.push(`/experimenter/${this.state.experId}/thanks`)
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   getQuestionnaire = async (props) => {
     try {
-      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/test-note`)
+      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/questionnaire`)
       if (response.status !== 200) {
         throw new Error('CANNOT GET QUESTIONNAIRE')
       }
@@ -59,8 +99,20 @@ class Answer extends React.Component {
     }
   }
 
+  getProject = async (props) => {
+    try {
+      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}`)
+      if (response.status !== 200) {
+        throw new Error('CANNOT GET PROJECT')
+      }
+      this.setState({ project: response.data.data })
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   render() {
-    const questionnaire = this.state.questionnaire
+    const { questionnaire, project } = this.state
     return (
       <div>
         <NotSupport className='d-md-none' />
@@ -71,7 +123,7 @@ class Answer extends React.Component {
               <Col xs={12}>
                 <Row className='space-head-block'>
                   <Col xs={12}>
-                    <p className='title'>UX Search Prototype <span>Questionnaire</span></p>
+                    <p className='title'>'{project && `${project.name}`}' <span>Questionnaire</span></p>
                   </Col>
                 </Row>
                 <Row>
@@ -80,70 +132,93 @@ class Answer extends React.Component {
                   </Col>
                 </Row>
                 <br />
-                <Row>
-                  <Col xs={12} className='answer-block'>
-                    <Form>
-                      {questionnaire.map(question => (
-                        <>
-                          <FormGroup>
-                            <Row>
-                              <Col xs={12}>
-                                <Label className='no-margin w-100'>
-                                  <Row>
-                                    <Col xs={12}>
-                                      <p className='question'>{question.data.question.question}</p>
-                                    </Col>
-                                  </Row>
-                                  <Row>
-                                    <Col xs={12}>
-                                      {question.data.question.type_form === 'textbox' &&
-                                        <Input type='textarea' name='answer1' rows="4" className='text-style' />
-                                      }
-                                      {question.data.question.type_form === 'multiple' &&
-                                        <>
-                                          <RadioGroup
-                                            aria-label="answer2"
-                                            name="answer2"
-                                          >
-                                            {question.data.options.map(option => (
-                                              <>
-                                                <FormControlLabel value={option.data.option} control={<RadioButton />} label={option.data.option} />
-                                              </>
-                                            ))}
-                                          </RadioGroup>
-                                        </>
-                                      }
-                                      {question.data.question.type_form === 'checkbox' &&
-                                        <>
-                                          {question.data.options.map(option => (
+                <Form
+                  onSubmit={this.submitQuestionnaire}
+                  mutators={{ ...arrayMutators }}
+                  render={({
+                    handleSubmit, form, submitting, pristine
+                  }) => (
+                      <form onSubmit={handleSubmit}>
+                        <Row>
+                          <Col xs={12} className='answer-block'>
+                            {questionnaire.map((question, index) => (
+                              <>
+                                <Row key={question.id}>
+                                  <Col xs={12}>
+                                    <Label className='no-margin w-100'>
+                                      <Row>
+                                        <Col xs={12}>
+                                          <Field component='input' type='hidden' name={`answers[${index}][question_key]`} initialValue={question.id} />
+                                          <p className='question'>{question.data.question.question}</p>
+                                        </Col>
+                                      </Row>
+                                      <Row>
+                                        <Col xs={12}>
+                                          {question.data.question.type_form === 'textbox' &&
+                                            <Field name={`answers[${index}][answer]`} type='textarea'>
+                                              {({ input, meta }) => (
+                                                <>
+                                                  <Row className='align-items-center'>
+                                                    <Col xs={12}>
+                                                      <Label className=' w-100'>
+                                                        <Input {...input} rows='4' className='text-style' />
+                                                        {meta.touched && meta.error && <span>{meta.error}</span>}
+                                                      </Label>
+                                                    </Col>
+                                                  </Row>
+                                                </>
+                                              )}
+                                            </Field>
+                                          }
+                                          {question.data.question.type_form === 'multiple' &&
                                             <>
-                                              <FormGroup className='no-margin'>
-                                                <FormControlLabel
-                                                  control={<CheckboxButton value={option.data.option} />}
-                                                  label={option.data.option}
-                                                />
-                                              </FormGroup>
+                                              <RadioGroup
+                                                aria-label='answer'
+                                                name={`answers[${index}][answer]`}
+                                              >
+                                                {question.data.options.map(option => (
+                                                  <>
+                                                    <Field name={`answers[${index}][answer]`} type='text' key={option.id}>
+                                                      {({ input, meta }) => (
+                                                        <>
+                                                          <FormControlLabel {...input} value={option.data.option} control={<RadioButton />} label={option.data.option} />
+                                                          {meta.touched && meta.error && <span>{meta.error}</span>}
+                                                        </>
+                                                      )}
+                                                    </Field>
+                                                  </>
+                                                ))}
+                                              </RadioGroup>
                                             </>
-                                          ))}
-                                        </>
-                                      }
-                                    </Col>
-                                  </Row>
-                                </Label>
-                              </Col>
-                            </Row>
-                          </FormGroup>
-                          <br />
-                        </>
-                      ))}
-                    </Form>
-                  </Col>
-                </Row>
-                <Row className='justify-content-center space-btn'>
-                  <Col xs={12} md={4} className='text-center'>
-                    <Button className='btn-submit-test'>Submit</Button>
-                  </Col>
-                </Row>
+                                          }
+                                          {question.data.question.type_form === 'checkbox' &&
+                                            <>
+                                              <FieldArray
+                                                name={`answers[${index}][answer]`}
+                                                component={CheckboxGroup}
+                                                options={question.data.options}
+                                                className='MuiFormControlLabel-root'
+                                              />
+                                            </>
+                                          }
+                                        </Col>
+                                      </Row>
+                                    </Label>
+                                  </Col>
+                                </Row>
+                                <br />
+                              </>
+                            ))}
+                          </Col>
+                        </Row>
+                        <Row className='justify-content-center space-btn'>
+                          <Col xs={12} md={4} className='text-center'>
+                            <Button className='btn-submit-test'>Submit</Button>
+                          </Col>
+                        </Row>
+                      </form>
+                    )}
+                />
               </Col>
             </Row>
           </Container>
@@ -153,4 +228,4 @@ class Answer extends React.Component {
   }
 }
 
-export default Answer;
+export default withRouter(Answer)

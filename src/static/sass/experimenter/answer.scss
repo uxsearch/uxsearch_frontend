@@ -5,6 +5,10 @@
     margin: 0px;
   }
 
+  .no-margin-right {
+    margin-right: 0px;
+  }
+
   .space-head-block {
     margin-top: 85px;
   }
@@ -26,6 +30,11 @@
 
   .text-style {
     font-size: 18px !important;
+  }
+
+  .text-checkbox {
+    position: absolute;
+    margin-top: 8px;
   }
 
   .space-btn {
