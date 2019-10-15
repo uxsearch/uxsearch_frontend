@@ -7,6 +7,8 @@ import NavbarExp from '../../components/utils/navbarExperimenter'
 import NotSupport from '../../components/utils/notSupport'
 
 import '../../static/sass/experimenter/answer.scss'
+import axios from '../../utils/axios'
+import APIURI from '../../utils/apiuri'
 
 const RadioButton = withStyles({
   root: {
@@ -32,33 +34,33 @@ const CheckboxButton = withStyles({
 class Answer extends React.Component {
   constructor(props) {
     super(props);
+    const { match } = props
     this.state = {
-      object: [
-        { type: 'textbox', question: '1. What you expect in this program?' },
-        {
-          type: 'multiple',
-          question: '2. What is the overall feeling of this application?',
-          option: [
-            { text: 'Happy' },
-            { text: 'Unconcern' },
-            { text: 'Unhappy' }
-          ]
-        },
-        {
-          type: 'checkbox',
-          question: '3. Something Questionnaire?',
-          option: [
-            { text: 'Choice 1' },
-            { text: 'Choice 2' },
-            { text: 'Choice 3' }
-          ]
-        },
-        { type: 'textbox', question: '4. Something Questionnaire?' },
-      ]
+      uxerId: '8t6UN47Z749qacrEvZ8O',
+      projectId: 'a89OdndRvNEoasnHXfhu',
+      experId: match.params.experId,
+      questionnaire: [],
+    }
+  }
+
+  async componentDidMount() {
+    this.getQuestionnaire()
+  }
+
+  getQuestionnaire = async (props) => {
+    try {
+      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/test-note`)
+      if (response.status !== 200) {
+        throw new Error('CANNOT GET QUESTIONNAIRE')
+      }
+      this.setState({ questionnaire: response.data })
+    } catch (e) {
+      console.error(e)
     }
   }
 
   render() {
+    const questionnaire = this.state.questionnaire
     return (
       <div>
         <NotSupport className='d-md-none' />
@@ -81,7 +83,7 @@ class Answer extends React.Component {
                 <Row>
                   <Col xs={12} className='answer-block'>
                     <Form>
-                      {this.state.object.map(data => (
+                      {questionnaire.map(question => (
                         <>
                           <FormGroup>
                             <Row>
@@ -89,36 +91,36 @@ class Answer extends React.Component {
                                 <Label className='no-margin w-100'>
                                   <Row>
                                     <Col xs={12}>
-                                      <p className='question'>{data.question}</p>
+                                      <p className='question'>{question.data.question.question}</p>
                                     </Col>
                                   </Row>
                                   <Row>
                                     <Col xs={12}>
-                                      {data.type === 'textbox' &&
+                                      {question.data.question.type_form === 'textbox' &&
                                         <Input type='textarea' name='answer1' rows="4" className='text-style' />
                                       }
-                                      {data.type === 'multiple' &&
+                                      {question.data.question.type_form === 'multiple' &&
                                         <>
                                           <RadioGroup
                                             aria-label="answer2"
                                             name="answer2"
                                           >
-                                            {data.option.map(option => (
+                                            {question.data.options.map(option => (
                                               <>
-                                                <FormControlLabel value={option.text} control={<RadioButton />} label={option.text} />
+                                                <FormControlLabel value={option.data.option} control={<RadioButton />} label={option.data.option} />
                                               </>
                                             ))}
                                           </RadioGroup>
                                         </>
                                       }
-                                      {data.type === 'checkbox' &&
+                                      {question.data.question.type_form === 'checkbox' &&
                                         <>
-                                          {data.option.map(option => (
+                                          {question.data.options.map(option => (
                                             <>
                                               <FormGroup className='no-margin'>
                                                 <FormControlLabel
-                                                  control={<CheckboxButton value={option.text} />}
-                                                  label={option.text}
+                                                  control={<CheckboxButton value={option.data.option} />}
+                                                  label={option.data.option}
                                                 />
                                               </FormGroup>
                                             </>
