@@ -1,9 +1,11 @@
 import React from 'react'
-import { Row, Col, Form, FormGroup, Input, Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from 'reactstrap'
+import { Row, Col, Form, FormGroup, Input, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Label } from 'reactstrap'
 import { withStyles, TextField } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSortDown, faGripLines, faTextHeight, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faCircle, faSquare, faTimesCircle } from '@fortawesome/free-regular-svg-icons'
+
+import { DEFAULT_QUESTION } from '../../pages/uxer/const'
 
 import '../../static/sass/uxer/createQuestion.scss'
 
@@ -23,41 +25,59 @@ const SearchField = withStyles({
   },
 })(TextField);
 
-class Question extends React.Component {
+class Testnote extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       isOpen: false,
-      type: props.type || 'Text box',
-      option: props.option || 'AddOption',
-      choice: [
-        {
-          name: 'option',
-          value: ''
-        }
-      ],
+      type: props.type || 'textbox',
     }
+  }
+
+  changeQuestion(e) {
+    const { question, setQuestion, index } = this.props
+    setQuestion(index, {
+      ...question,
+      question: e.target.value
+    })
+  }
+
+  changeType(type) {
+    const { setQuestion, index } = this.props
+    this.setState({ type })
+    setQuestion(index, DEFAULT_QUESTION[type.toUpperCase()])
+  }
+
+  changeOption(option, index) {
+    const { question, setQuestion, index: questionIndex } = this.props
+    const newQuestion = { ...question }
+    newQuestion.options[index].option = option
+    setQuestion(questionIndex, newQuestion)
+  }
+
+  deleteOption(optionIndex) {
+    const { question, setQuestion, index } = this.props
+    const newQuestion = { ...question }
+    newQuestion.options.splice(optionIndex, 1)
+    setQuestion(index, newQuestion)
   }
 
   addOption() {
-    if (this.state.option) {
-      console.log('test AddOption')
-      const option = 'AddOption'
-      this.setState({
-        choice: [...this.state.choice, {
-          name: 'option',
-          value: ''
-        }]
-      })
-    }
+    const { question, setQuestion, index } = this.props
+    const newQuestion = { ...question }
+    newQuestion.options.push({
+      optionId: '',
+      option: 'option',
+    })
+    setQuestion(index, newQuestion)
   }
 
   render() {
-    const type = this.state.type
-    //const option = this.state.option
+    const { type } = this.state
+  
     return (
       <>
-        {type === 'Text box' && (
+        {type === 'textbox' && (
           <>
             <Row className='question-block' >
               <Col xs={12}>
@@ -79,6 +99,8 @@ class Question extends React.Component {
                               type='search'
                               className='w-100 no-margin'
                               margin='normal'
+                              value={this.props.question.question}
+                              onChange={e => this.changeQuestion(e)}
                             />
                           </Col>
                           <Col xs={12} md={6} lg={4} className='text-center space-top-btn'>
@@ -101,10 +123,10 @@ class Question extends React.Component {
                                 </Col>
                               </DropdownToggle>
                               <DropdownMenu className='btn-secondary indropdown text-center '>
-                                <DropdownItem onClick={() => this.setState({ type: 'Multiple choice' })}>
+                                <DropdownItem onClick={() => this.changeType('multiple')}>
                                   <Dropdown >Multiple Choice</Dropdown>
                                 </DropdownItem>
-                                <DropdownItem onClick={() => this.setState({ type: 'Check box' })}>
+                                <DropdownItem onClick={() => this.changeType('checkbox')}>
                                   <Dropdown>Check box</Dropdown>
                                 </DropdownItem>
                               </DropdownMenu>
@@ -126,7 +148,7 @@ class Question extends React.Component {
           </>
         )}
 
-        {type === 'Multiple choice' &&
+        {type === 'multiple' &&
           <>
             <Row className='question-block'>
               <Col xs={12}>
@@ -148,6 +170,8 @@ class Question extends React.Component {
                               type='search'
                               className='w-100 no-margin'
                               margin='normal'
+                              value={this.props.question.question}
+                              onChange={e => this.changeQuestion(e)}
                             />
                           </Col>
                           <Col xs={12} md={6} lg={4} className='text-center space-top-btn'>
@@ -169,10 +193,10 @@ class Question extends React.Component {
                                 </Col>
                               </DropdownToggle>
                               <DropdownMenu className='btn-secondary indropdown text-center '>
-                                <DropdownItem onClick={() => this.setState({ type: 'Text box' })}>
+                                <DropdownItem onClick={() => this.changeType('textbox')}>
                                   <Dropdown>Text box</Dropdown>
                                 </DropdownItem>
-                                <DropdownItem onClick={() => this.setState({ type: 'Check box' })}>
+                                <DropdownItem onClick={() => this.changeType('checkbox')}>
                                   <Dropdown>Check box</Dropdown>
                                 </DropdownItem>
                               </DropdownMenu>
@@ -180,26 +204,23 @@ class Question extends React.Component {
                           </Col>
                         </Row>
                         <br />
-                        {this.state.choice.map((choice, index) => (
+
+                        {this.props.question.options.map((option, index) => (
                           <Row className='no-margin w-100' key={index}>
                             <Col xs={1}>
                               <FontAwesomeIcon icon={faCircle} size='2x' color='#ced4da' className='icon-mul-check' />
                             </Col>
-                            {type === 'Multiple choice' && (
+                            {type === 'multiple' && (
                               <>
                                 <Col xs={10} className='choice'>
                                   <Form>
                                     <FormGroup>
                                       <Input
                                         type='multiple'
-                                        name={choice.name}
                                         placeholder='AddOption'
-                                        value={choice.value}
+                                        value={option.option}
                                         onChange={e => {
-                                          this.state.choice[index].value = e.target.value
-                                          this.setState({
-                                            choice: [...this.state.choice]
-                                          })
+                                          this.changeOption(e.target.value, index)
                                         }} />
                                     </FormGroup>
                                   </Form>
@@ -214,10 +235,7 @@ class Question extends React.Component {
                                 color='#909090'
                                 className='icon-delete'
                                 onClick={() => {
-                                  this.state.choice.splice(index, 1)
-                                  this.setState({
-                                    choice: [...this.state.choice]
-                                  })
+                                  this.deleteOption(index)
                                 }}
                               />
                             </Col>
@@ -246,7 +264,7 @@ class Question extends React.Component {
         }
 
         {
-          type === 'Check box' && (
+          type === 'checkbox' && (
             <>
               <Row className='question-block'>
                 <Col xs={12}>
@@ -268,6 +286,8 @@ class Question extends React.Component {
                                 type='search'
                                 className='w-100 no-margin'
                                 margin='normal'
+                                value={this.props.question.question}
+                                onChange={e => this.changeQuestion(e)}
                               />
                             </Col>
                             <Col xs={12} md={6} lg={4} className='text-center space-top-btn'>
@@ -288,10 +308,10 @@ class Question extends React.Component {
                                   </Col>
                                 </DropdownToggle>
                                 <DropdownMenu className='btn-secondary indropdown text-center '>
-                                  <DropdownItem onClick={() => this.setState({ type: 'Text box' })}>
+                                  <DropdownItem onClick={() => this.changeType('textbox')}>
                                     <Dropdown>Text box</Dropdown>
                                   </DropdownItem>
-                                  <DropdownItem onClick={() => this.setState({ type: 'Multiple choice' })}>
+                                  <DropdownItem onClick={() => this.changeType('multiple')}>
                                     <Dropdown>Multiple Choice</Dropdown>
                                   </DropdownItem>
                                 </DropdownMenu>
@@ -299,34 +319,54 @@ class Question extends React.Component {
                             </Col>
                           </Row>
                           <br />
+
+                          {this.props.question.options.map((option, index) => (
+                            <Row className='no-margin w-100' key={index}>
+                              <Col xs={1}>
+                                <FontAwesomeIcon icon={faSquare} size='2x' color='#ced4da' className='icon-mul-check' />
+                              </Col>
+                              {type === 'checkbox' && (
+                                <>
+                                  <Col xs={10} className='choice'>
+                                    <Form>
+                                      <FormGroup>
+                                        <Input
+                                          type='multiple'
+                                          placeholder='AddOption'
+                                          value={option.option}
+                                          onChange={e => {
+                                            this.changeOption(e.target.value, index)
+                                          }} />
+                                      </FormGroup>
+                                    </Form>
+                                  </Col>
+                                </>
+                              )}
+
+                              <Col xs={1}>
+                                <FontAwesomeIcon
+                                  icon={faTimesCircle}
+                                  size='2x'
+                                  color='#909090'
+                                  className='icon-delete'
+                                  onClick={() => {
+                                  this.deleteOption(index)
+                                  }}
+                                />
+                              </Col>
+                            </Row>
+                          ))}
+
                           <Row className='no-margin w-100'>
                             <Col xs={1}>
                               <FontAwesomeIcon icon={faSquare} size='2x' color='#ced4da' className='icon-mul-check' />
                             </Col>
-                            <Col xs={10} className='choice'>
+                            <Col xs={10} >
                               <Form>
                                 <FormGroup>
-                                  <Input type='multiple' name='choice1' id='exampleMultiple' placeholder='Choice1' />
+                                  <span onClick={() => this.addOption()} className='underline'>AddOption</span>
                                 </FormGroup>
                               </Form>
-                            </Col>
-                            <Col xs={1}>
-                              <FontAwesomeIcon icon={faTimesCircle} size='2x' color='#909090' className='icon-delete' />
-                            </Col>
-                          </Row>
-                          <Row className='no-margin w-100'>
-                            <Col xs={1}>
-                              <FontAwesomeIcon icon={faSquare} size='2x' color='#ced4da' className='icon-mul-check' />
-                            </Col>
-                            <Col xs={10} className='choice'>
-                              <Form>
-                                <FormGroup>
-                                  <Input type='multiple' name='choice5' id='exampleMultiple' placeholder='AddOption' />
-                                </FormGroup>
-                              </Form>
-                            </Col>
-                            <Col xs={1}>
-                              <FontAwesomeIcon icon={faTimesCircle} size='2x' color='#909090' className='icon-delete' />
                             </Col>
                           </Row>
                         </Col>
@@ -343,4 +383,4 @@ class Question extends React.Component {
   }
 }
 
-export default Question
+export default Testnote
