@@ -23,7 +23,7 @@ class SubNavbar extends React.Component {
                   <NavLink href={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/question`} className='link-text'>Create Questionnaire</NavLink>
                 </NavItem>
                 <NavItem className='menu-block' >
-                  <NavLink href={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/question`} className='link-text'>Create Usability Test Note</NavLink>
+                  <NavLink href={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/testnote`} className='link-text'>Create Usability Test Note</NavLink>
                 </NavItem>
               </Nav>
             </Col>
@@ -38,7 +38,7 @@ class SubNavbar extends React.Component {
               <NavLink href={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/question`} className='link-text'>Create Questionnaire</NavLink>
             </NavItem>
             <NavItem className='menu-block'>
-              <NavLink href={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/question`} className='link-text'>Create Usability Test Note</NavLink>
+              <NavLink href={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/testnote`} className='link-text'>Create Usability Test Note</NavLink>
             </NavItem>
           </Nav>
         </Container>
