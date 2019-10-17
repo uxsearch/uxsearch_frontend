@@ -71,10 +71,7 @@ class ExperPage extends React.Component {
   }
 
   render() {
-    const project = this.state.project
-    const experList = this.state.experList
-    const uxerId = this.state.uxerId
-    const projId = this.state.projectId
+    const { project, experList, uxerId, projId } = this.state
 
     return (
       <section id='exper-page'>
@@ -130,7 +127,7 @@ class ExperPage extends React.Component {
           <Row>
             {experList.map(experiment => (
               <>
-                <Col xs={6} md={4} lg={3}>
+                <Col xs={6} md={4} lg={3} key={experiment.id}>
                   <ExperBlock
                     link={`/uxer/${this.state.uxerId}/project/${this.state.projectId}/experiment/${experiment.data.experimenter_key}/result`}
                     imgUrl={'https://picsum.photos/200/300'}
