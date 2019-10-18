@@ -11,6 +11,7 @@ import ProjectPage from './pages/uxer/projectPage'
 import NotFound from './pages/error/not_found.js'
 import CreateQuestion from './pages/uxer/createQuestion'
 import CreateTestnote from './pages/uxer/createTestnote'
+import AnswerTestnote from './pages/uxer/answerTestnote'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './static/sass/customAll.scss'
@@ -38,6 +39,7 @@ const UXer = ({ match }) => {
         <Route exact path={`${match.path}/:id/project/:projId/experiment/:experId/result`} component={(VideoResult)} />
         <Route exact path={`${match.path}/:id/project/:projId/experiment/question`} component={CreateQuestion} />
         <Route exact path={`${match.path}/:id/project/:projId/experiment/testnote`} component={CreateTestnote} />
+        <Route exact path={`${match.path}/:id/project/:projId/experiment/answertestnote`} component={AnswerTestnote} />
         <Route component={NotFound} />
       </Switch>
     </Router>
