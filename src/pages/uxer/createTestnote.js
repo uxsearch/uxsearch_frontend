@@ -10,7 +10,7 @@ import NavbarUXer from "../../components/utils/navbarUXer";
 import SubNavbar from "../../components/utils/subNavbar";
 import Testnote from "../../components/uxer/testnote";
 
-import {DEFAULT_QUESTION} from './const'
+import { DEFAULT_QUESTION } from './const'
 
 import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
@@ -59,23 +59,20 @@ class CreateTestnote extends Component {
     if (this.state.questions.length < 15) {
       const questions = this.state.questions;
       questions.push(DEFAULT_QUESTION.TEXTBOX);
-      this.setState({ questions: [...questions]});
+      this.setState({ questions: [...questions] });
     }
   }
 
   submitCreateTestnote = async (values) => {
     console.log(">>> Submit")
+    console.log(values)
     // try {
-    //   const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}add/`, values)
-    //     .then(result => {
-    //       this.setState({ redirect: true })
-    //       return result
-    //       console.log('test CreateTestnote')
-    //     })
-    //   if (response.status !== 201) {
+    //   const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/updatequestionnaire`, values)
+    //   console.log(response)
+    //   if (response.status !== 200) {
     //     throw new Error('CANNOT CREATE TESTNOTE')
     //   }
-    //   this.props.history.push(`/${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${response.data.projects.id}/experiments`)
+    //   // this.props.history.push(`/UXer/${this.state.projectId}/projects`)
     // } catch (e) {
     //   console.error(e)
     // }
@@ -93,38 +90,37 @@ class CreateTestnote extends Component {
           <NavbarUXer title={`${project && project.name}`} />
           <SubNavbar uxerId={`${uxerId}`} projId={`${projId}`} />
           <Container>
-            <Row></Row>
-            <Row className="questionnaire-block no-gutters">
-              <Col xs={12} md={12}>
-                <Row>
-                  <Col xs={12} md={12} lg={12} className="space-side ">
-                    <h2>Usability Test Note : Web Development </h2>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xs={1} md={1}></Col>
-                  <Col xs={12} md={10} lg={10}>
-                    <SearchField
-                      id="standard-search"
-                      label="Form Description"
-                      type="search"
-                      className="w-100 no-margin"
-                      margin="normal"
-                    />
-                  </Col>
-                  <Col xs={1} md={1}></Col>
-                </Row>
-                <br />
-                <Col xs={12} md={12}>
-                  <hr className="black-line" />
-                </Col>
-                <br />
-                <Form
-                  onSubmit={this.submitCreateTestnote}
-                  render={({
-                    handleSubmit, form, submitting, pristine
-                  }) => (
-                      <form onSubmit={handleSubmit} id="test-note">
+            <Form
+              onSubmit={this.submitCreateTestnote}
+              render={({
+                handleSubmit, form, submitting, pristine
+              }) => (
+                  <form onSubmit={handleSubmit}>
+                    <Row className="questionnaire-block no-gutters">
+                      <Col xs={12} md={12}>
+                        <Row>
+                          <Col xs={12} md={12} lg={12} className="space-side ">
+                            <h2>Usability Test Note : Web Development </h2>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col xs={1} md={1}></Col>
+                          <Col xs={12} md={10} lg={10}>
+                            <SearchField
+                              id="standard-search"
+                              label="Form Description"
+                              type="search"
+                              className="w-100 no-margin"
+                              margin="normal"
+                            />
+                          </Col>
+                          <Col xs={1} md={1}></Col>
+                        </Row>
+                        <br />
+                        <Col xs={12} md={12}>
+                          <hr className="black-line" />
+                        </Col>
+                        <br />
                         {this.state.questions.map((question, index) => (
                           <Testnote
                             question={question}
@@ -152,16 +148,16 @@ class CreateTestnote extends Component {
                             <br />
                           </Col>
                         </Row>
-                      </form>
-                    )}
-                />
-              </Col>
-            </Row >
-            <Row className='justify-content-center space-btn'>
-              <Col xs={12} md={4} className='text-center'>
-                <Button type="submit" form="test-note" className='btn-save-questionnaire' size='lg'>Save Usability Test Note</Button>
-              </Col>
-            </Row>
+                      </Col>
+                    </Row >
+                    <Row className='justify-content-center space-btn'>
+                      <Col xs={12} md={4} className='text-center'>
+                        <Button type="submit" className='btn-save-questionnaire'>Save Usability Test Note</Button>
+                      </Col>
+                    </Row>
+                  </form>
+                )}
+            />
           </Container>
         </section>
       </div>
