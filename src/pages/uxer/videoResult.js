@@ -39,7 +39,7 @@ class VideoResult extends React.Component {
     return age + ' years'
   }
 
-  render() {
+  render(props) {
     const experiment = this.state.experiment
 
     return (
@@ -65,7 +65,7 @@ class VideoResult extends React.Component {
                   </Row>
                   <Row className='d-sm-none space-btn-mobile'>
                     <Col xs={12}>
-                      <Button href='#' className='btn-usability-test'>Usability Test Note</Button>
+                      <Button href={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/answertestnote`} className='btn-usability-test'>Usability Test Note</Button>
                     </Col>
                   </Row>
                 </Col>
@@ -73,7 +73,7 @@ class VideoResult extends React.Component {
             </Col>
             <Col md={3} xl={4} className='d-none d-md-block' />
             <Col xs={12} sm={4} md={3} xl={2} className='d-none d-sm-block'>
-              <Button href='#' className='btn-usability-test w-100'>Usability Test Note</Button>
+              <Button href={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/answertestnote`} className='btn-usability-test w-100'>Usability Test Note</Button>
             </Col>
           </Row>
         </Container>
