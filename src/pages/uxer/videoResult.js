@@ -21,13 +21,14 @@ class VideoResult extends React.Component {
       projectId: match.params.projId,
       experId: match.params.experId,
       experiment: undefined,
-      project: undefined
+      project: undefined,
+      questionnaire: [],
     }
   }
-
   async componentDidMount() {
     this.getExperimenter()
     this.getProject()
+    this.getQuestionnaireExperimenter()
   }
   
   getExperimenter = async () => {
@@ -40,6 +41,19 @@ class VideoResult extends React.Component {
     } catch (error) {
       console.error(error)
     }
+  }
+
+  getQuestionnaireExperimenter = async () => {
+		try {
+		  const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/questionnaire`)
+      console.log(response);
+      if (response.status !== 200) {
+			throw new Error('CANNOT GET QUESTIONNAIRE')
+		  }
+		  this.setState({questionnaire: response.data})
+		}catch (e){
+		  console.log(e)
+		}
   }
 
   getProject = async () => {
@@ -62,9 +76,9 @@ class VideoResult extends React.Component {
   }
 
   render() {
-    const experiment = this.state.experiment
+    const {experiment, experId} = this.state
     const project = this.state.project
-
+    const questionnaire = this.state.questionnaire
     return (
       <div>
         <NotSupport className='d-md-none' />
@@ -120,8 +134,17 @@ class VideoResult extends React.Component {
               </>
             }
             <br />
-            <ResultQuestion />
-          </Container>
+            {questionnaire &&
+              <>
+                {console.log('questionnaire page', questionnaire)}
+
+                <ResultQuestion
+                  question={questionnaire}
+                  experiment={experId}
+                />
+              </>
+            }
+            </Container>
         </section>
       </div>
     )
