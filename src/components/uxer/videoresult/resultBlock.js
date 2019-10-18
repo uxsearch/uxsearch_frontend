@@ -12,18 +12,18 @@ class ResultQuestion extends React.Component {
 		}
 	}
 
-	getAnswer = async () => {
-		try {
-		  const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.EXPERIMENTER}${this.state.experId}/questionnaire`)
-      console.log(response);
-      if (response.status !== 200) {
-			throw new Error('CANNOT GET QUESTIONNAIRE')
-		  }
-		  this.setState({questionnaire: response.data})
-		}catch (e){
-		  console.log(e)
-		}
-  }
+// 	getAnswer = async () => {
+// 		try {
+// 		  const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.EXPERIMENTER}${this.state.experId}/questionnaire`)
+//       console.log(response);
+//       if (response.status !== 200) {
+// 			throw new Error('CANNOT GET QUESTIONNAIRE')
+// 		  }
+// 		  this.setState({questionnaire: response.data})
+// 		}catch (e){
+// 		  console.log(e)
+// 		}
+//   }
 
 	render() {
 		const questionnaire = this.props.question
@@ -37,14 +37,11 @@ class ResultQuestion extends React.Component {
 						</Col>
 					</Row>
 					<br />
-					{questionnaire.map(question => (
-						<>
-						{console.log('question', question)}
 							<Row>
 								<Col xs={12}>
 									<Row>
 										<Col xs={12}>
-											<p className='question-text'>{question.data.question.question}</p>
+											<p className='question-text'></p>
 										</Col>
 									</Row>
 									<Row>
@@ -62,8 +59,7 @@ class ResultQuestion extends React.Component {
 									</Row>
 								</Col>
 							</Row>
-						</>
-					))}
+					)
 				</Col>
 			</Row>
 		)
