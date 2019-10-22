@@ -8,6 +8,10 @@ class SubNavbar extends React.Component {
     console.log(props)
   }
 
+  componentDidMount() {
+    console.log(">>> this.props :", this.props)
+  }
+
   render(props) {
     return (
       <section id='sub-navbar'>

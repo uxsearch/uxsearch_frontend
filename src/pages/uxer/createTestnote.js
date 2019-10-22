@@ -4,6 +4,9 @@ import { withStyles, TextField } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { Form, Field } from 'react-final-form'
+import {
+  withRouter
+} from 'react-router-dom'
 
 import NotSupport from "../../components/utils/notSupport";
 import NavbarUXer from "../../components/utils/navbarUXer";
@@ -47,6 +50,10 @@ class CreateTestnote extends Component {
     }
   }
 
+  componentDidMount() {
+    console.log(">>> this.props.match :", this.props.match)
+  }
+
   setQuestion(index, question) {
     const newQuestions = [...this.state.questions]
     newQuestions[index] = question
@@ -63,25 +70,32 @@ class CreateTestnote extends Component {
     }
   }
 
-  submitCreateTestnote = async (values) => {
+  submitCreateTestnote = async () => {
     console.log(">>> Submit")
-    console.log(values)
-    // try {
-    //   const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/updatequestionnaire`, values)
-    //   console.log(response)
-    //   if (response.status !== 200) {
-    //     throw new Error('CANNOT CREATE TESTNOTE')
-    //   }
-    //   // this.props.history.push(`/UXer/${this.state.projectId}/projects`)
-    // } catch (e) {
-    //   console.error(e)
-    // }
+    console.log(">>> this.state.questions :", this.state.questions)
+    console.log(">>> this.props.history :", this.props.history)
+    try {
+      console.log(">>> 1")
+      const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/updatenote`, this.state.questions)
+      console.log(">>> 2")
+      console.log(response)
+      if (response.status !== 200) {
+        console.log(">>> 3")
+        throw new Error('CANNOT CREATE TESTNOTE')
+      }
+      console.log(">>> 4")
+      this.props.history.push(`/UXer/${this.state.projectId}/projects`)
+      console.log(">>> 5")
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   render() {
     const project = this.state.project
     const uxerId = this.state.uxerId
     const projId = this.state.projectId
+    console.log(">>> project", project)
 
     return (
       <div>
@@ -165,4 +179,4 @@ class CreateTestnote extends Component {
   }
 }
 
-export default CreateTestnote;
+export default withRouter(CreateTestnote);
