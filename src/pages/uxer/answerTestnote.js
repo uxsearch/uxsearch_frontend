@@ -119,11 +119,13 @@ class AnswerTestnote extends React.Component {
   }
 
   getTestnote = async (props) => {
+    console.log('testnote function')
     try {
       const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/test-note`)
       if (response.status !== 200) {
         throw new Error('CANNOT GET TESTNOTE')
       }
+      
       this.setState({ testnote: response.data })
     } catch (e) {
       console.error(e)
@@ -143,8 +145,8 @@ class AnswerTestnote extends React.Component {
   }
 
   render(props) {
-    const { testnote, project, experList, uxerId, projId } = this.state
-    const experiment = this.state.experiment
+    const { testnote, project, experList, uxerId, projId, experiment } = this.state
+
     return (
       <div>
         <section id='video-result' className='d-none d-md-block'>
@@ -233,6 +235,7 @@ class AnswerTestnote extends React.Component {
                             <br />
                             {testnote.map((question, index) => (
                               <>
+                              {console.log(question)}
                                 <Row key={question.id}>
                                   <Col xs={12}>
                                     <Label className='no-margin w-100'>
