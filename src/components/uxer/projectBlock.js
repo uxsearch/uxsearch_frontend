@@ -8,10 +8,10 @@ import '../../static/sass/uxer/projectPage.scss'
 class ProjectBlock extends React.Component {
 	constructor(props) {
 		super(props);
-
 		this.toggle = this.toggle.bind(this);
 		this.state = {
-			dropdownOpen: false
+			dropdownOpen: false,
+			statusRemove: undefined
 		};
 	}
 
@@ -21,7 +21,18 @@ class ProjectBlock extends React.Component {
 		});
 	}
 
-	render(props) {
+	// componentDidMount() {
+	// 	this.blockRemove()
+	// }
+	
+	blockRemove = (projectId) => {
+		const statusRemove = true
+		const project = { projectId: projectId }
+		this.props.removeProject(project, statusRemove)
+	}
+
+	render() {
+		const projectId = this.props.projectId
 		return (
 			<div className='project'>
 				<Row className='justify-content-center'>
@@ -58,7 +69,7 @@ class ProjectBlock extends React.Component {
 											<FontAwesomeIcon icon={faShare} color='#303030' size='sm' className='space-icon' />
 											<span>Send link to experimenter</span>
 										</DropdownItem>
-										<DropdownItem>
+										<DropdownItem onClick={() => this.blockRemove(projectId)}>
 											<FontAwesomeIcon icon={faTrash} color='#D42B2B' size='sm' className='space-icon' />
 											<span className='delete-text'>Delete Project</span>
 										</DropdownItem>
