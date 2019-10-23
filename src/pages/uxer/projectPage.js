@@ -109,13 +109,12 @@ class ProjectPage extends React.Component {
     try {
       if (statusRemove === true) {
         const response = await axios.delete(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}delete`, projectId)
-        console.log('response', response);
         if (response.status !== 200) {
           throw new Error('CANNOT DELETE PROJECT')
         }     
       }
 		} catch (e) {
-		  console.log(e)
+		  console.error(e)
 		}
   }
 

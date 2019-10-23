@@ -21,10 +21,6 @@ class ProjectBlock extends React.Component {
 		});
 	}
 
-	// componentDidMount() {
-	// 	this.blockRemove()
-	// }
-	
 	blockRemove = (projectId) => {
 		const statusRemove = true
 		const project = { projectId: projectId }
