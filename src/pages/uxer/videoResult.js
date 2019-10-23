@@ -17,7 +17,6 @@ Component {
     super(props);
     const { match } = props
     this.state = {
-      uxerId: match.params.id,
       experId: match.params.experId,
       experiment: undefined,
       uxerId: match.params.id,
@@ -59,9 +58,6 @@ Component {
   // }
 
   render(props) {
-    const experiment = this.state.experId
-    const project = this.state.projId
-
     const experiment = this.state.experiment
     const { project, experList, uxerId, projId } = this.state
     return (
