@@ -76,13 +76,12 @@ class ExperPage extends React.Component {
   }
 
   render() {
-    const { project, experList, uxerId, projId } = this.state
-    const {match} = this.props
+    const { project, experList, uxerId, projectId } = this.state
 
     return (
       <section id='exper-page'>
         <NavbarUxer title={`${project && project.name}`} />
-        <SubNavbar uxerId={`${uxerId}`} projId={`${match.params.projId}`} />
+        <SubNavbar uxerId={uxerId} projId={projectId} />
         <Container>
           <Row className='space-head-block justify-content-center align-items-end'>
             <Col xs={10} md={4}>

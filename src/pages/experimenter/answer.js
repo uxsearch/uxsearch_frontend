@@ -115,6 +115,7 @@ class Answer extends React.Component {
 
   render() {
     const { questionnaire, project } = this.state
+
     return (
       <div>
         <NotSupport className='d-md-none' />

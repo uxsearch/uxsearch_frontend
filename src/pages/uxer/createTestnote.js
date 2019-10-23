@@ -75,7 +75,7 @@ class CreateTestnote extends Component {
       if (response.status !== 200) {
         throw new Error('CANNOT CREATE TESTNOTE')
       }
-      this.props.history.push(`${APIURI.UXER}${this.state.uxerId}/projects`)
+      this.props.history.push(`/uxer/${this.state.uxerId}/projects`)
     } catch (e) {
       console.error(e)
     }
@@ -106,14 +106,14 @@ class CreateTestnote extends Component {
   // }
 
   render() {
-    const { uxerId, projId, project, questions } = this.state
+    const { uxerId, projectId, project, questions } = this.state
 
     return (
       <div>
         <NotSupport className='d-md-none' />
         <section id='questionnaire' className='d-none d-md-block'>
           <NavbarUXer title={`${project && project.name}`} />
-          <SubNavbar uxerId={`${uxerId}`} projId={`${projId}`} />
+          <SubNavbar uxerId={uxerId} projId={projectId} />
           <Container>
             <Form
               onSubmit={this.submitCreateTestnote}

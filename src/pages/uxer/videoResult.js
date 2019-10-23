@@ -46,6 +46,7 @@ class VideoResult extends React.Component {
   render(props) {
     const experiment = this.state.experiment
     const { project, experList, uxerId, projId } = this.state
+
     return (
       <section id='video-result'>
         <NavbarUXer />
