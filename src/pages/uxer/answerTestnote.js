@@ -5,8 +5,9 @@ import { Form, Field } from 'react-final-form'
 import { FieldArray } from 'react-final-form-arrays'
 import arrayMutators from 'final-form-arrays'
 import { Checkbox, Radio, RadioGroup, FormControlLabel, withStyles } from '@material-ui/core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
-import NavbarExp from '../../components/utils/navbarExperimenter'
 import NotSupport from '../../components/utils/notSupport'
 import NavbarUXer from '../../components/utils/navbarUXer'
 
@@ -14,11 +15,9 @@ import '../../static/sass/experimenter/answer.scss'
 import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
 
-
 import ExperProfile from '../../components/uxer/videoresult/profileBlock'
 
 import '../../static/sass/uxer/videoResult.scss'
-
 
 const RadioButton = withStyles({
   root: {
@@ -69,20 +68,25 @@ class AnswerTestnote extends React.Component {
     super(props);
     const { match } = props
     this.state = {
-      uxerId: '8t6UN47Z749qacrEvZ8O',
-      projectId: 'a89OdndRvNEoasnHXfhu',
+      uxerId: match.params.id,
+      projectId: match.params.projId,
       experId: match.params.experId,
       experiment: undefined,
       answer: [],
       answerId: '934DlGsmzBo8JlZWoDRL',
       project: undefined,
       testnote: [],
+      experList: [],
     }
   }
 
   async componentDidMount() {
     this.getProject()
     this.getTestnote()
+    this.getExperimenter()
+  }
+
+  getExperimenter = async () => {
     try {
       const response = await axios.get(`${APIURI.EXPERIMENTER}${this.state.experId}/`)
       if (response.status !== 200) {
@@ -138,13 +142,13 @@ class AnswerTestnote extends React.Component {
     }
   }
 
-  render() {
-    const { testnote, project } = this.state
+  render(props) {
+    const { testnote, project, experList, uxerId, projId } = this.state
     const experiment = this.state.experiment
     return (
       <div>
-        <section id='video-result'>
-          <NavbarUXer />
+        <section id='video-result' className='d-none d-md-block'>
+          <NavbarUXer title={`${project && project.name}`} />
           <Container fluid className='space-bottom-video'>
             <Row className='justify-content-center align-items-center'>
               <Col xs={12} sm={8} md={6} lg={5}>
@@ -162,7 +166,13 @@ class AnswerTestnote extends React.Component {
                     </Row>
                     <Row className='d-sm-none space-btn-mobile'>
                       <Col xs={12}>
-                        <Button href={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/answertestnote`} className='btn-usability-test'>Usability Test Note</Button>
+                        <FontAwesomeIcon
+                          icon={faTimes}
+                          size='3x'
+                          color='#303030'
+                          className='plus'
+                          link={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/answertestnote`}
+                        />
                       </Col>
                     </Row>
                   </Col>
@@ -170,7 +180,13 @@ class AnswerTestnote extends React.Component {
               </Col>
               <Col md={3} xl={4} className='d-none d-md-block' />
               <Col xs={12} sm={4} md={3} xl={2} className='d-none d-sm-block'>
-                <Button href={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/answertestnote`} className='btn-usability-test w-100'>Usability Test Note</Button>
+                <FontAwesomeIcon
+                  icon={faTimes}
+                  size='3x'
+                  color='#303030'
+                  className='plus'
+                  link={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/answertestnote`}
+                />
               </Col>
             </Row>
           </Container>
@@ -214,7 +230,7 @@ class AnswerTestnote extends React.Component {
                                 <h2 className='title'>'{project && `${project.name}`}' <span>Testnote</span></h2>
                               </Col>
                             </Row>
-                              <br />
+                            <br />
                             {testnote.map((question, index) => (
                               <>
                                 <Row key={question.id}>

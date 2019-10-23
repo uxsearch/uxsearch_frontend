@@ -4,9 +4,7 @@ import { withStyles, TextField } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { Form, Field } from 'react-final-form'
-import {
-  withRouter
-} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import NotSupport from "../../components/utils/notSupport";
 import NavbarUXer from "../../components/utils/navbarUXer";
@@ -51,7 +49,8 @@ class CreateTestnote extends Component {
   }
 
   componentDidMount() {
-    console.log(">>> this.props.match :", this.props.match)
+    this.getProject()
+    // this.getTestnote()
   }
 
   setQuestion(index, question) {
@@ -71,31 +70,43 @@ class CreateTestnote extends Component {
   }
 
   submitCreateTestnote = async () => {
-    console.log(">>> Submit")
-    console.log(">>> this.state.questions :", this.state.questions)
-    console.log(">>> this.props.history :", this.props.history)
     try {
-      console.log(">>> 1")
       const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/updatenote`, this.state.questions)
-      console.log(">>> 2")
-      console.log(response)
       if (response.status !== 200) {
-        console.log(">>> 3")
         throw new Error('CANNOT CREATE TESTNOTE')
       }
-      console.log(">>> 4")
-      this.props.history.push(`/UXer/${this.state.projectId}/projects`)
-      console.log(">>> 5")
+      this.props.history.push(`${APIURI.UXER}${this.state.uxerId}/projects`)
     } catch (e) {
       console.error(e)
     }
   }
 
+  getProject = async (props) => {
+    try {
+      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}`)
+      if (response.status !== 200) {
+        throw new Error('CANNOT GET PROJECT')
+      }
+      this.setState({ project: response.data.data })
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  // getTestnote = async (props) => {
+  //   try {
+  //     const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/test-note`)
+  //     if (response.status !== 200) {
+  //       throw new Error('CANNOT GET PROJECT')
+  //     }
+  //     this.setState({ questions: response.data ? response.data : DEFAULT_QUESTION.TEXTBOX })
+  //   } catch (e) {
+  //     console.error(e)
+  //   }
+  // }
+
   render() {
-    const project = this.state.project
-    const uxerId = this.state.uxerId
-    const projId = this.state.projectId
-    console.log(">>> project", project)
+    const { uxerId, projId, project, questions } = this.state
 
     return (
       <div>
@@ -135,13 +146,15 @@ class CreateTestnote extends Component {
                           <hr className="black-line" />
                         </Col>
                         <br />
-                        {this.state.questions.map((question, index) => (
-                          <Testnote
-                            question={question}
-                            setQuestion={(index, question) => this.setQuestion(index, question)}
-                            index={index}
-                            key={index}
-                          />
+                        {questions.map((question, index) => (
+                          <>
+                            <Testnote
+                              question={question}
+                              setQuestion={(index, question) => this.setQuestion(index, question)}
+                              index={index}
+                              key={index}
+                            />
+                          </>
                         ))}
                         <br />
                         <Row className="justify-content-center">

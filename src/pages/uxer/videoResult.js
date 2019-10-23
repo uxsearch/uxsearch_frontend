@@ -17,7 +17,11 @@ class VideoResult extends React.Component {
     const { match } = props
     this.state = {
       experId: match.params.experId,
-      experiment: undefined
+      experiment: undefined,
+      uxerId: match.params.id,
+      projectId: match.params.projId,
+      project: undefined,
+      experList: [],
     }
   }
 
@@ -41,7 +45,7 @@ class VideoResult extends React.Component {
 
   render(props) {
     const experiment = this.state.experiment
-
+    const { project, experList, uxerId, projId } = this.state
     return (
       <section id='video-result'>
         <NavbarUXer />
@@ -65,7 +69,7 @@ class VideoResult extends React.Component {
                   </Row>
                   <Row className='d-sm-none space-btn-mobile'>
                     <Col xs={12}>
-                      <Button href={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/answertestnote`} className='btn-usability-test'>Usability Test Note</Button>
+                      <Button href={`/uxer/${this.state.uxerId}/project/${this.state.projectId}/experiment/answertestnote`} className='btn-usability-test'>Usability Test Note</Button>
                     </Col>
                   </Row>
                 </Col>
@@ -73,7 +77,7 @@ class VideoResult extends React.Component {
             </Col>
             <Col md={3} xl={4} className='d-none d-md-block' />
             <Col xs={12} sm={4} md={3} xl={2} className='d-none d-sm-block'>
-              <Button href={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/answertestnote`} className='btn-usability-test w-100'>Usability Test Note</Button>
+              <Button href={`/uxer/${this.state.uxerId}/project/${this.state.projectId}/experiment/${this.state.experId}/answertestnote`} className='btn-usability-test w-100'>Usability Test Note</Button>
             </Col>
           </Row>
         </Container>
