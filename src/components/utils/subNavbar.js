@@ -5,7 +5,9 @@ import { Container, Row, Col } from 'reactstrap'
 class SubNavbar extends React.Component {
   constructor(props) {
     super(props)
-    console.log(props)
+  }
+
+  componentDidMount() {
   }
 
   render(props) {

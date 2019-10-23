@@ -76,9 +76,11 @@ class Answer extends React.Component {
   }
 
   submitQuestionnaire = async (values) => {
+    console.log(values)
+    console.log('test')
     try {
       const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.EXPERIMENTER}${this.state.experId}/answer-question/update/`, values)
-      if(response.status !== 200) {
+      if (response.status !== 200) {
         throw new Error('CANNOT SUBMIT QUESTIONNAIRE')
       }
       this.props.history.push(`/experimenter/${this.state.experId}/thanks`)

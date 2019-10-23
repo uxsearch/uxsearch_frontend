@@ -42,8 +42,13 @@ class ExperPage extends React.Component {
   }
 
   componentDidMount() {
+    console.log(">>> did mount this.state :", this.state)
     this.getAllExperiment()
     this.getProject()
+  }
+
+  componentDidUpdate() {
+    console.log(">>> this.state :", this.state)
   }
 
   getProject = async () => {
@@ -72,11 +77,12 @@ class ExperPage extends React.Component {
 
   render() {
     const { project, experList, uxerId, projId } = this.state
+    const {match} = this.props
 
     return (
       <section id='exper-page'>
         <NavbarUxer title={`${project && project.name}`} />
-        <SubNavbar uxerId={`${uxerId}`} projId={`${projId}`} />
+        <SubNavbar uxerId={`${uxerId}`} projId={`${match.params.projId}`} />
         <Container>
           <Row className='space-head-block justify-content-center align-items-end'>
             <Col xs={10} md={4}>
