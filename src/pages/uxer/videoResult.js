@@ -11,7 +11,8 @@ import ResultQuestion from '../../components/uxer/videoresult/resultBlock'
 
 import '../../static/sass/uxer/videoResult.scss'
 
-class VideoResult extends React.Component {
+class VideoResult extends React.
+Component {
   constructor(props) {
     super(props);
     const { match } = props
@@ -35,6 +36,7 @@ class VideoResult extends React.Component {
     } catch (error) {
       console.error(error)
     }
+    this.getProject()
   }
 
   getAge(birthdate) {
@@ -43,13 +45,25 @@ class VideoResult extends React.Component {
     return age + ' years'
   }
 
+  // getProject = async () => {
+  //   try {
+  //     const response = await axios.get(`${APIUPI.UXER}${this.state.uxerId}/${APIUPI.ONE_PROJECT}${this.state.projectId}`)
+  //     if (response.status !== 200) {
+  //       throw new Error('CANNOT GET PROJECT')
+  //     }
+  //     this.setState({ project: response.data.data })
+  //   } catch (e) {
+  //     console.error(e)
+  //   }
+  // }
+
   render(props) {
     const experiment = this.state.experiment
     const { project, experList, uxerId, projId } = this.state
 
     return (
       <section id='video-result'>
-        <NavbarUXer />
+        <NavbarUXer title={`${project && project.name}`}  />
         <Container fluid>
           <PlayVideo />
         </Container>
