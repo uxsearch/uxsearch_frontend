@@ -42,8 +42,13 @@ class ExperPage extends React.Component {
   }
 
   componentDidMount() {
+    console.log(">>> did mount this.state :", this.state)
     this.getAllExperiment()
     this.getProject()
+  }
+
+  componentDidUpdate() {
+    console.log(">>> this.state :", this.state)
   }
 
   getProject = async () => {
@@ -71,15 +76,12 @@ class ExperPage extends React.Component {
   }
 
   render() {
-    const project = this.state.project
-    const experList = this.state.experList
-    const uxerId = this.state.uxerId
-    const projId = this.state.projectId
+    const { project, experList, uxerId, projectId } = this.state
 
     return (
       <section id='exper-page'>
         <NavbarUxer title={`${project && project.name}`} />
-        <SubNavbar uxerId={`${uxerId}`} projId={`${projId}`} />
+        <SubNavbar uxerId={uxerId} projId={projectId} />
         <Container>
           <Row className='space-head-block justify-content-center align-items-end'>
             <Col xs={10} md={4}>
@@ -130,7 +132,7 @@ class ExperPage extends React.Component {
           <Row>
             {experList.map(experiment => (
               <>
-                <Col xs={6} md={4} lg={3}>
+                <Col xs={6} md={4} lg={3} key={experiment.id}>
                   <ExperBlock
                     link={`/uxer/${this.state.uxerId}/project/${this.state.projectId}/experiment/${experiment.data.experimenter_key}/result`}
                     imgUrl={'https://picsum.photos/200/300'}

@@ -8,7 +8,7 @@ class ThanksBlock extends React.Component {
         <Col xs={12} className='block'>
           <Row>
             <Col xs={12}>
-              <p class='title'>Thank You.</p>
+              <p className='title'>Thank You.</p>
             </Col>
           </Row>
           <Row>

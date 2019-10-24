@@ -1,8 +1,33 @@
 import React from 'react'
 import { Row, Col, Label, Input } from 'reactstrap'
 
+import axios from '../../../utils/axios'
+import APIURI from '../../../utils/apiuri'
+
 class ResultQuestion extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			experId: this.props.experiment
+		}
+	}
+
+// 	getAnswer = async () => {
+// 		try {
+// 		  const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.EXPERIMENTER}${this.state.experId}/questionnaire`)
+//       console.log(response);
+//       if (response.status !== 200) {
+// 			throw new Error('CANNOT GET QUESTIONNAIRE')
+// 		  }
+// 		  this.setState({questionnaire: response.data})
+// 		}catch (e){
+// 		  console.log(e)
+// 		}
+//   }
+
 	render() {
+		const questionnaire = this.props.question
+		console.log('questionnaire in component', this.state.experId)
 		return (
 			<Row>
 				<Col xs={12} className='bg-questionnaire'>
@@ -12,50 +37,29 @@ class ResultQuestion extends React.Component {
 						</Col>
 					</Row>
 					<br />
-					<Row>
-						<Col xs={12}>
 							<Row>
 								<Col xs={12}>
-									<p className='question-text'>1. What you expect in this program?</p>
+									<Row>
+										<Col xs={12}>
+											<p className='question-text'></p>
+										</Col>
+									</Row>
+									<Row>
+										<Col xs={12}>
+											<Label className='w-100'>
+												<Input 
+													type='textarea' 
+													value=''
+													className='input-field'
+													rows='3'
+													disabled 
+												/>
+											</Label>
+										</Col>
+									</Row>
 								</Col>
 							</Row>
-							<Row>
-								<Col xs={12}>
-									<Label className='w-100'>
-										<Input 
-											type='textarea' 
-											value={`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknow printer took a galley of type and scrambled it to make a type specimen.`}
-											className='input-field'
-											rows='3'
-											disabled 
-										/>
-									</Label>
-								</Col>
-							</Row>
-						</Col>
-					</Row>
-					<Row>
-						<Col xs={12}>
-							<Row>
-								<Col xs={12}>
-									<p className='question-text'>2. Would you like to recommend something more?</p>
-								</Col>
-							</Row>
-							<Row>
-								<Col xs={12}>
-								<Label className='w-100'>
-										<Input 
-											type='textarea' 
-											value={`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknow printer took a galley of type and scrambled it to make a type specimen.`}
-											className='input-field'
-											rows='3'
-											disabled
-										/>
-									</Label>
-								</Col>
-							</Row>
-						</Col>
-					</Row>
+					)
 				</Col>
 			</Row>
 		)

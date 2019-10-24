@@ -1,15 +1,16 @@
+
 import React from 'react'
 import { Row, Col, Form, FormGroup, Input, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Label } from 'reactstrap'
 import { withStyles, TextField } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSortDown, faGripLines, faTextHeight, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faCircle, faSquare, faTimesCircle } from '@fortawesome/free-regular-svg-icons'
-
+import { Field } from 'react-final-form'
 import { DEFAULT_QUESTION } from '../../pages/uxer/const'
 
 import '../../static/sass/uxer/createQuestion.scss'
 
-const SearchField = withStyles({
+const QuestionField = withStyles({
   root: {
     '& label.Mui-focused': {
       color: '#28a1f2',
@@ -28,7 +29,9 @@ const SearchField = withStyles({
 class Testnote extends React.Component {
   constructor(props) {
     super(props)
+    const { index } = this.props
     this.state = {
+      indexQuestion: index,
       isOpen: false,
       type: props.type || 'textbox',
     }
@@ -73,8 +76,8 @@ class Testnote extends React.Component {
   }
 
   render() {
-    const { type } = this.state
-  
+    const { type, index } = this.state
+
     return (
       <>
         {type === 'textbox' && (
@@ -92,17 +95,24 @@ class Testnote extends React.Component {
                     <Row>
                       <Col xs={12}>
                         <Row className='no-margin w-100'>
-                          <Col xs={12} md={6} lg={8}>
-                            <SearchField
-                              id='standard-search'
-                              label='Question'
-                              type='search'
-                              className='w-100 no-margin'
-                              margin='normal'
-                              value={this.props.question.question}
-                              onChange={e => this.changeQuestion(e)}
-                            />
-                          </Col>
+                          <Field name={`questions[${index}][question]`} type='text'>
+                            {({ input, meta }) => (
+                              <>
+                                <Col xs={12} md={6} lg={8}>
+                                  <QuestionField
+                                    {...input}
+                                    label='Question'
+                                    type='search'
+                                    className='w-100 no-margin'
+                                    margin='normal'
+                                    value={this.props.question.question}
+                                    onChange={e => this.changeQuestion(e)}
+                                  />
+                                  {meta.touched && meta.error && <span>{meta.error}</span>}
+                                </Col>
+                              </>
+                            )}
+                          </Field>
                           <Col xs={12} md={6} lg={4} className='text-center space-top-btn'>
                             <Dropdown
                               isOpen={this.state.isOpen}
@@ -136,7 +146,12 @@ class Testnote extends React.Component {
                         <br />
                         <Row>
                           <Col xs={12} md={12}>
-                            <Input type='textbox' name='answer1' rows='5' className='text-style ' />
+                            <Form>
+                              <FormGroup>
+                                <Input type='textbox' name='answer1' rows='5' className='text-style ' />
+                                <Field component='input' type='hidden' name={`answers[${index}][options]`} initialValue={[]} />
+                              </FormGroup>
+                            </Form>
                           </Col>
                         </Row>
                       </Col>
@@ -164,8 +179,7 @@ class Testnote extends React.Component {
                       <Col xs={12}>
                         <Row className='no-margin w-100'>
                           <Col xs={12} md={6} lg={8}>
-                            <SearchField
-                              id='standard-search'
+                            <QuestionField
                               label='Question'
                               type='search'
                               className='w-100 no-margin'
@@ -280,8 +294,7 @@ class Testnote extends React.Component {
                         <Col xs={12}>
                           <Row className='no-margin w-100'>
                             <Col xs={12} md={6} lg={8}>
-                              <SearchField
-                                id='standard-search'
+                              <QuestionField
                                 label='Question'
                                 type='search'
                                 className='w-100 no-margin'
@@ -350,7 +363,7 @@ class Testnote extends React.Component {
                                   color='#909090'
                                   className='icon-delete'
                                   onClick={() => {
-                                  this.deleteOption(index)
+                                    this.deleteOption(index)
                                   }}
                                 />
                               </Col>

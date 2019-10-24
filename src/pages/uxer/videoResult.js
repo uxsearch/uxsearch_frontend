@@ -11,13 +11,18 @@ import ResultQuestion from '../../components/uxer/videoresult/resultBlock'
 
 import '../../static/sass/uxer/videoResult.scss'
 
-class VideoResult extends React.Component {
+class VideoResult extends React.
+Component {
   constructor(props) {
     super(props);
     const { match } = props
     this.state = {
       experId: match.params.experId,
-      experiment: undefined
+      experiment: undefined,
+      uxerId: match.params.id,
+      projectId: match.params.projId,
+      project: undefined,
+      experList: [],
     }
   }
 
@@ -31,6 +36,7 @@ class VideoResult extends React.Component {
     } catch (error) {
       console.error(error)
     }
+    // this.getProject()
   }
 
   getAge(birthdate) {
@@ -39,12 +45,25 @@ class VideoResult extends React.Component {
     return age + ' years'
   }
 
-  render() {
+  // getProject = async () => {
+  //   try {
+  //     const response = await axios.get(`${APIUPI.UXER}${this.state.uxerId}/${APIUPI.ONE_PROJECT}${this.state.projectId}`)
+  //     if (response.status !== 200) {
+  //       throw new Error('CANNOT GET PROJECT')
+  //     }
+  //     this.setState({ project: response.data.data })
+  //   } catch (e) {
+  //     console.error(e)
+  //   }
+  // }
+
+  render(props) {
     const experiment = this.state.experiment
+    const { project, experList, uxerId, projId } = this.state
 
     return (
       <section id='video-result'>
-        <NavbarUXer />
+        <NavbarUXer title={`${project && project.name}`}  />
         <Container fluid>
           <PlayVideo />
         </Container>
@@ -65,7 +84,7 @@ class VideoResult extends React.Component {
                   </Row>
                   <Row className='d-sm-none space-btn-mobile'>
                     <Col xs={12}>
-                      <Button href='#' className='btn-usability-test'>Usability Test Note</Button>
+                      <Button href={`/uxer/${this.state.uxerId}/project/${this.state.projectId}/experiment/answertestnote`} className='btn-usability-test'>Usability Test Note</Button>
                     </Col>
                   </Row>
                 </Col>
@@ -73,7 +92,7 @@ class VideoResult extends React.Component {
             </Col>
             <Col md={3} xl={4} className='d-none d-md-block' />
             <Col xs={12} sm={4} md={3} xl={2} className='d-none d-sm-block'>
-              <Button href='#' className='btn-usability-test w-100'>Usability Test Note</Button>
+              <Button href={`/uxer/${this.state.uxerId}/project/${this.state.projectId}/experiment/${this.state.experId}/answertestnote`} className='btn-usability-test w-100'>Usability Test Note</Button>
             </Col>
           </Row>
         </Container>

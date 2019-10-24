@@ -4,13 +4,14 @@ import { withStyles, TextField } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { Form, Field } from 'react-final-form'
+import { withRouter } from 'react-router-dom'
 
 import NotSupport from "../../components/utils/notSupport";
 import NavbarUXer from "../../components/utils/navbarUXer";
 import SubNavbar from "../../components/utils/subNavbar";
 import Testnote from "../../components/uxer/testnote";
 
-import {DEFAULT_QUESTION} from './const'
+import { DEFAULT_QUESTION } from './const'
 
 import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
@@ -47,6 +48,11 @@ class CreateTestnote extends Component {
     }
   }
 
+  componentDidMount() {
+    this.getProject()
+    // this.getTestnote()
+  }
+
   setQuestion(index, question) {
     const newQuestions = [...this.state.questions]
     newQuestions[index] = question
@@ -59,79 +65,96 @@ class CreateTestnote extends Component {
     if (this.state.questions.length < 15) {
       const questions = this.state.questions;
       questions.push(DEFAULT_QUESTION.TEXTBOX);
-      this.setState({ questions: [...questions]});
+      this.setState({ questions: [...questions] });
     }
   }
 
-  submitCreateTestnote = async (values) => {
-    console.log(">>> Submit")
-    // try {
-    //   const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}add/`, values)
-    //     .then(result => {
-    //       this.setState({ redirect: true })
-    //       return result
-    //       console.log('test CreateTestnote')
-    //     })
-    //   if (response.status !== 201) {
-    //     throw new Error('CANNOT CREATE TESTNOTE')
-    //   }
-    //   this.props.history.push(`/${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${response.data.projects.id}/experiments`)
-    // } catch (e) {
-    //   console.error(e)
-    // }
+  submitCreateTestnote = async () => {
+    try {
+      const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/updatenote`, this.state.questions)
+      if (response.status !== 200) {
+        throw new Error('CANNOT CREATE TESTNOTE')
+      }
+      this.props.history.push(`/uxer/${this.state.uxerId}/projects`)
+    } catch (e) {
+      console.error(e)
+    }
   }
 
+  getProject = async (props) => {
+    try {
+      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}`)
+      if (response.status !== 200) {
+        throw new Error('CANNOT GET PROJECT')
+      }
+      this.setState({ project: response.data.data })
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  // getTestnote = async (props) => {
+  //   try {
+  //     const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/test-note`)
+  //     if (response.status !== 200) {
+  //       throw new Error('CANNOT GET PROJECT')
+  //     }
+  //     this.setState({ questions: response.data ? response.data : DEFAULT_QUESTION.TEXTBOX })
+  //   } catch (e) {
+  //     console.error(e)
+  //   }
+  // }
+
   render() {
-    const project = this.state.project
-    const uxerId = this.state.uxerId
-    const projId = this.state.projectId
+    const { uxerId, projectId, project, questions } = this.state
 
     return (
       <div>
         <NotSupport className='d-md-none' />
         <section id='questionnaire' className='d-none d-md-block'>
           <NavbarUXer title={`${project && project.name}`} />
-          <SubNavbar uxerId={`${uxerId}`} projId={`${projId}`} />
+          <SubNavbar uxerId={uxerId} projId={projectId} />
           <Container>
-            <Row></Row>
-            <Row className="questionnaire-block no-gutters">
-              <Col xs={12} md={12}>
-                <Row>
-                  <Col xs={12} md={12} lg={12} className="space-side ">
-                    <h2>Usability Test Note : Web Development </h2>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xs={1} md={1}></Col>
-                  <Col xs={12} md={10} lg={10}>
-                    <SearchField
-                      id="standard-search"
-                      label="Form Description"
-                      type="search"
-                      className="w-100 no-margin"
-                      margin="normal"
-                    />
-                  </Col>
-                  <Col xs={1} md={1}></Col>
-                </Row>
-                <br />
-                <Col xs={12} md={12}>
-                  <hr className="black-line" />
-                </Col>
-                <br />
-                <Form
-                  onSubmit={this.submitCreateTestnote}
-                  render={({
-                    handleSubmit, form, submitting, pristine
-                  }) => (
-                      <form onSubmit={handleSubmit} id="test-note">
-                        {this.state.questions.map((question, index) => (
-                          <Testnote
-                            question={question}
-                            setQuestion={(index, question) => this.setQuestion(index, question)}
-                            index={index}
-                            key={index}
-                          />
+            <Form
+              onSubmit={this.submitCreateTestnote}
+              render={({
+                handleSubmit, form, submitting, pristine
+              }) => (
+                  <form onSubmit={handleSubmit}>
+                    <Row className="questionnaire-block no-gutters">
+                      <Col xs={12} md={12}>
+                        <Row>
+                          <Col xs={12} md={12} lg={12} className="space-side ">
+                            <h2>Usability Test Note : Web Development </h2>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col xs={1} md={1}></Col>
+                          <Col xs={12} md={10} lg={10}>
+                            <SearchField
+                              id="standard-search"
+                              label="Form Description"
+                              type="search"
+                              className="w-100 no-margin"
+                              margin="normal"
+                            />
+                          </Col>
+                          <Col xs={1} md={1}></Col>
+                        </Row>
+                        <br />
+                        <Col xs={12} md={12}>
+                          <hr className="black-line" />
+                        </Col>
+                        <br />
+                        {questions.map((question, index) => (
+                          <>
+                            <Testnote
+                              question={question}
+                              setQuestion={(index, question) => this.setQuestion(index, question)}
+                              index={index}
+                              key={index}
+                            />
+                          </>
                         ))}
                         <br />
                         <Row className="justify-content-center">
@@ -152,16 +175,16 @@ class CreateTestnote extends Component {
                             <br />
                           </Col>
                         </Row>
-                      </form>
-                    )}
-                />
-              </Col>
-            </Row >
-            <Row className='justify-content-center space-btn'>
-              <Col xs={12} md={4} className='text-center'>
-                <Button type="submit" form="test-note" className='btn-save-questionnaire' size='lg'>Save Usability Test Note</Button>
-              </Col>
-            </Row>
+                      </Col>
+                    </Row >
+                    <Row className='justify-content-center space-btn'>
+                      <Col xs={12} md={4} className='text-center'>
+                        <Button type="submit" className='btn-save-questionnaire'>Save Usability Test Note</Button>
+                      </Col>
+                    </Row>
+                  </form>
+                )}
+            />
           </Container>
         </section>
       </div>
@@ -169,4 +192,4 @@ class CreateTestnote extends Component {
   }
 }
 
-export default CreateTestnote;
+export default withRouter(CreateTestnote);

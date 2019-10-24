@@ -57,7 +57,7 @@ class ProjectPage extends React.Component {
       projectList: [],
       sortDropdownOpen: false,
       modal: false,
-      redirect: false
+      redirect: false,
     };
   }
 
@@ -75,11 +75,6 @@ class ProjectPage extends React.Component {
 
   componentDidMount() {
     this.getProject()
-  }
-
-  changeUnmountOnClose(e) {
-    let value = e.target.value;
-    this.setState({ unmountOnClose: JSON.parse(value) });
   }
 
   getProject = async () => {
@@ -104,15 +99,28 @@ class ProjectPage extends React.Component {
       if (response.status !== 201) {
         throw new Error('CANNOT CREATE UXER')
       }
-      this.props.history.push(`/${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${response.data.projects.id}/experiments`)
+      this.props.history.push(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${response.data.projects.id}/experiments`)
     } catch (e) {
       console.error(e)
     }
   }
 
+  removeProject = async (projectId, statusRemove) => {
+    try {
+      if (statusRemove === true) {
+        const response = await axios.delete(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}delete`, projectId)
+        if (response.status !== 200) {
+          throw new Error('CANNOT DELETE PROJECT')
+        }     
+      }
+		} catch (e) {
+		  console.error(e)
+		}
+  }
+
   render() {
     const projectList = this.state.projectList
-    const redirect = this.state.redirect;
+    // const redirect = this.state.redirect
 
     // if (redirect) return <Redirect to={`/${APIURI.UXER}${this.state.uxerId}/${APIURI.PROJECT}`} />
 
@@ -189,8 +197,14 @@ class ProjectPage extends React.Component {
                   <>
                     {projectList.map(project => (
                       <>
-                        <Col xs={12} sm={6} md={4} lg={3}>
-                          <ProjectBlock url={`/uxer/${this.state.uxerId}/project/${project.id}/experiments`} title={project.data.name} imgUrl={project.data.cover_url} />
+                        <Col xs={12} sm={6} md={4} lg={3} key={project.id}>
+                          <ProjectBlock
+                            url={`/uxer/${this.state.uxerId}/project/${project.id}/experiments`}
+                            title={project.data.name}
+                            imgUrl={project.data.cover_url}
+                            projectId={project.id} 
+                            removeProject={this.removeProject}
+                          />
                         </Col>
                       </>
                     ))}
