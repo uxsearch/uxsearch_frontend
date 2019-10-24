@@ -22,7 +22,8 @@ Component {
       uxerId: match.params.id,
       projectId: match.params.projId,
       project: undefined,
-      questions: []
+      questions: [],
+      records: undefined
     }
   }
 
@@ -30,6 +31,7 @@ Component {
     this.getExperimentProfile()
     this.getProject()
     this.getResultAnswer()
+    this.getResultRecord()
   }
 
   getExperimentProfile = async () => {
@@ -75,17 +77,37 @@ Component {
     }
 }
 
+  getResultRecord = async () => {
+    try {
+      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.EXPERIMENTER}${this.state.experId}`)
+      if (response.status !== 200) {
+        throw new Error('CANNOT GET RESULT')
+      }
+      this.setState({ records: response.data.data })
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   render() {
     const experiment = this.state.experiment
     const project = this.state.project
     const questions = this.state.questions
+    const records = this.state.records
 
     console.log('questions', questions)
     return (
       <section id='video-result'>
         <NavbarUXer title={`${project && project.name}`}/>
         <Container fluid>
-          <PlayVideo />
+          {records &&
+            <PlayVideo 
+              faceVideo={records.video_url}
+              faceVideoTime= {records.video_time}
+              screenVideo= {records.screen_url}
+              screenVideoTime= {records.screen_time}
+            />
+          }
         </Container>
         <Container fluid className='space-bottom-video'>
           <Row className='justify-content-center align-items-center'>
