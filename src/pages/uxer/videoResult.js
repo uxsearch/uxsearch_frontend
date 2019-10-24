@@ -22,11 +22,17 @@ Component {
       uxerId: match.params.id,
       projectId: match.params.projId,
       project: undefined,
-      experList: [],
+      questions: []
     }
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.getExperimentProfile()
+    this.getProject()
+    this.getResultAnswer()
+  }
+
+  getExperimentProfile = async () => {
     try {
       const response = await axios.get(`${APIURI.EXPERIMENTER}${this.state.experId}/`)
       if (response.status !== 200) {
@@ -45,25 +51,39 @@ Component {
     return age + ' years'
   }
 
-  // getProject = async () => {
-  //   try {
-  //     const response = await axios.get(`${APIUPI.UXER}${this.state.uxerId}/${APIUPI.ONE_PROJECT}${this.state.projectId}`)
-  //     if (response.status !== 200) {
-  //       throw new Error('CANNOT GET PROJECT')
-  //     }
-  //     this.setState({ project: response.data.data })
-  //   } catch (e) {
-  //     console.error(e)
-  //   }
-  // }
+  getProject = async () => {
+    try {
+      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}`)
+      if (response.status !== 200) {
+        throw new Error('CANNOT GET PROJECT')
+      }
+      this.setState({ project: response.data.data })
+    } catch (e) {
+      console.error(e)
+    }
+  }
 
-  render(props) {
+  getResultAnswer = async () => {
+    try {
+      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.EXPERIMENTER}${this.state.experId}/answers-questionnaire`)
+      if (response.status !== 200) {
+        throw new Error('CANNOT GET RESULT')
+      }
+      this.setState({ questions: response.data })
+    } catch (e) {
+      console.error(e)
+    }
+}
+
+  render() {
     const experiment = this.state.experiment
-    const { project, experList, uxerId, projId } = this.state
+    const project = this.state.project
+    const questions = this.state.questions
 
+    console.log('questions', questions)
     return (
       <section id='video-result'>
-        <NavbarUXer title={`${project && project.name}`}  />
+        <NavbarUXer title={`${project && project.name}`}/>
         <Container fluid>
           <PlayVideo />
         </Container>
@@ -114,7 +134,9 @@ Component {
             </>
           }
           <br />
-          <ResultQuestion />
+          <ResultQuestion  
+            questions={questions && questions}  
+          />
         </Container>
       </section>
     )
