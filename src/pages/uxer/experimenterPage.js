@@ -42,13 +42,11 @@ class ExperPage extends React.Component {
   }
 
   componentDidMount() {
-    console.log(">>> did mount this.state :", this.state)
     this.getAllExperiment()
     this.getProject()
   }
 
   componentDidUpdate() {
-    console.log(">>> this.state :", this.state)
   }
 
   getProject = async () => {

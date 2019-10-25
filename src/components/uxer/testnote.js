@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { Row, Col, Form, FormGroup, Input, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Label } from 'reactstrap'
 import { withStyles, TextField } from '@material-ui/core'
@@ -241,7 +240,6 @@ class Testnote extends React.Component {
                                 </Col>
                               </>
                             )}
-
                             <Col xs={1}>
                               <FontAwesomeIcon
                                 icon={faTimesCircle}
@@ -255,7 +253,6 @@ class Testnote extends React.Component {
                             </Col>
                           </Row>
                         ))}
-
                         <Row className='no-margin w-100 '>
                           <Col xs={1}>
                             <FontAwesomeIcon icon={faCircle} size='2x' color='#ced4da' className='icon-mul-check' />
@@ -355,7 +352,6 @@ class Testnote extends React.Component {
                                   </Col>
                                 </>
                               )}
-
                               <Col xs={1}>
                                 <FontAwesomeIcon
                                   icon={faTimesCircle}
@@ -369,7 +365,6 @@ class Testnote extends React.Component {
                               </Col>
                             </Row>
                           ))}
-
                           <Row className='no-margin w-100'>
                             <Col xs={1}>
                               <FontAwesomeIcon icon={faSquare} size='2x' color='#ced4da' className='icon-mul-check' />

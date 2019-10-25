@@ -95,7 +95,6 @@ Component {
     const questions = this.state.questions
     const records = this.state.records
 
-    console.log('questions', questions)
     return (
       <section id='video-result'>
         <NavbarUXer title={`${project && project.name}`}/>

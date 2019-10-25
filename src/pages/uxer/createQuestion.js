@@ -72,13 +72,12 @@ class CreateQuestion extends Component {
   submitCreateQuestionnaire = async () => {
     try {
       const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/updatequestionnaire`, this.state.questions)
-      console.log('>>>response', this.state.response)
+      // console.log('>>>response', this.state.response)
       if (response.status !== 200) {
         throw new Error('CANNOT CREATE QUESTIONNAIRE')
       }
-      // this.props.history.push(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/experiment/question`)
       this.props.history.push(`/uxer/${this.state.uxerId}/project/${this.state.projectId}/experiment/question`)
-      console.log('>>>back', this.props.history)
+      // console.log('>>>back', this.props.history)
     } catch (e) {
       console.error(e)
     }

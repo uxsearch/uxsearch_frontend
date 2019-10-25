@@ -73,7 +73,6 @@ class AnswerTestnote extends React.Component {
       experId: match.params.experId,
       experiment: undefined,
       answer: [],
-      answerId: '934DlGsmzBo8JlZWoDRL',
       project: undefined,
       testnote: [],
       experList: [],
@@ -105,17 +104,15 @@ class AnswerTestnote extends React.Component {
   }
 
   submitTestnote = async (values) => {
-    console.log(values)
-    console.log('test123')
-    // try {
-    //   const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.EXPERIMENTER}${this.state.experId}/${APIURI.ANSWER}${this.state.answerId}/update/`, values)
-    //   if (response.status !== 200) {
-    //     throw new Error('CANNOT SUBMIT TESTNOTE')
-    //   }
-    //   this.props.history.push(`/experimenter/${this.state.experId}/thanks`)
-    // } catch (e) {
-    //   console.error(e)
-    // }
+    try {
+      const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.EXPERIMENTER}${this.state.experId}/answer-note/update `, values)
+      if (response.status !== 200) {
+        throw new Error('CANNOT CREATE TESTNOTE')
+      }
+      this.props.history.push(`/uxer/${this.state.uxerId}/project/${this.state.projectId}/experiment/${this.state.experId}/answertestnote`)
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   getTestnote = async (props) => {
@@ -125,7 +122,7 @@ class AnswerTestnote extends React.Component {
       if (response.status !== 200) {
         throw new Error('CANNOT GET TESTNOTE')
       }
-      
+
       this.setState({ testnote: response.data })
     } catch (e) {
       console.error(e)
@@ -145,7 +142,7 @@ class AnswerTestnote extends React.Component {
   }
 
   render(props) {
-    const { testnote, project, experList, uxerId, projId, experiment } = this.state
+    const { testnote, project, experList, uxerId, projId, experiment, answer } = this.state
 
     return (
       <div>
@@ -235,10 +232,11 @@ class AnswerTestnote extends React.Component {
                             <br />
                             {testnote.map((question, index) => (
                               <>
-                              {console.log(question)}
+                                {console.log(question)}
                                 <Row key={question.id}>
                                   <Col xs={12}>
                                     <Label className='no-margin w-100'>
+                                      <Field component='input' type='hidden' name={`answers[${index}][answerId]`} initialValue={answer.id ? answer.id : ''} />
                                       <Row>
                                         <Col xs={12}>
                                           <Field component='input' type='hidden' name={`answers[${index}][question_key]`} initialValue={question.id} />
