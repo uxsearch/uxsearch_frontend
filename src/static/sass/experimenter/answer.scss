@@ -10,7 +10,7 @@
   }
 
   .space-head-block {
-    margin-top: 40px;
+    margin-top: 5px;
   }
 
   .answer-block {
@@ -53,5 +53,13 @@
   .btn-submit-test:hover {
     background-color: $blue-hover !important;
     border: 2px solid $blue-hover !important;
+  }
+
+  .cross{
+    padding: 10px;
+  }
+
+  .close_btn{
+    color: aqua;
   }
 }

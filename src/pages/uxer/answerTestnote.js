@@ -147,45 +147,54 @@ class AnswerTestnote extends React.Component {
     return (
       <div>
         <section id='video-result' className='d-none d-md-block'>
-          <NavbarUXer title={`${project && project.name}`} />
-          <Container fluid className='space-bottom-video'>
-            <Row className='justify-content-center align-items-center'>
-              <Col xs={12} sm={8} md={6} lg={5}>
+          <NavbarUXer title={`${project && project.name} Test Note`} />
+          <Container className='space-bottom-video'>
+            <Row className=' align-items-center'>
+              {/* <Col xs={12} sm={8} md={6} lg={5}> */}
+              <Col xs={12} sm={8} md={6} lg={7}>
+                {/* <Row className='align-items-center justify-content-center'> */}
                 <Row className='align-items-center justify-content-center'>
-                  <Col xs={3} sm={4} xl={3}>
+                  <Col xs={1} sm={4} xl={3}>
                     <div className='profile-block'>
                       <img src='https://picsum.photos/200/300' alt='Profile Picture' className='profile-img' />
                     </div>
                   </Col>
-                  <Col xs={9} sm={8} xl={9}>
+                  <Col xs={10} sm={8} xl={9}>
                     <Row>
                       <Col xs={12}>
                         <p className='no-margin exper-name'>{experiment && `${experiment.firstname} ${experiment.lastname}`}</p>
                       </Col>
                     </Row>
-                    <Row className='d-sm-none space-btn-mobile'>
-                      <Col xs={12}>
+                    {/* <Row className='d-sm-none space-btn-mobile'>
+                      <Col xs={1}>
                         <FontAwesomeIcon
                           icon={faTimes}
-                          size='3x'
+                          size='2x'
                           color='#303030'
-                          className='plus'
+                          className='cross'
                           link={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/answertestnote`}
                         />
                       </Col>
-                    </Row>
+                    </Row> */}
                   </Col>
                 </Row>
               </Col>
               <Col md={3} xl={4} className='d-none d-md-block' />
-              <Col xs={12} sm={4} md={3} xl={2} className='d-none d-sm-block'>
-                <FontAwesomeIcon
+              <Col xs={12} sm={4} md={3} xl={1} className='d-none d-sm-block'>
+                <img
+                  src={require('../../static/img/close.svg')}
+                  height='20px'
+                  className="close_btn"
+                  alt="close button"
+                  
+               />
+                {/* <FontAwesomeIcon
                   icon={faTimes}
-                  size='3x'
+                  size='2x'
                   color='#303030'
-                  className='plus'
+                  className='cross'
                   link={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/answertestnote`}
-                />
+                /> */}
               </Col>
             </Row>
           </Container>
@@ -226,7 +235,7 @@ class AnswerTestnote extends React.Component {
                           <Col xs={12} className='answer-block'>
                             <Row className='space-head-block'>
                               <Col xs={12}>
-                                <h2 className='title'>'{project && `${project.name}`}' <span>Testnote</span></h2>
+                                <h2 className='title'> <span>Test Note Form</span></h2>
                               </Col>
                             </Row>
                             <br />
