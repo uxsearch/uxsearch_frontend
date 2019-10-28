@@ -13,6 +13,8 @@ import CreateQuestion from './pages/uxer/createQuestion'
 import CreateTestnote from './pages/uxer/createTestnote'
 import AnswerTestnote from './pages/uxer/answerTestnote'
 
+import SignIn from './pages/uxer/signin'
+
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './static/sass/customAll.scss'
 
@@ -34,6 +36,7 @@ const UXer = ({ match }) => {
   return (
     <Router>
       <Switch>
+        <Route exact path={`${match.path}`} component={SignIn} />
         <Route exact path={`${match.path}/:id/projects`} component={ProjectPage} />
         <Route exact path={`${match.path}/:id/project/:projId/experiments`} component={ExperPage} />
         <Route exact path={`${match.path}/:id/project/:projId/experiment/:experId/result`} component={(VideoResult)} />

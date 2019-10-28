@@ -1,0 +1,114 @@
+@import "../variables";
+
+#signin {
+  .no-margin {
+    margin: 0px !important;
+  }
+
+  .space-block {
+    margin: 50px auto;
+  }
+
+  // @supports (background-image: url(full_logo.png), url(background1.jpg)) {
+  .background {
+    width: 1688px;
+    height: 800px;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  // }
+
+  .blue-screen {
+    background-color: $blue !important;
+
+    padding: 30px !important;
+
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .profile-block {
+    background-color: $white !important;
+    border-radius: 20px;
+    padding: 30px !important;
+
+    position: absolute;
+    z-index: 3;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .logo-icon {
+    width: 200px;
+    height: auto;
+  }
+
+  .logo-facebook {
+    width: 30px;
+    height: auto;
+  }
+
+  .btn-signin {
+    background-color: $blue !important;
+    border: 2px solid $blue !important;
+    color: $light !important;
+    width: 100%;
+    border-radius: 10px !important;
+    font-size: 18px;
+    font-weight: 700px !important;
+  }
+
+  .btn-signin-facebook {
+    background-color: #3b5998 !important;
+    border: 2px solid $blue !important;
+    color: $light !important;
+    width: 100%;
+    border-radius: 10px !important;
+    font-size: 18px;
+    font-weight: 700px;
+  }
+
+  .btn-sign-Up {
+    background-color: $light !important;
+    border: 2px solid $blue !important;
+    color: $blue !important;
+    width: 100%;
+    border-radius: 10px !important;
+    font-size: 18px;
+    font-weight: 700px;
+  }
+
+  .user {
+    margin-right: 0px;
+    padding: 0px;
+  }
+
+  .text {
+    font-size: 30px;
+    margin-top: 100pt;
+    color: #858585;
+    font-weight: 300;
+    cursor: default;
+  }
+
+  .black-line {
+    height: 0px;
+  }
+
+  .or {
+    padding: 5px;
+  }
+
+  .forgot {
+    padding-bottom: 25px;
+    font-size: 14px;
+    font-weight: 300;
+  }
+}
