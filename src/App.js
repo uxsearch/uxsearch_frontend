@@ -55,7 +55,7 @@ class App extends React.Component {
       <Router>
         <Switch>
           <Route exact path='/' component={Test} />
-          <Route path='/experimenter' component={Experimenter} />
+          <Route path='/:projId/experimenter' component={Experimenter} />
           <Route path='/uxer' component={UXer} />
           <Route component={NotFound} />
         </Switch>
