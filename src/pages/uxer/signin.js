@@ -48,15 +48,16 @@ class SignIn extends React.Component {
 
   submitLogin = async (values) => {
     try {
-      const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}add/`, values)
+      const response = await axios.post(`authen/signin`, values)
         .then(result => {
           this.setState({ redirect: true })
+          localStorage.setItem('token', result.data.token)
           return result
         })
-      if (response.status !== 201) {
-        throw new Error('CANNOT CREATE UXER')
+      if (response.status !== 200) {
+        throw new Error('CANNOT SIGNIN')
       }
-      this.props.history.push(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${response.data.projects.id}/experiments`)
+      this.props.history.push(`/uxer/${response.data.uid}/projects`)
     } catch (e) {
       console.error(e)
     }
@@ -90,10 +91,10 @@ class SignIn extends React.Component {
                           <Col xs={12} md={11}>
                             <Row className='justify-content-center align-items-end no-gutters'>
                               <Col xs={2} className='text-center'>
-                                <FontAwesomeIcon icon={faUserAlt} size='2x' color='#303030' />
+                                <FontAwesomeIcon icon={faUserAlt} size='lg' color='#303030' />
                               </Col>
                               <Col xs={10} className='text-center'>
-                                <Field name='Username' type='text'>
+                                <Field name='email' type='email'>
                                   {({ input, meta }) => (
                                     <>
                                       <Row className='align-items-center'>
@@ -102,8 +103,8 @@ class SignIn extends React.Component {
                                           <Label className='w-100'>
                                             <TextInput {...input}
                                               id='standard-Username'
-                                              label='Username / Email'
-                                              type='text'
+                                              label='Email'
+                                              type='email'
                                               className='w-100 create-form space-bottom'
                                               margin='normal'
                                               required
@@ -124,10 +125,10 @@ class SignIn extends React.Component {
                           <Col xs={12} md={11}>
                             <Row className='justify-content-center align-items-end no-gutters'>
                               <Col xs={2} className='text-center'>
-                                <FontAwesomeIcon icon={faLock} size='2x' color='#303030' />
+                                <FontAwesomeIcon icon={faLock} size='lg' color='#303030' />
                               </Col>
                               <Col xs={10} className='text-center'>
-                                <Field name='Password' type='text'>
+                                <Field name='password' type='password'>
                                   {({ input, meta }) => (
                                     <>
                                       <Row className='align-items-center'>
@@ -137,7 +138,7 @@ class SignIn extends React.Component {
                                             <TextInput {...input}
                                               id='standard-Password'
                                               label='Password'
-                                              type='text'
+                                              type='password'
                                               className='w-100 create-form space-bottom'
                                               margin='normal'
                                               required
@@ -154,11 +155,11 @@ class SignIn extends React.Component {
                           </Col>
                         </Row>
 
-                        <Row className='forgot justify-content-end align-items-end'>
+                        {/* <Row className='forgot justify-content-end align-items-end'>
                           <Col xs={5} >
                             <span>Forgot Password?</span>
                           </Col>
-                        </Row>
+                        </Row> */}
 
                         <Row>
                           <Col xs={12}>
@@ -166,7 +167,7 @@ class SignIn extends React.Component {
                           </Col>
                         </Row>
 
-                        <Row className='or justify-content-center align-items-center'>
+                        {/* <Row className='or justify-content-center align-items-center'>
                           <Col xs={1} className='or ' >
                             <span>OR</span>
                           </Col>
@@ -189,7 +190,7 @@ class SignIn extends React.Component {
                           <Col xs={12}>
                             <Button type="submit" className='btn-sign-Up'>Sign Up</Button>
                           </Col>
-                        </Row>
+                        </Row> */}
                       </form>
                     )}
                 />

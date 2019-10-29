@@ -97,9 +97,9 @@ class ProjectPage extends React.Component {
           return result
         })
       if (response.status !== 201) {
-        throw new Error('CANNOT CREATE UXER')
+        throw new Error('CANNOT CREATE PROJECT')
       }
-      this.props.history.push(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${response.data.projects.id}/experiments`)
+      this.props.history.push(`/uxer/${this.state.uxerId}/project/${response.data.projects.id}/experiments`)
     } catch (e) {
       console.error(e)
     }
