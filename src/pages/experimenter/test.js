@@ -31,6 +31,13 @@ class Test extends React.Component {
             Sign in
           </Button>
         </a>
+
+        <h1>MyAccount</h1>
+        <a href='/uxer/myAccount'>
+          <Button className='btn btn-success'>
+            MyAccount
+          </Button>
+        </a>
       </div>
     )
   }
