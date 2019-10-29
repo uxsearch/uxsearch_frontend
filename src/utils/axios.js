@@ -2,14 +2,18 @@ import axios from 'axios'
 require('dotenv').config()
 
 function createApiInstance(headers) {
-  return axios.create({
+  const instance = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
-    headers
+    headers: {
+      ...headers,
+      'Authorization': `${localStorage.getItem('token')}`,
+    }
   })
+  return instance
 }
 
 function handleResponse(response) {
-  if(response.data) {
+  if (response.data) {
     return {
       status: response.status,
       data: response.data,
@@ -20,7 +24,7 @@ function handleResponse(response) {
 }
 
 function catchError(error) {
-  if(error.response) {
+  if (error.response) {
     return {
       status: error.response.status,
       data: error.response.data,
@@ -51,8 +55,8 @@ export default {
       .then(handleResponse)
       .catch(catchError)
   ),
-  put: (path, body = {}) => (
-    createApiInstance()
+  put: (path, body = {}, headers = {}) => (
+    createApiInstance(headers)
       .request({
         url: path,
         method: 'PUT',
@@ -61,8 +65,8 @@ export default {
       .then(handleResponse)
       .catch(catchError)
   ),
-  delete: (path, body = {}) => (
-    createApiInstance()
+  delete: (path, body = {}, headers = {}) => (
+    createApiInstance(headers)
       .request({
         url: path,
         method: 'DELETE',
