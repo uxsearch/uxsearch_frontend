@@ -11,7 +11,7 @@ class Test extends React.Component {
       <div>
         <NavbarExp />
         <h1>Test test page</h1>
-        <a href='/experimenter'>
+        <a href='/VBpjcnZz4OurNa257WOh/experimenter'>
           <Button className='btn btn-success'>
             Start Experimenter
           </Button>
@@ -19,7 +19,7 @@ class Test extends React.Component {
         <FontAwesomeIcon icon={faUserAlt} size="lg" /> <br></br>
 
         <h1>Project Page</h1>
-        <a href='/uxer/8t6UN47Z749qacrEvZ8O/projects'>
+        <a href='/uxer/Ra5yR8oqRlP0Inxx1BJYzuupjoV2/projects'>
           <Button className='btn btn-success'>
             Project Page
           </Button>

@@ -46,9 +46,10 @@ const modalSubmit = () => {
 class IndexExperiment extends React.Component {
   constructor(props) {
     super(props)
+    const { match } = props
     this.state = {
-      uxerId: '8t6UN47Z749qacrEvZ8O',
-      projectId: 'a89OdndRvNEoasnHXfhu',
+      uxerId: 'Ra5yR8oqRlP0Inxx1BJYzuupjoV2',
+      projectId: match.params.projId,
       project: undefined,
       country: '',
       university: ''
@@ -95,12 +96,11 @@ class IndexExperiment extends React.Component {
       newValue.educate = prepareEducate
       newValue.job = prepareJob
       newValue.lifestyle = prepareLifestyle
-      console.log('value : ', newValue)
       const response = await axios.post(`${APIURI.EXPERIMENTER}add/`, newValue)
       if (response.status !== 201) {
         throw new Error('CANNOT CREATE EXPERIMENTER')
       }
-      this.props.history.push(`/experimenter/${response.data.experimenter.id}/record`)
+      this.props.history.push(`/${this.state.projectId}/experimenter/${response.data.experimenter.id}/record`)
     } catch (e) {
       console.error(e)
     }

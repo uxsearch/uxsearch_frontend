@@ -62,8 +62,8 @@ class Answer extends React.Component {
     super(props);
     const { match } = props
     this.state = {
-      uxerId: '8t6UN47Z749qacrEvZ8O',
-      projectId: 'a89OdndRvNEoasnHXfhu',
+      uxerId: 'Ra5yR8oqRlP0Inxx1BJYzuupjoV2',
+      projectId: match.params.projId,
       experId: match.params.experId,
       project: undefined,
       questionnaire: [],
@@ -76,14 +76,12 @@ class Answer extends React.Component {
   }
 
   submitQuestionnaire = async (values) => {
-    // console.log(values)
-    // console.log('test')
     try {
       const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.EXPERIMENTER}${this.state.experId}/answer-question/update/`, values)
       if (response.status !== 200) {
         throw new Error('CANNOT SUBMIT QUESTIONNAIRE')
       }
-      this.props.history.push(`/experimenter/${this.state.experId}/thanks`)
+      this.props.history.push(`/${this.state.projectId}/experimenter/${this.state.experId}/thanks`)
     } catch (e) {
       console.error(e)
     }
