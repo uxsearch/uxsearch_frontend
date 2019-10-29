@@ -200,6 +200,7 @@ class ProjectPage extends React.Component {
                         <Col xs={12} sm={6} md={4} lg={3} key={project.id}>
                           <ProjectBlock
                             url={`/uxer/${this.state.uxerId}/project/${project.id}/experiments`}
+                            uxerId={this.state.uxerId}
                             title={project.data.name}
                             imgUrl={project.data.cover_url}
                             projectId={project.id} 
