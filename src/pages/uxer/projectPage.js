@@ -114,21 +114,21 @@ class ProjectPage extends React.Component {
         }
         this.props.history.push(`/uxer/${this.state.uxerId}/projects`)
       }
-		} catch (e) {
-		  console.error(e)
-		}
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   submitUpdateProject = async (values, projectId) => {
-		try {
-      const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${projectId}/update`, values )
+    try {
+      const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${projectId}/update`, values)
       if (response.status !== 200) {
         throw new Error('CANNOT EDIT MY PROJECT')
       }
       this.props.history.push(`/uxer/${this.state.uxerId}/projects`)
-		} catch (e) {
-		  console.error(e)
-		}
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   render() {
@@ -216,7 +216,7 @@ class ProjectPage extends React.Component {
                             uxerId={this.state.uxerId}
                             title={project.data.name}
                             imgUrl={project.data.cover_url}
-                            projectId={project.id} 
+                            projectId={project.id}
                             removeProject={this.removeProject}
                             updateProject={this.submitUpdateProject}
                           />

@@ -186,8 +186,8 @@ class AnswerTestnote extends React.Component {
                   height='20px'
                   className="close_btn"
                   alt="close button"
-                  
-               />
+
+                />
                 {/* <FontAwesomeIcon
                   icon={faTimes}
                   size='2x'
