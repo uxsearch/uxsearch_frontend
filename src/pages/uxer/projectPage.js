@@ -49,11 +49,11 @@ const TextInput = withStyles({
 class ProjectPage extends React.Component {
   constructor(props) {
     super(props);
-    const { match } = props
+    const { computedMatch } = props
     this.toggleSort = this.toggleSort.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.state = {
-      uxerId: match.params.id,
+      uxerId: computedMatch.params.id,
       projectList: [],
       sortDropdownOpen: false,
       modal: false,

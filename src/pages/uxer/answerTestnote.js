@@ -66,11 +66,11 @@ const CheckboxGroup = ({ fields, options }) => {
 class AnswerTestnote extends React.Component {
   constructor(props) {
     super(props);
-    const { match } = props
+    const { computedMatch } = props
     this.state = {
-      uxerId: match.params.id,
-      projectId: match.params.projId,
-      experId: match.params.experId,
+      uxerId: computedMatch.params.id,
+      projectId: computedMatch.params.projId,
+      experId: computedMatch.params.experId,
       experiment: undefined,
       answer: [],
       project: undefined,

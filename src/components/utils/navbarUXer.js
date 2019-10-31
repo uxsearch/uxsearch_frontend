@@ -3,18 +3,18 @@ import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, Un
 import { Row, Col } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
-
+import { withRouter } from 'react-router-dom'
 
 import logo from '../../static/img/Logo_White.png'
+import axios from '../../utils/axios';
+
 import '../../static/sass/navbar.scss'
 
 class NavbarUxer extends React.Component {
   constructor(props) {
     super(props);
-
     this.toggle = this.toggle.bind(this);
     this.toggleNavbar = this.toggleNavbar.bind(this);
-
     this.state = {
       isOpen: false,
       collapsed: true
@@ -31,6 +31,12 @@ class NavbarUxer extends React.Component {
     this.setState({
       collapsed: !this.state.collapsed
     });
+  }
+
+  logout = async () => {
+    console.log(this.props.history)
+    localStorage.removeItem('token')
+    window.location.assign('/login')
   }
 
   render() {
@@ -93,7 +99,7 @@ class NavbarUxer extends React.Component {
                       <span>My Account</span>
                     </DropdownItem>
                     <DropdownItem divider />
-                    <DropdownItem>
+                    <DropdownItem onClick={() => this.logout()}>
                       <FontAwesomeIcon icon={faSignOutAlt} size='sm' className='space-icon' />
                       <span>Sign out</span>
                     </DropdownItem>
@@ -118,4 +124,4 @@ class NavbarUxer extends React.Component {
   }
 }
 
-export default NavbarUxer
+export default withRouter(NavbarUxer)

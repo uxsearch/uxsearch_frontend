@@ -15,12 +15,12 @@ class VideoResult extends React.
 Component {
   constructor(props) {
     super(props);
-    const { match } = props
+    const { computedMatch } = props
     this.state = {
-      experId: match.params.experId,
+      experId: computedMatch.params.experId,
       experiment: undefined,
-      uxerId: match.params.id,
-      projectId: match.params.projId,
+      uxerId: computedMatch.params.id,
+      projectId: computedMatch.params.projId,
       project: undefined,
       questions: [],
       records: undefined

@@ -32,10 +32,10 @@ const SearchField = withStyles({
 class ExperPage extends React.Component {
   constructor(props) {
     super(props)
-    const { match } = props
+    const { computedMatch } = props
     this.state = {
-      uxerId: match.params.id,
-      projectId: match.params.projId,
+      uxerId: computedMatch.params.id,
+      projectId: computedMatch.params.projId,
       project: undefined,
       experList: [],
     }
