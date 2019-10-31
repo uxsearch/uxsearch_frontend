@@ -1,9 +1,6 @@
 import React from 'react'
 import { Row, Col, Label, Input } from 'reactstrap'
 
-import axios from '../../../utils/axios'
-import APIURI from '../../../utils/apiuri'
-
 class ResultQuestion extends React.Component {
 	constructor(props) {
 		super(props)

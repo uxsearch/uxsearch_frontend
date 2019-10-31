@@ -44,7 +44,6 @@ Component {
     } catch (error) {
       console.error(error)
     }
-    // this.getProject()
   }
 
   getAge(birthdate) {

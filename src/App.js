@@ -14,6 +14,7 @@ import CreateTestnote from './pages/uxer/createTestnote'
 import AnswerTestnote from './pages/uxer/answerTestnote'
 
 import SignIn from './pages/uxer/signin'
+import MyAccount from './pages/uxer/myAccount'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './static/sass/customAll.scss'
@@ -36,7 +37,6 @@ const UXer = (match) => {
   return (
     <Router>
       <Switch>
-        {/* <Route exact path={`${match.path}`} component={SignIn} /> */}
         <PrivateRoute exact path={`${match.path}/:id/projects`} component={ProjectPage} />
         <PrivateRoute exact path={`${match.path}/:id/project/:projId/experiments`} component={ExperPage} />
         <PrivateRoute exact path={`${match.path}/:id/project/:projId/experiment/:experId/result`} component={(VideoResult)} />
