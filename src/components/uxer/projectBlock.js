@@ -8,9 +8,6 @@ import { faEllipsisV, faTrash, faShare, faEdit, faBook, faLink } from '@fortawes
 
 import '../../static/sass/uxer/projectPage.scss'
 
-import axios from '../../utils/axios'
-import APIURI from '../../utils/apiuri'
-
 const TextInput = withStyles({
 	root: {
 	  '& label.Mui-focused': {
@@ -32,13 +29,14 @@ class ProjectBlock extends React.Component {
 	constructor(props) {
 		super(props);
 		const { match } = props
+		const projectId = this.props.projectId
 		this.toggleModal = this.toggleModal.bind(this);
 		this.toggle = this.toggle.bind(this);
 		this.state = {
+			projectId: projectId,
 			dropdownOpen: false,
 			statusRemove: undefined,
 			modal: false,
-			project: undefined,
 		};
 	}
 
@@ -62,44 +60,12 @@ class ProjectBlock extends React.Component {
 		}));
 	}
 
-	submitUpdateProject = async (values) => {
-		console.log('aaaaaa',values)
-		const uxerId = this.props.uxerId
-		console.log('uxerid -->',uxerId)
-		try {
-		  const response = await axios.put(`${APIURI.UXER}${this.props.uxerId}/${APIURI.ONE_PROJECT}${this.props.projectId}/update`, values)
-			.then(result => {
-				console.log('result',result)
-			  this.setState({ redirect: true })
-			  return result
-			})
-		  if (response.status !== 200) {
-			throw new Error('CANNOT EDIT MY PROJECT')
-		  }
-		} catch (e) {
-		  console.error(e)
-		}
+	updateProject = (values)=> {
+		this.props.updateProject(values, this.state.projectId) 
 	}
 
-	// componentDidMount() {	
-	// 	this.getProject()
-	// }
-
-	// getProject = async () => {
-	// 	try {
-	// 	  const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}`)
-	// 	  if (response.status !== 200) {
-	// 		throw new Error('CANNOT GET PROJECT')
-	// 	  }
-	// 	  this.setState({ project: response.data })
-	// 	} catch (e) {
-	// 	  console.error(e)
-	// 	}
-	//   }
-
 	render() {
-		const projectId = this.props.projectId
-		const project = this.props.project
+		const { projectId } = this.state
 		
 		return (
 			<div className='project'>
@@ -151,20 +117,17 @@ class ProjectBlock extends React.Component {
 						</Row>
 					</Col>
 				</Row>
-
 				<section id='create-modal'>
           <Modal isOpen={this.state.modal} toggle={this.toggleModal} className='modal-dialog-centered'>
             <ModalBody>
               <Form
-                onSubmit={this.submitUpdateProject}
+                onSubmit={this.updateProject}
                 render={({
                   handleSubmit, form, submitting, pristine
                 }) => (
                     <form onSubmit={handleSubmit}>
                       <Row>
                         <Col xs={12}>
-						  
-                          
                           <Row className='justify-content-center'>
                             <Col xs={12} className='text-center img-block'>
                               <img
@@ -210,7 +173,6 @@ class ProjectBlock extends React.Component {
                                 </Col>
                               </Row>
 							  <Field component='input' type='hidden' name='cover_url' initialValue={`https://picsum.photos/500/300`} />
-
                               <Row className='justify-content-center'>
                                 <Col xs={12} md={11}>
                                   <Row className='justify-content-center align-items-end no-gutters'>
@@ -247,7 +209,7 @@ class ProjectBlock extends React.Component {
                               <br />
                               <Row className='justify-content-center'>
                                 <Col xs={12}>
-                                  <Button className='w-100 create-project-btn' type='submit' >Update Project</Button>
+                                  <Button className='w-100 create-project-btn' type='submit'>Update Project</Button>
                                 </Col>
                               </Row>
                             </Col>
@@ -260,7 +222,6 @@ class ProjectBlock extends React.Component {
             </ModalBody>
           </Modal>
         </section>
-
 			</div >
 		)
 	}
