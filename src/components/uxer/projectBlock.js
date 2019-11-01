@@ -29,13 +29,17 @@ class ProjectBlock extends React.Component {
 	constructor(props) {
 		super(props);
 		const projectId = this.props.projectId
+		const projectName = this.props.title
+		const projectLink = this.props.linkUrl
 		this.toggleModal = this.toggleModal.bind(this);
 		this.toggle = this.toggle.bind(this);
 		this.state = {
 			projectId: projectId,
+			projectName: projectName,
+			projectLink: projectLink,
 			dropdownOpen: false,
 			statusRemove: undefined,
-			modal: false,
+			modal: false
 		};
 	}
 
@@ -60,11 +64,19 @@ class ProjectBlock extends React.Component {
 	}
 
 	updateProject = (values) => {
+		values = {
+			...values,
+			name: this.state.projectName,
+		}
 		this.props.updateProject(values, this.state.projectId)
 	}
 
+	handleNameChange = (event) => {
+		this.setState({ projectName: event.target.value });
+	};
+
 	render() {
-		const { projectId } = this.state
+		const { projectId, projectLink, projectName } = this.state
 
 		return (
 			<div className='project'>
@@ -145,16 +157,18 @@ class ProjectBlock extends React.Component {
 																			<FontAwesomeIcon icon={faBook} size='1x' color='#303030' />
 																		</Col>
 																		<Col xs={10} className='text-center'>
+																		<Field component='input' type='hidden' name='cover_url' initialValue={`https://picsum.photos/500/300`} />
 																			<Field name='name' type='text'>
 																				{({ input, meta }) => (
 																					<>
 																						<Row className='align-items-center'>
-
 																							<Col xs={12}>
 																								<Label className='w-100'>
 																									<TextInput {...input}
 																										id='standard-name'
 																										label='Project Name'
+																										value={projectName}
+																										onChange={this.handleNameChange}
 																										type='text'
 																										className='w-100 create-form space-bottom'
 																										margin='normal'
@@ -171,7 +185,6 @@ class ProjectBlock extends React.Component {
 																	</Row>
 																</Col>
 															</Row>
-															<Field component='input' type='hidden' name='cover_url' initialValue={`https://picsum.photos/500/300`} />
 															<Row className='justify-content-center'>
 																<Col xs={12} md={11}>
 																	<Row className='justify-content-center align-items-end no-gutters'>
@@ -189,6 +202,7 @@ class ProjectBlock extends React.Component {
 																									<TextInput {...input}
 																										id='standard-link'
 																										label='Link Path'
+																										value={projectLink}
 																										type='text'
 																										className='w-100 create-form space-bottom'
 																										margin='normal'

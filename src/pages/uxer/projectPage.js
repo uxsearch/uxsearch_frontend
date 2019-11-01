@@ -92,10 +92,6 @@ class ProjectPage extends React.Component {
   submitCreateProject = async (values) => {
     try {
       const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}add/`, values)
-        .then(result => {
-          this.setState({ redirect: true })
-          return result
-        })
       if (response.status !== 201) {
         throw new Error('CANNOT CREATE PROJECT')
       }
@@ -125,7 +121,7 @@ class ProjectPage extends React.Component {
       if (response.status !== 200) {
         throw new Error('CANNOT EDIT MY PROJECT')
       }
-      this.props.history.push(`/uxer/${this.state.uxerId}/projects`)
+      // this.props.history.push(`/uxer/${this.state.uxerId}/projects`)
     } catch (e) {
       console.error(e)
     }
@@ -133,9 +129,6 @@ class ProjectPage extends React.Component {
 
   render() {
     const projectList = this.state.projectList
-    //const redirect = this.state.redirect
-
-    // if (redirect) return <Redirect to={`/${APIURI.UXER}${this.state.uxerId}/${APIURI.PROJECT}`} />
 
     return (
       <div>
@@ -216,6 +209,7 @@ class ProjectPage extends React.Component {
                             uxerId={this.state.uxerId}
                             title={project.data.name}
                             imgUrl={project.data.cover_url}
+                            linkUrl={project.data.file_url}
                             projectId={project.id}
                             removeProject={this.removeProject}
                             updateProject={this.submitUpdateProject}
