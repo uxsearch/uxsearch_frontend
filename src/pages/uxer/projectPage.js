@@ -4,7 +4,7 @@ import { Form, Field } from 'react-final-form'
 import { Container, Row, Col, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalBody, Button, Label } from 'reactstrap'
 import { TextField, withStyles } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faBook, faLink, faCircle, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faBook, faLink, faCircle, faPlus, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 
 import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
@@ -92,10 +92,14 @@ class ProjectPage extends React.Component {
   submitCreateProject = async (values) => {
     try {
       const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}add/`, values)
+        .then(result => {
+          this.setState({ redirect: true })
+          return result
+        })
       if (response.status !== 201) {
         throw new Error('CANNOT CREATE PROJECT')
       }
-      this.props.history.push(`/uxer/${this.state.uxerId}/project/${response.data.projects.id}/experiments`)
+      this.getProject()
     } catch (e) {
       console.error(e)
     }
@@ -108,7 +112,7 @@ class ProjectPage extends React.Component {
         if (response.status !== 200) {
           throw new Error('CANNOT DELETE PROJECT')
         }
-        this.props.history.push(`/uxer/${this.state.uxerId}/projects`)
+        this.getProject()
       }
     } catch (e) {
       console.error(e)
@@ -121,7 +125,7 @@ class ProjectPage extends React.Component {
       if (response.status !== 200) {
         throw new Error('CANNOT EDIT MY PROJECT')
       }
-      // this.props.history.push(`/uxer/${this.state.uxerId}/projects`)
+      this.getProject()
     } catch (e) {
       console.error(e)
     }
@@ -129,6 +133,9 @@ class ProjectPage extends React.Component {
 
   render() {
     const projectList = this.state.projectList
+    //const redirect = this.state.redirect
+
+    // if (redirect) return <Redirect to={`/${APIURI.UXER}${this.state.uxerId}/${APIURI.PROJECT}`} />
 
     return (
       <div>
@@ -209,7 +216,8 @@ class ProjectPage extends React.Component {
                             uxerId={this.state.uxerId}
                             title={project.data.name}
                             imgUrl={project.data.cover_url}
-                            linkUrl={project.data.file_url}
+                            LinkUrl={project.data.file_url}
+                            description={project.data.description}
                             projectId={project.id}
                             removeProject={this.removeProject}
                             updateProject={this.submitUpdateProject}
@@ -289,6 +297,39 @@ class ProjectPage extends React.Component {
                                 <Col xs={12} md={11}>
                                   <Row className='justify-content-center align-items-end no-gutters'>
                                     <Col xs={2} className='text-center'>
+                                      <FontAwesomeIcon icon={faPencilAlt} size='1x' color='#303030' />
+                                    </Col>
+                                    <Col xs={10} className='text-center'>
+                                      <Field name='description' type='text'>
+                                        {({ input, meta }) => (
+                                          <>
+                                            <Row className='align-items-center'>
+
+                                              <Col xs={12}>
+                                                <Label className='w-100'>
+                                                  <TextInput {...input}
+                                                    id='standard-description'
+                                                    label='Project Description'
+                                                    type='text'
+                                                    className='w-100 create-form space-bottom'
+                                                    margin='normal'
+                                                    required
+                                                  />
+                                                  {meta.touched && meta.error && <span>{meta.error}</span>}
+                                                </Label>
+                                              </Col>
+                                            </Row>
+                                          </>
+                                        )}
+                                      </Field>
+                                    </Col>
+                                  </Row>
+                                </Col>
+                              </Row>
+                              <Row className='justify-content-center'>
+                                <Col xs={12} md={11}>
+                                  <Row className='justify-content-center align-items-end no-gutters'>
+                                    <Col xs={2} className='text-center'>
                                       <FontAwesomeIcon icon={faLink} size='1x' color='#303030' />
                                     </Col>
                                     <Col xs={10} className='text-center'>
@@ -296,7 +337,6 @@ class ProjectPage extends React.Component {
                                         {({ input, meta }) => (
                                           <>
                                             <Row className='align-items-center'>
-
                                               <Col xs={12}>
                                                 <Label className=' w-100'>
                                                   <TextInput {...input}

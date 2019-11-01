@@ -4,7 +4,7 @@ import { Form, Field } from 'react-final-form'
 import { Container, Row, Col, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalBody, Button, Label } from 'reactstrap'
 import { TextField, withStyles } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEllipsisV, faTrash, faShare, faEdit, faBook, faLink } from '@fortawesome/free-solid-svg-icons'
+import { faEllipsisV, faTrash, faShare, faEdit, faBook, faLink, faPencilAlt} from '@fortawesome/free-solid-svg-icons'
 
 import '../../static/sass/uxer/projectPage.scss'
 
@@ -30,13 +30,15 @@ class ProjectBlock extends React.Component {
 		super(props);
 		const projectId = this.props.projectId
 		const projectName = this.props.title
-		const projectLink = this.props.linkUrl
+		const projectLink = this.props.LinkUrl
+		const projectDescription = this.props.description
 		this.toggleModal = this.toggleModal.bind(this);
 		this.toggle = this.toggle.bind(this);
 		this.state = {
 			projectId: projectId,
 			projectName: projectName,
 			projectLink: projectLink,
+			projectDescription: projectDescription,
 			dropdownOpen: false,
 			statusRemove: undefined,
 			modal: false
@@ -67,16 +69,22 @@ class ProjectBlock extends React.Component {
 		values = {
 			...values,
 			name: this.state.projectName,
+			description: this.state.projectDescription
 		}
 		this.props.updateProject(values, this.state.projectId)
+		this.setState({modal: false})
 	}
 
 	handleNameChange = (event) => {
 		this.setState({ projectName: event.target.value });
 	};
 
+	handleDescriptionChange = (event) => {
+		this.setState({ projectDescription: event.target.value });
+	};
+
 	render() {
-		const { projectId, projectLink, projectName } = this.state
+		const { projectId, projectLink, projectName , projectDescription } = this.state
 
 		return (
 			<div className='project'>
@@ -128,7 +136,7 @@ class ProjectBlock extends React.Component {
 						</Row>
 					</Col>
 				</Row>
-				<section id='create-modal'>
+				<section id='update-modal'>
 					<Modal isOpen={this.state.modal} toggle={this.toggleModal} className='modal-dialog-centered'>
 						<ModalBody>
 							<Form
@@ -169,6 +177,41 @@ class ProjectBlock extends React.Component {
 																										label='Project Name'
 																										value={projectName}
 																										onChange={this.handleNameChange}
+																										type='text'
+																										className='w-100 create-form space-bottom'
+																										margin='normal'
+																										required
+																									/>
+																									{meta.touched && meta.error && <span>{meta.error}</span>}
+																								</Label>
+																							</Col>
+																						</Row>
+																					</>
+																				)}
+																			</Field>
+																		</Col>
+																	</Row>
+																</Col>
+															</Row>
+															<Row className='justify-content-center'>
+																<Col xs={12} md={11}>
+																	<Row className='justify-content-center align-items-end no-gutters'>
+																		<Col xs={2} className='text-center'>
+																			<FontAwesomeIcon icon={faPencilAlt} size='1x' color='#303030' />
+																		</Col>
+																		<Col xs={10} className='text-center'>
+																			<Field name='description' type='text'>
+																				{({ input, meta }) => (
+																					<>
+																						<Row className='align-items-center'>
+
+																							<Col xs={12}>
+																								<Label className=' w-100'>
+																									<TextInput {...input}
+																										id='standard-description'
+																										label='Project Description'
+																										value={projectDescription}
+																										onChange={this.handleDescriptionChange}
 																										type='text'
 																										className='w-100 create-form space-bottom'
 																										margin='normal'
