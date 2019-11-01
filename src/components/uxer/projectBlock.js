@@ -83,7 +83,7 @@ class ProjectBlock extends React.Component {
 						</Row>
 						<Row className='justify-content-center align-items-center'>
 							<Col xs={10} className=''>
-								<a href='/uxer/project/experiments' className='link'>
+								<a href={this.props.url} className='link'>
 									<p className='no-margin project-text'>{this.props.title}</p>
 								</a>
 							</Col>
