@@ -97,7 +97,7 @@ class App extends React.Component {
           <Route exact path='/login' component={SignIn} />
           <Route exact path='/:projId/experimenter' component={Experimenter} />
           <Route exact path='/:url' component={redirectURL} />
-          <PrivateRoute exact path='/uxer' component={UXer} />
+          <PrivateRoute path='/uxer' component={UXer} />
           <Route path='*' component={NotFound} />
         </Switch>
       </Router>
