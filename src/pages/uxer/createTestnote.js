@@ -11,8 +11,6 @@ import NavbarUXer from "../../components/utils/navbarUXer";
 import SubNavbar from "../../components/utils/subNavbar";
 import Testnote from "../../components/uxer/testnote";
 
-import { DEFAULT_QUESTION } from './const'
-
 import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
 
@@ -40,7 +38,12 @@ class CreateTestnote extends Component {
     const { match } = props
     this.state = {
       questions: [
-        DEFAULT_QUESTION.TEXTBOX
+        {
+          questionId: '',
+          question: '',
+          value: '',
+          type_form: 'textbox'
+        }
       ],
       uxerId: match.params.id,
       projectId: match.params.projId,
@@ -48,24 +51,31 @@ class CreateTestnote extends Component {
     }
   }
 
-  componentDidMount() {
-    this.getProject()
-    // this.getTestnote()
+  async componentDidMount() {
+    await this.getProject()
+    await this.getTestnote()
   }
 
-  setQuestion(index, question) {
-    const newQuestions = [...this.state.questions]
-    newQuestions[index] = question
-    this.setState({
-      questions: newQuestions
-    })
+  setQuestion(index) {
+    return (question) => {
+      const newQuestions = [...this.state.questions]
+      newQuestions[index] = {...question}
+      this.setState({
+        questions: newQuestions
+      })
+    }
   }
 
   addQuestion() {
     if (this.state.questions.length < 15) {
-      const questions = this.state.questions;
-      questions.push(DEFAULT_QUESTION.TEXTBOX);
-      this.setState({ questions: [...questions] });
+      const questions = [...this.state.questions];
+      questions.push({
+        questionId: '',
+        question: '',
+        value: '',
+        type_form: 'textbox'
+      });
+      this.setState({ questions });
     }
   }
 
@@ -93,17 +103,17 @@ class CreateTestnote extends Component {
     }
   }
 
-  // getTestnote = async (props) => {
-  //   try {
-  //     const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/test-note`)
-  //     if (response.status !== 200) {
-  //       throw new Error('CANNOT GET PROJECT')
-  //     }
-  //     this.setState({ questions: response.data ? response.data : DEFAULT_QUESTION.TEXTBOX })
-  //   } catch (e) {
-  //     console.error(e)
-  //   }
-  // }
+  getTestnote = async (props) => {
+    try {
+      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/test-note`)
+      if (response.status !== 200) {
+        throw new Error('CANNOT GET TESTNOTE')
+      }
+      this.setState({ questions: response.data && response.data })
+    } catch (e) {
+      console.error(e)
+    }
+  }
 
   render() {
     const { uxerId, projectId, project, questions } = this.state
@@ -125,7 +135,7 @@ class CreateTestnote extends Component {
                       <Col xs={12} md={12}>
                         <Row>
                           <Col xs={12} md={12} lg={12} className="space-side ">
-                            <h2>Usability Test Note : Web Development </h2>
+                            <h2>Usability Test Note : {`${project && project.name}`} </h2>
                           </Col>
                         </Row>
                         <Row>
@@ -146,16 +156,18 @@ class CreateTestnote extends Component {
                           <hr className="black-line" />
                         </Col>
                         <br />
+
                         {questions.map((question, index) => (
-                          <>
                             <Testnote
                               question={question}
-                              setQuestion={(index, question) => this.setQuestion(index, question)}
+                              setQuestion={(question) => this.setQuestion(index)(question)}
+                              setOption={options => this.setOption(index)(options)}
                               index={index}
                               key={index}
                             />
-                          </>
                         ))}
+
+
                         <br />
                         <Row className="justify-content-center">
                           <Col xs={12} md={4} className="text-center">
