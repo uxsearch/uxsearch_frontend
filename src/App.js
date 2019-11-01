@@ -18,6 +18,7 @@ import MyAccount from './pages/uxer/myAccount'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './static/sass/customAll.scss'
+import redirectURL from './pages/experimenter/redirectURL';
 
 const Experimenter = ({ match }) => {
   return (
@@ -93,9 +94,10 @@ class App extends React.Component {
       <Router>
         <Switch>
           <Route exact path='/' component={Test} />
-          <Route path='/login' component={SignIn} />
-          <Route path='/:projId/experimenter' component={Experimenter} />
-          <PrivateRoute path='/uxer' component={UXer} />
+          <Route exact path='/login' component={SignIn} />
+          <Route exact path='/:projId/experimenter' component={Experimenter} />
+          <Route exact path='/:url' component={redirectURL} />
+          <PrivateRoute exact path='/uxer' component={UXer} />
           <Route path='*' component={NotFound} />
         </Switch>
       </Router>
