@@ -12,7 +12,7 @@ import ResultQuestion from '../../components/uxer/videoresult/resultBlock'
 import '../../static/sass/uxer/videoResult.scss'
 
 class VideoResult extends React.
-Component {
+  Component {
   constructor(props) {
     super(props);
     const { computedMatch } = props
@@ -74,7 +74,7 @@ Component {
     } catch (e) {
       console.error(e)
     }
-}
+  }
 
   getResultRecord = async () => {
     try {
@@ -96,14 +96,14 @@ Component {
 
     return (
       <section id='video-result'>
-        <NavbarUXer title={`${project && project.name}`}/>
+        <NavbarUXer title={`${project && project.name}`} />
         <Container fluid>
           {records &&
-            <PlayVideo 
+            <PlayVideo
               faceVideo={records.video_url}
-              faceVideoTime= {records.video_time}
-              screenVideo= {records.screen_url}
-              screenVideoTime= {records.screen_time}
+              faceVideoTime={records.video_time}
+              screenVideo={records.screen_url}
+              screenVideoTime={records.screen_time}
             />
           }
         </Container>
@@ -154,8 +154,8 @@ Component {
             </>
           }
           <br />
-          <ResultQuestion  
-            questions={questions && questions}  
+          <ResultQuestion
+            questions={questions && questions}
           />
         </Container>
       </section>

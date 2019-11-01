@@ -94,7 +94,7 @@ class NavbarUxer extends React.Component {
                     Uxer 1
                 	</DropdownToggle>
                   <DropdownMenu right>
-                    <DropdownItem>
+                    <DropdownItem href={`/uxer/${this.props.uxerId}/account'`}>
                       <FontAwesomeIcon icon={faUserAlt} size='sm' className='space-icon' />
                       <span>My Account</span>
                     </DropdownItem>

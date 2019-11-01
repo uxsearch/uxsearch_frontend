@@ -68,7 +68,7 @@ class MyAccount extends React.Component {
       <div>
         <NotSupport className='d-md-none' />
         <section id='signin' className='d-none d-md-block'>
-          <NavbarUXer />
+          <NavbarUXer title='My Account' />
           <Container  >
             <Row xs={5} md={5} lg={5} className='align-items-center justify-content-center'>
               <Col xs={3} className='profile-block '>

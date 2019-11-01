@@ -164,7 +164,7 @@ class AnswerTestnote extends React.Component {
     return (
       <div>
         <section id='video-result' className='d-none d-md-block'>
-          <NavbarUXer title={`${project && project.name} Test Note`} />
+          <NavbarUXer title={`${project && project.name} Test Note`} uxerId={uxerId} />
           <Container className='space-bottom-video'>
             <Row className=' align-items-center'>
               {/* <Col xs={12} sm={8} md={6} lg={5}> */}

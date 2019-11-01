@@ -95,7 +95,9 @@ class ProjectPage extends React.Component {
       if (response.status !== 201) {
         throw new Error('CANNOT CREATE PROJECT')
       }
-      this.props.history.push(`/uxer/${this.state.uxerId}/project/${response.data.projects.id}/experiments`)
+      this.setState({ modal : false })
+      await this.getProject()
+      // this.props.history.push(`/uxer/${this.state.uxerId}/project/${response.data.projects.id}/experiments`)
     } catch (e) {
       console.error(e)
     }
@@ -128,12 +130,12 @@ class ProjectPage extends React.Component {
   }
 
   render() {
-    const projectList = this.state.projectList
+    const { projectList, uxerId } = this.state
 
     return (
       <div>
         <section id='project-page'>
-          <NavbarUxer title='My Projects' />
+          <NavbarUxer title='My Projects' uxerId={uxerId} />
           <Container>
             <Row>
               <Col xs={11} sm={10} md={11}>

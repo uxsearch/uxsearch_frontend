@@ -39,6 +39,7 @@ const UXer = (match) => {
     <Router>
       <Switch>
         <PrivateRoute exact path={`${match.path}/:id/projects`} component={ProjectPage} />
+        <PrivateRoute exact path={`${match.path}/:id/account`} component={MyAccount} />
         <PrivateRoute exact path={`${match.path}/:id/project/:projId/experiments`} component={ExperPage} />
         <PrivateRoute exact path={`${match.path}/:id/project/:projId/experiment/:experId/result`} component={(VideoResult)} />
         <PrivateRoute exact path={`${match.path}/:id/project/:projId/experiment/question`} component={CreateQuestion} />
