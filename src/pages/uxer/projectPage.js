@@ -49,15 +49,15 @@ const TextInput = withStyles({
 class ProjectPage extends React.Component {
   constructor(props) {
     super(props);
-    const { match } = props
+    const { computedMatch } = props
     this.toggleSort = this.toggleSort.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.state = {
-      uxerId: match.params.id,
+      uxerId: computedMatch.params.id,
       projectList: [],
       sortDropdownOpen: false,
       modal: false,
-      redirect: false,
+      redirect: false
     };
   }
 
@@ -92,10 +92,6 @@ class ProjectPage extends React.Component {
   submitCreateProject = async (values) => {
     try {
       const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}add/`, values)
-        .then(result => {
-          this.setState({ redirect: true })
-          return result
-        })
       if (response.status !== 201) {
         throw new Error('CANNOT CREATE PROJECT')
       }
@@ -111,18 +107,28 @@ class ProjectPage extends React.Component {
         const response = await axios.delete(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}delete`, projectId)
         if (response.status !== 200) {
           throw new Error('CANNOT DELETE PROJECT')
-        }     
+        }
+        this.props.history.push(`/uxer/${this.state.uxerId}/projects`)
       }
-		} catch (e) {
-		  console.error(e)
-		}
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  submitUpdateProject = async (values, projectId) => {
+    try {
+      const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${projectId}/update`, values)
+      if (response.status !== 200) {
+        throw new Error('CANNOT EDIT MY PROJECT')
+      }
+      // this.props.history.push(`/uxer/${this.state.uxerId}/projects`)
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   render() {
     const projectList = this.state.projectList
-    // const redirect = this.state.redirect
-
-    // if (redirect) return <Redirect to={`/${APIURI.UXER}${this.state.uxerId}/${APIURI.PROJECT}`} />
 
     return (
       <div>
@@ -203,8 +209,10 @@ class ProjectPage extends React.Component {
                             uxerId={this.state.uxerId}
                             title={project.data.name}
                             imgUrl={project.data.cover_url}
-                            projectId={project.id} 
+                            linkUrl={project.data.file_url}
+                            projectId={project.id}
                             removeProject={this.removeProject}
+                            updateProject={this.submitUpdateProject}
                           />
                         </Col>
                       </>

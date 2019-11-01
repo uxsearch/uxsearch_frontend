@@ -35,7 +35,7 @@ const SearchField = withStyles({
 class CreateTestnote extends Component {
   constructor(props) {
     super(props)
-    const { match } = props
+    const { computedMatch } = props
     this.state = {
       questions: [
         {
@@ -45,8 +45,8 @@ class CreateTestnote extends Component {
           type_form: 'textbox'
         }
       ],
-      uxerId: match.params.id,
-      projectId: match.params.projId,
+      uxerId: computedMatch.params.id,
+      projectId: computedMatch.params.projId,
       project: undefined,
     }
   }
