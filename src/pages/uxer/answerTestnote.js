@@ -71,6 +71,7 @@ class AnswerTestnote extends React.Component {
       uxerId: match.params.id,
       projectId: match.params.projId,
       experId: match.params.experId,
+      noteId: undefined,
       experiment: undefined,
       answer: [],
       project: undefined,
@@ -83,6 +84,8 @@ class AnswerTestnote extends React.Component {
     this.getProject()
     this.getTestnote()
     this.getExperimenter()
+    this.getAnswerTestnote()
+
   }
 
   getExperimenter = async () => {
@@ -121,6 +124,21 @@ class AnswerTestnote extends React.Component {
       const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/test-note`)
       if (response.status !== 200) {
         throw new Error('CANNOT GET TESTNOTE')
+      }
+
+      this.setState({ testnote: response.data })
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  getAnswerTestnote = async (props) => {
+    console.log('getAnswerTestnote function')
+    try {
+      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.EXPERIMENTER}${this.state.experId}/${APIURI.NOTE}${this.state.noteId}/answer`)
+      console.log(">>> res :", response)
+      if (response.status !== 200) {
+        throw new Error('CANNOT GET ANSWER TESTNOTE')
       }
 
       this.setState({ testnote: response.data })
@@ -186,8 +204,8 @@ class AnswerTestnote extends React.Component {
                   height='20px'
                   className="close_btn"
                   alt="close button"
-                  
-               />
+
+                />
                 {/* <FontAwesomeIcon
                   icon={faTimes}
                   size='2x'
