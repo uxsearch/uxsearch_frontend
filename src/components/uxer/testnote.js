@@ -29,8 +29,15 @@ class Testnote extends React.Component {
     super(props)
     this.state = {
       isOpen: false,
-      type: props.type || 'textbox',
+      type: '',
     }
+  }
+
+  componentDidMount() {
+    console.log(">>> this.props.question.type_form", this.props.question.type_form)
+    this.setState({
+      type: this.props.question.type_form,
+    })
   }
 
   changeQuestion(e) {
@@ -206,7 +213,6 @@ class Testnote extends React.Component {
                     <>
                       {this.props.question.options.map((option, index) => (
                         <Row className='no-margin w-100' key={index}>
-                          {console.log('index', index)}
                           <Col xs={1}>
                             <FontAwesomeIcon icon={faCircle} size='2x' color='#ced4da' className='icon-mul-check' />
                           </Col>
