@@ -34,7 +34,6 @@ class NavbarUxer extends React.Component {
   }
 
   logout = async () => {
-    console.log(this.props.history)
     localStorage.removeItem('token')
     window.location.assign('/login')
   }

@@ -23,7 +23,6 @@ class RedirectURL extends React.Component {
       if (response.status !== 200) {
         throw new Error('CANNOT REDIRECT PAGE')
       }
-      console.log(">>> res :", response)
       this.setState({ redirect: true })
       this.setState({ project: response.data })
     } catch (e) {
@@ -33,7 +32,6 @@ class RedirectURL extends React.Component {
 
   render() {
     const { redirect, project } = this.state
-    console.log(redirect, 'project' ,project)
     if (redirect && project) return <Redirect to={`/${project.id}/experimenter`} />
     return <></>
   }

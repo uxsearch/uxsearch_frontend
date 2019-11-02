@@ -59,7 +59,6 @@ class ProjectBlock extends React.Component {
 
 
 	toggleModal() {
-		console.log('test', this.props.title, this.props.uxerId)
 		this.setState(prevState => ({
 			modal: !prevState.modal
 		}));

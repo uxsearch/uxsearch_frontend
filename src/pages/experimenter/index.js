@@ -78,7 +78,6 @@ class IndexExperiment extends React.Component {
       if (response.status !== 200) {
         throw new Error('CANNOT GET PROJECT')
       }
-      console.log(response.data.data)
       this.setState({ project: response.data.data })
     } catch (e) {
       console.error(e)
