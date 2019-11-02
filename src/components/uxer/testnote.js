@@ -34,7 +34,6 @@ class Testnote extends React.Component {
   }
 
   componentDidMount() {
-    console.log(">>> this.props.question.type_form", this.props.question.type_form)
     this.setState({
       type: this.props.question.type_form,
     })
@@ -131,7 +130,6 @@ class Testnote extends React.Component {
               <Row>
                 <Col xs={12}>
                   <Row className='no-margin w-100'>
-                    {/* {console.log('question index', index)} */}
                     <Field name={`questions[${index}][question]`} type='text'>
                       {({ input, meta }) => (
                         <>
@@ -180,21 +178,17 @@ class Testnote extends React.Component {
                         <DropdownMenu className='btn-secondary indropdown text-center '>
                           <DropdownItem onClick={() => this.changeType('multiple')}>
                             <FontAwesomeIcon icon={faCircle} size='1x' color='#efefef' className='textHeight' />Multiple Choice
-                              {/* <Dropdown >Multiple Choice</Dropdown> */}
                           </DropdownItem>
                           <DropdownItem onClick={() => this.changeType('checkbox')}>
                             <FontAwesomeIcon icon={faSquare} size='1x' color='#efefef' className='textHeight' />Check Box
-                              {/* <Dropdown>Check box</Dropdown> */}
                           </DropdownItem>
                           <DropdownItem onClick={() => this.changeType('textbox')}>
                             <FontAwesomeIcon icon={faTextHeight} size='1x' color='#efefef' className='textHeight' />Text box
-                              {/* <Dropdown>Text box</Dropdown> */}
                           </DropdownItem>
                         </DropdownMenu>
                       </Dropdown>
                     </Col>
                   </Row>
-
                   <br />
                   {type === 'textbox' && (
                     <Row>
@@ -208,7 +202,6 @@ class Testnote extends React.Component {
                       </Col>
                     </Row>
                   )}
-
                   {type === 'multiple' &&
                     <>
                       {this.props.question.options.map((option, index) => (
@@ -256,59 +249,57 @@ class Testnote extends React.Component {
                       </Row>
                     </>
                   }
-
                   {type === 'checkbox' && (
-                      <>
-                        {this.props.question.options.map((option, index) => (
-                          <Row className='no-margin w-100' key={index}>
-                            <Col xs={1}>
-                              <FontAwesomeIcon icon={faSquare} size='2x' color='#ced4da' className='icon-mul-check' />
-                            </Col>
-                            {type === 'checkbox' && (
-                              <>
-                                <Col xs={10} className='choice'>
-                                  <Form>
-                                    <FormGroup>
-                                      <Input
-                                        type='multiple'
-                                        placeholder='AddOption'
-                                        value={option.option}
-                                        onChange={e => {
-                                          this.changeOption(e.target.value, index)
-                                        }} />
-                                    </FormGroup>
-                                  </Form>
-                                </Col>
-                              </>
-                            )}
-                            <Col xs={1}>
-                              <FontAwesomeIcon
-                                icon={faTimesCircle}
-                                size='2x'
-                                color='#909090'
-                                className='icon-delete'
-                                onClick={() => {
-                                  this.deleteOption(index)
-                                }}
-                              />
-                            </Col>
-                          </Row>
-                        ))}
-                        <Row className='no-margin w-100'>
+                    <>
+                      {this.props.question.options.map((option, index) => (
+                        <Row className='no-margin w-100' key={index}>
                           <Col xs={1}>
                             <FontAwesomeIcon icon={faSquare} size='2x' color='#ced4da' className='icon-mul-check' />
                           </Col>
-                          <Col xs={10} >
-                            <Form>
-                              <FormGroup>
-                                <span onClick={() => this.addOption()} className='underline'>AddOption</span>
-                              </FormGroup>
-                            </Form>
+                          {type === 'checkbox' && (
+                            <>
+                              <Col xs={10} className='choice'>
+                                <Form>
+                                  <FormGroup>
+                                    <Input
+                                      type='multiple'
+                                      placeholder='AddOption'
+                                      value={option.option}
+                                      onChange={e => {
+                                        this.changeOption(e.target.value, index)
+                                      }} />
+                                  </FormGroup>
+                                </Form>
+                              </Col>
+                            </>
+                          )}
+                          <Col xs={1}>
+                            <FontAwesomeIcon
+                              icon={faTimesCircle}
+                              size='2x'
+                              color='#909090'
+                              className='icon-delete'
+                              onClick={() => {
+                                this.deleteOption(index)
+                              }}
+                            />
                           </Col>
                         </Row>
-                      </>
-                    )
-                    }
+                      ))}
+                      <Row className='no-margin w-100'>
+                        <Col xs={1}>
+                          <FontAwesomeIcon icon={faSquare} size='2x' color='#ced4da' className='icon-mul-check' />
+                        </Col>
+                        <Col xs={10} >
+                          <Form>
+                            <FormGroup>
+                              <span onClick={() => this.addOption()} className='underline'>AddOption</span>
+                            </FormGroup>
+                          </Form>
+                        </Col>
+                      </Row>
+                    </>
+                  )}
                 </Col>
               </Row>
             </FormGroup>

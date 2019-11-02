@@ -1,10 +1,10 @@
 import React, { Component } from "react";
+import { withRouter } from 'react-router-dom'
 import { Container, Row, Col, Button } from "reactstrap";
+import { Form } from 'react-final-form'
 import { withStyles, TextField } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-import { Form, Field } from 'react-final-form'
-import { withRouter } from 'react-router-dom'
 
 import NotSupport from "../../components/utils/notSupport";
 import NavbarUXer from "../../components/utils/navbarUXer";
@@ -83,12 +83,11 @@ class CreateTestnote extends Component {
 
   submitCreateTestnote = async () => {
     try {
-      console.log(this.state.questions)
       const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/updatenote`, this.state.questions)
       if (response.status !== 200) {
         throw new Error('CANNOT CREATE TESTNOTE')
       }
-      this.props.history.push(`/uxer/${this.state.uxerId}/projects`)
+      await this.getProject()
     } catch (e) {
       console.error(e)
     }
@@ -109,13 +108,11 @@ class CreateTestnote extends Component {
   getTestnote = async (props) => {
     try {
       const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/test-note`)
-      console.log(">>>response", response)
       if (response.status !== 200) {
         throw new Error('CANNOT GET TESTNOTE')
       }
       const { data } = response
-      if (data) {
-        console.log('>>> data :', data)
+      if (data.length !== 0) {
         const questions = data.map(d => {
           if (d.data.question.type_form === "textbox") {
             return {
@@ -139,7 +136,6 @@ class CreateTestnote extends Component {
             }
           }
         })
-        console.log('>>> question :', questions)
         this.setState({ questions })
       }
     } catch (e) {
@@ -188,7 +184,7 @@ class CreateTestnote extends Component {
                           <hr className="black-line" />
                         </Col>
                         <br />
-                        {questions.map((question, index) => (
+                        {loading && questions.map((question, index) => (
                           <Testnote
                             question={question}
                             setQuestion={(question) => this.setQuestion(index)(question)}
