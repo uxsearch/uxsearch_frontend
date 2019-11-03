@@ -30,6 +30,8 @@ class Question extends React.Component {
     this.state = {
       isOpen: false,
       type: '',
+      statusRemove: undefined,
+      index: null
     }
   }
 
@@ -95,7 +97,10 @@ class Question extends React.Component {
     setQuestion(newQuestion)
   }
 
-  deleteOption(optionIndex) {
+  blockRemoveOption = (optionId, questionId, optionIndex) => {
+    const option = { optionId: optionId }
+    this.props.deleteOption(option, questionId)
+
     const { question, setQuestion, index } = this.props
     const newQuestion = { ...question }
     newQuestion.options.splice(optionIndex, 1)
@@ -113,8 +118,7 @@ class Question extends React.Component {
   }
 
   render() {
-    const { type } = this.state
-    const { index } = this.props
+    const { type, index } = this.state
 
     return (
       <Row className='question-block' >
@@ -232,7 +236,7 @@ class Question extends React.Component {
                               color='#909090'
                               className='icon-delete'
                               onClick={() => {
-                                this.deleteOption(index)
+                                this.blockRemoveOption(option.optionId, this.props.question.questionId, index)
                               }}
                             />
                           </Col>
@@ -253,57 +257,57 @@ class Question extends React.Component {
                     </>
                   }
                   {type === 'checkbox' && (
-                      <>
-                        {this.props.question.options.map((option, index) => (
-                          <Row className='no-margin w-100' key={index}>
-                            <Col xs={1}>
-                              <FontAwesomeIcon icon={faSquare} size='2x' color='#ced4da' className='icon-mul-check' />
-                            </Col>
-                            {type === 'checkbox' && (
-                              <>
-                                <Col xs={10} className='choice'>
-                                  <Form>
-                                    <FormGroup>
-                                      <Input
-                                        type='multiple'
-                                        placeholder='AddOption'
-                                        value={option.option}
-                                        onChange={e => {
-                                          this.changeOption(e.target.value, index)
-                                        }} />
-                                    </FormGroup>
-                                  </Form>
-                                </Col>
-                              </>
-                            )}
-                            <Col xs={1}>
-                              <FontAwesomeIcon
-                                icon={faTimesCircle}
-                                size='2x'
-                                color='#909090'
-                                className='icon-delete'
-                                onClick={() => {
-                                  this.deleteOption(index)
-                                }}
-                              />
-                            </Col>
-                          </Row>
-                        ))}
-                        <Row className='no-margin w-100'>
+                    <>
+                      {this.props.question.options.map((option, index) => (
+                        <Row className='no-margin w-100' key={index}>
                           <Col xs={1}>
                             <FontAwesomeIcon icon={faSquare} size='2x' color='#ced4da' className='icon-mul-check' />
                           </Col>
-                          <Col xs={10} >
-                            <Form>
-                              <FormGroup>
-                                <span onClick={() => this.addOption()} className='underline'>AddOption</span>
-                              </FormGroup>
-                            </Form>
+                          {type === 'checkbox' && (
+                            <>
+                              <Col xs={10} className='choice'>
+                                <Form>
+                                  <FormGroup>
+                                    <Input
+                                      type='multiple'
+                                      placeholder='AddOption'
+                                      value={option.option}
+                                      onChange={e => {
+                                        this.changeOption(e.target.value, index)
+                                      }} />
+                                  </FormGroup>
+                                </Form>
+                              </Col>
+                            </>
+                          )}
+                          <Col xs={1}>
+                            <FontAwesomeIcon
+                              icon={faTimesCircle}
+                              size='2x'
+                              color='#909090'
+                              className='icon-delete'
+                              onClick={() => {
+                                this.blockRemoveOption(option.optionId, this.props.question.questionId, index)
+                              }}
+                            />
                           </Col>
                         </Row>
-                      </>
-                    )
-                    }
+                      ))}
+                      <Row className='no-margin w-100'>
+                        <Col xs={1}>
+                          <FontAwesomeIcon icon={faSquare} size='2x' color='#ced4da' className='icon-mul-check' />
+                        </Col>
+                        <Col xs={10} >
+                          <Form>
+                            <FormGroup>
+                              <span onClick={() => this.addOption()} className='underline'>AddOption</span>
+                            </FormGroup>
+                          </Form>
+                        </Col>
+                      </Row>
+                    </>
+                  )
+                  }
                 </Col>
               </Row>
             </FormGroup>
