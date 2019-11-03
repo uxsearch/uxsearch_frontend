@@ -9,12 +9,12 @@ import APIURI from '../../utils/apiuri'
 import NotSupport from '../../components/utils/notSupport'
 
 import '../../static/sass/experimenter/index.scss'
+import "../../static/sass/uxer/signin.scss";
 
 import { withStyles, TextField, Grid } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faUserAlt, faLock } from '@fortawesome/free-solid-svg-icons'
-import "../../static/sass/uxer/signin.scss";
 import logo from '../../static/img/full_logo.png'
 import background1 from '../../static/img/background.jpg'
 

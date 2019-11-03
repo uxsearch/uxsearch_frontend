@@ -22,7 +22,7 @@
   }
 
   .exper-name {
-    font-size: 35px;
+    font-size: 30px;
     font-weight: 600;
   }
 
@@ -37,7 +37,7 @@
   }
 
   .space-head-block {
-    margin-top: 5px;
+    margin-top: 0px;
   }
 
   .title {
@@ -82,5 +82,11 @@
   .close_btn {
     width: 30px;
     height: 30px;
+  }
+
+  @media (min-width: 768px) {
+    .exper-name {
+      font-size: 30px;
+    }
   }
 }
