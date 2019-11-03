@@ -38,10 +38,10 @@
     transform: translate(-50%, -50%);
   }
 
-  .logo-icon {
-    width: 200px;
-    height: auto;
-  }
+.logo-icon{
+  width: 200px;
+  height: auto;
+}
 
   .btn-signin {
     background-color: $blue !important;
@@ -65,4 +65,28 @@
     font-weight: 300;
     cursor: default;
   }
+
+  .font {
+    font-size: 17px;
+  }
+
+  .block-account {
+    background-color: $white !important;
+    border-radius: 20px;
+    padding: 30px !important;
+    margin: 50px;
+  }
+
+  .profile-img {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 100%;
+    left: 50%;
+    right: 50%;
+  }
+
+  // .center{
+  //   margin: 0px 0px !important;
+  // }
 }

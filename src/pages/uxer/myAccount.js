@@ -12,7 +12,6 @@ import NavbarUXer from "../../../src/components/utils/navbarUXer";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import '../../static/sass/experimenter/index.scss'
 import "../../static/sass/uxer/signin.scss";
 
 import '../../static/sass/navbar.scss'
@@ -64,20 +63,22 @@ class MyAccount extends React.Component {
 
   render() {
     const project = this.state.project
+
     return (
       <div>
         <NotSupport className='d-md-none' />
         <section id='signin' className='d-none d-md-block'>
           <NavbarUXer title='My Account' />
           <Container  >
-            <Row xs={5} md={5} lg={5} className='align-items-center justify-content-center'>
-              <Col xs={3} className='profile-block '>
-                <Row>
-                  <Col xs={12} className='text-center img-block'>
-                    <img className='logo-icon' src={logo} />
+            <Row xs={5} md={4} lg={3} className='align-items-center justify-content-center'>
+              <Col xs={4} className='block-account '>
+                <Row >
+                  <Col xs={5} sm={4} xl={3}>
+                    <img src='https://picsum.photos/200/300' alt='Profile Picture' className='profile-img' />
                   </Col>
                 </Row>
                 <br />
+
 
                 <Form
                   onSubmit={this.submitUpdate}
@@ -89,13 +90,13 @@ class MyAccount extends React.Component {
                           <Col xs={12}>
                             <FormGroup>
                               <Row>
-                                <Col xs={12} lg={12}>
-                                  <Field name='name' type='text'>
+                                <Col xs={12} lg={12} className='space font'>
+                                  <Field name='Firstname' type='text'>
                                     {({ input, meta }) => (
                                       <>
                                         <Row className='align-items-center'>
-                                          <Col xs={12} lg={5} className='space'>
-                                            <span>Name</span>
+                                          <Col xs={12} lg={5} >
+                                            <span className='font'>Firstname</span>
                                           </Col>
                                           <Col xs={12} lg={12}>
                                             <Label className=' w-100'>
@@ -109,12 +110,32 @@ class MyAccount extends React.Component {
                                   </Field>
                                 </Col>
 
-                                <Col xs={12} lg={12}>
+                                <Col xs={12} lg={12} className='space font'>
+                                  <Field name='Lastname' type='text'>
+                                    {({ input, meta }) => (
+                                      <>
+                                        <Row className='align-items-center'>
+                                          <Col xs={12} lg={5} >
+                                            <span>Lastname</span>
+                                          </Col>
+                                          <Col xs={12} lg={12}>
+                                            <Label className=' w-100'>
+                                              <Input {...input} required />
+                                              {meta.touched && meta.error && <span>{meta.error}</span>}
+                                            </Label>
+                                          </Col>
+                                        </Row>
+                                      </>
+                                    )}
+                                  </Field>
+                                </Col>
+
+                                <Col xs={12} lg={12} className='space font'>
                                   <Field name='Email' type='text'>
                                     {({ input, meta }) => (
                                       <>
                                         <Row className='align-items-center'>
-                                          <Col xs={12} lg={5} className='space'>
+                                          <Col xs={12} lg={5} >
                                             <span>Email</span>
                                           </Col>
                                           <Col xs={12} lg={12}>
@@ -129,12 +150,12 @@ class MyAccount extends React.Component {
                                   </Field>
                                 </Col>
 
-                                <Col xs={12} lg={12}>
+                                <Col xs={12} lg={12} className='font'>
                                   <Field name='Company' type='text'>
                                     {({ input, meta }) => (
                                       <>
                                         <Row className='align-items-center'>
-                                          <Col xs={12} lg={5} className='space'>
+                                          <Col xs={12} lg={5} >
                                             <span>Company</span>
                                           </Col>
                                           <Col xs={12} lg={12}>

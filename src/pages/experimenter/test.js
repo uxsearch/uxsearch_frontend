@@ -26,7 +26,7 @@ class Test extends React.Component {
         </a>
 
         <h1>MyAccount</h1>
-        <a href='/uxer/myAccount'>
+        <a href='/uxer/uxerId/account'>
           <Button className='btn btn-success'>
             MyAccount
           </Button>
