@@ -10,14 +10,8 @@ import NotSupport from '../../components/utils/notSupport'
 
 import NavbarUXer from "../../../src/components/utils/navbarUXer";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import "../../static/sass/uxer/signin.scss";
-
 import '../../static/sass/navbar.scss'
-
-import logo from '../../static/img/full_logo.png'
-
 
 const TextInput = withStyles({
   root: {
