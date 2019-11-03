@@ -38,11 +38,6 @@ const TextInput = withStyles({
 class SignIn extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      uxerId: [],
-      projectId: [],
-      project: [],
-    }
   }
 
   submitLogin = async (values) => {
@@ -51,6 +46,7 @@ class SignIn extends React.Component {
         .then(result => {
           this.setState({ redirect: true })
           localStorage.setItem('token', result.data.token)
+          localStorage.setItem('firstname', result.data.data.firstname)
           return result
         })
       if (response.status !== 200) {
@@ -63,7 +59,6 @@ class SignIn extends React.Component {
   }
 
   render() {
-    const project = this.state.project
     return (
       <div>
         <NotSupport className='d-md-none' />

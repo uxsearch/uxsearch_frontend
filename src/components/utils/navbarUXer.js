@@ -6,22 +6,20 @@ import { faUserAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { withRouter } from 'react-router-dom'
 
 import logo from '../../static/img/Logo_White.png'
-import axios from '../../utils/axios';
-import MyAccount from '../../pages/uxer/myAccount'
 
 import '../../static/sass/navbar.scss'
 
 class NavbarUxer extends React.Component {
   constructor(props) {
     super(props);
-    const { computedMatch } = props
     this.toggle = this.toggle.bind(this);
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.state = {
       isOpen: false,
       collapsed: true,
-
+      nameUser: localStorage.getItem('firstname')
     };
+    console.log(this.state.nameUser)
   }
 
   toggle() {
@@ -38,11 +36,12 @@ class NavbarUxer extends React.Component {
 
   logout = async () => {
     localStorage.removeItem('token')
+    localStorage.removeItem('firstname')
     window.location.assign('/login')
   }
 
   render() {
-    const experiment = this.state.experiment
+    const { nameUser } = this.state
     return (
       <section id='uxer-navbar'>
         <Navbar dark className='nav-bgColoruxer-mobile d-md-none'>
@@ -60,7 +59,7 @@ class NavbarUxer extends React.Component {
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret className='link-text'>
-                  UXer1
+                  {nameUser}
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem href={`/uxer/${this.props.uxerId}/account`}>
@@ -94,7 +93,7 @@ class NavbarUxer extends React.Component {
               <Nav>
                 <UncontrolledDropdown nav inNavbar className='dropdown-position'>
                   <DropdownToggle nav caret className='link-text'>
-                    UXer1
+                    {nameUser}
                   </DropdownToggle>
                   <DropdownMenu right>
                     <DropdownItem href={`/uxer/${this.props.uxerId}/account`}>
