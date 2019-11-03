@@ -173,6 +173,7 @@ async uploadHandler (file) {
 
   render() {
     const projectList = this.state.projectList
+    const uxerId = this.state.uxerId
 
     let {imagePreviewUrl} = this.state;
     let $imagePreview = null;
