@@ -46,9 +46,10 @@ const modalSubmit = () => {
 class IndexExperiment extends React.Component {
   constructor(props) {
     super(props)
+    const { match } = props
     this.state = {
-      uxerId: '8t6UN47Z749qacrEvZ8O',
-      projectId: 'a89OdndRvNEoasnHXfhu',
+      uxerId: 'Ra5yR8oqRlP0Inxx1BJYzuupjoV2',
+      projectId: match.params.projId,
       project: undefined,
       country: '',
       university: ''
@@ -77,7 +78,6 @@ class IndexExperiment extends React.Component {
       if (response.status !== 200) {
         throw new Error('CANNOT GET PROJECT')
       }
-      console.log(response.data.data)
       this.setState({ project: response.data.data })
     } catch (e) {
       console.error(e)
@@ -89,18 +89,18 @@ class IndexExperiment extends React.Component {
       const newValue = { ...values }
       const prepareEducate = newValue.educate ? newValue.educate : ''
       const prepareJob = newValue.job ? newValue.job : ''
-      const prepareLifestyle = newValue.lifestyle ? newValue.lifestyle : ''
+      if(this.state.country === '') {
+        newValue.province = ''
+      }
 
       newValue.country = this.state.country
       newValue.educate = prepareEducate
       newValue.job = prepareJob
-      newValue.lifestyle = prepareLifestyle
-      console.log('value : ', newValue)
       const response = await axios.post(`${APIURI.EXPERIMENTER}add/`, newValue)
       if (response.status !== 201) {
         throw new Error('CANNOT CREATE EXPERIMENTER')
       }
-      this.props.history.push(`/experimenter/${response.data.experimenter.id}/record`)
+      this.props.history.push(`/${this.state.projectId}/experimenter/${response.data.experimenter.id}/record`)
     } catch (e) {
       console.error(e)
     }

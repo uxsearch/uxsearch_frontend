@@ -12,15 +12,15 @@ import ResultQuestion from '../../components/uxer/videoresult/resultBlock'
 import '../../static/sass/uxer/videoResult.scss'
 
 class VideoResult extends React.
-Component {
+  Component {
   constructor(props) {
     super(props);
-    const { match } = props
+    const { computedMatch } = props
     this.state = {
-      experId: match.params.experId,
+      experId: computedMatch.params.experId,
       experiment: undefined,
-      uxerId: match.params.id,
-      projectId: match.params.projId,
+      uxerId: computedMatch.params.id,
+      projectId: computedMatch.params.projId,
       project: undefined,
       questions: [],
       records: undefined
@@ -44,7 +44,6 @@ Component {
     } catch (error) {
       console.error(error)
     }
-    // this.getProject()
   }
 
   getAge(birthdate) {
@@ -75,7 +74,7 @@ Component {
     } catch (e) {
       console.error(e)
     }
-}
+  }
 
   getResultRecord = async () => {
     try {
@@ -95,17 +94,16 @@ Component {
     const questions = this.state.questions
     const records = this.state.records
 
-    console.log('questions', questions)
     return (
       <section id='video-result'>
-        <NavbarUXer title={`${project && project.name}`}/>
+        <NavbarUXer title={`${project && project.name}`} />
         <Container fluid>
           {records &&
-            <PlayVideo 
+            <PlayVideo
               faceVideo={records.video_url}
-              faceVideoTime= {records.video_time}
-              screenVideo= {records.screen_url}
-              screenVideoTime= {records.screen_time}
+              faceVideoTime={records.video_time}
+              screenVideo={records.screen_url}
+              screenVideoTime={records.screen_time}
             />
           }
         </Container>
@@ -156,8 +154,8 @@ Component {
             </>
           }
           <br />
-          <ResultQuestion  
-            questions={questions && questions}  
+          <ResultQuestion
+            questions={questions && questions}
           />
         </Container>
       </section>

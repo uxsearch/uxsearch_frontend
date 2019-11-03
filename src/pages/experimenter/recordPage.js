@@ -49,8 +49,8 @@ class RecordPage extends React.Component {
     super(props)
     const { match } = props
     this.state = {
-      uxerId: '8t6UN47Z749qacrEvZ8O',
-      projectId: 'a89OdndRvNEoasnHXfhu',
+      uxerId: 'Ra5yR8oqRlP0Inxx1BJYzuupjoV2',
+      projectId: match.params.projId,
       experId: match.params.experId,
       experiment: undefined,
       project: undefined,
@@ -76,8 +76,7 @@ class RecordPage extends React.Component {
       timeDuration: timeDuration,
       blob: cameraBlob
     }
-    this.setState({ cameraBlob: Childcamara})
-    console.log(this.state.cameraBlob)
+    this.setState({ cameraBlob: Childcamara })
   }
 
   setParentScreenState = (screenBlob, timeDuration) => {
@@ -86,7 +85,6 @@ class RecordPage extends React.Component {
       blob: screenBlob
     }
     this.setState({ screenBlob: Childscreen })
-    console.log(this.state.screenBlob)
   }
 
   async uploadVideo(blob) {
@@ -119,7 +117,7 @@ class RecordPage extends React.Component {
       if (response.status !== 201) {
         throw new Error('CANNOT CREATE FORM RECORD')
       }
-      this.props.history.push(`/experimenter/${this.state.experId}/answer`)
+      this.props.history.push(`/${this.state.projectId}/experimenter/${this.state.experId}/answer`)
     } catch (e) {
       console.error(e)
     }

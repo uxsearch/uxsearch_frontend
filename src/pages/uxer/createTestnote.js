@@ -1,17 +1,15 @@
 import React, { Component } from "react";
+import { withRouter } from 'react-router-dom'
 import { Container, Row, Col, Button } from "reactstrap";
+import { Form } from 'react-final-form'
 import { withStyles, TextField } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-import { Form, Field } from 'react-final-form'
-import { withRouter } from 'react-router-dom'
 
 import NotSupport from "../../components/utils/notSupport";
 import NavbarUXer from "../../components/utils/navbarUXer";
 import SubNavbar from "../../components/utils/subNavbar";
-import Testnote from "../../components/uxer/testnote";
-
-import { DEFAULT_QUESTION } from './const'
+import Question from "../../components/uxer/question";
 
 import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
@@ -37,35 +35,49 @@ const SearchField = withStyles({
 class CreateTestnote extends Component {
   constructor(props) {
     super(props)
-    const { match } = props
+    const { computedMatch } = props
     this.state = {
       questions: [
-        DEFAULT_QUESTION.TEXTBOX
+        {
+          questionId: '',
+          question: '',
+          value: '',
+          type_form: 'textbox'
+        }
       ],
-      uxerId: match.params.id,
-      projectId: match.params.projId,
+      uxerId: computedMatch.params.id,
+      projectId: computedMatch.params.projId,
       project: undefined,
+      loading: false
     }
   }
 
-  componentDidMount() {
-    this.getProject()
-    // this.getTestnote()
+  async componentDidMount() {
+    await this.getProject()
+    await this.getTestnote()
+    this.setState({ loading: true })
   }
 
-  setQuestion(index, question) {
-    const newQuestions = [...this.state.questions]
-    newQuestions[index] = question
-    this.setState({
-      questions: newQuestions
-    })
+  setQuestion(index) {
+    return (question) => {
+      const newQuestions = [...this.state.questions]
+      newQuestions[index] = { ...question }
+      this.setState({
+        questions: newQuestions
+      })
+    }
   }
 
   addQuestion() {
     if (this.state.questions.length < 15) {
-      const questions = this.state.questions;
-      questions.push(DEFAULT_QUESTION.TEXTBOX);
-      this.setState({ questions: [...questions] });
+      const questions = [...this.state.questions];
+      questions.push({
+        questionId: '',
+        question: '',
+        value: '',
+        type_form: 'textbox'
+      });
+      this.setState({ questions });
     }
   }
 
@@ -75,7 +87,7 @@ class CreateTestnote extends Component {
       if (response.status !== 200) {
         throw new Error('CANNOT CREATE TESTNOTE')
       }
-      this.props.history.push(`/uxer/${this.state.uxerId}/projects`)
+      await this.getProject()
     } catch (e) {
       console.error(e)
     }
@@ -93,27 +105,53 @@ class CreateTestnote extends Component {
     }
   }
 
-  // getTestnote = async (props) => {
-  //   try {
-  //     const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/test-note`)
-  //     if (response.status !== 200) {
-  //       throw new Error('CANNOT GET PROJECT')
-  //     }
-  //     this.setState({ questions: response.data ? response.data : DEFAULT_QUESTION.TEXTBOX })
-  //   } catch (e) {
-  //     console.error(e)
-  //   }
-  // }
+  getTestnote = async (props) => {
+    try {
+      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/test-note`)
+      if (response.status !== 200) {
+        throw new Error('CANNOT GET TESTNOTE')
+      }
+      const { data } = response
+      if (data.length !== 0) {
+        const questions = data.map(d => {
+          if (d.data.question.type_form === "textbox") {
+            return {
+              questionId: d.id,
+              question: d.data.question.question,
+              value: '',
+              type_form: d.data.question.type_form
+            }
+          } else {
+            const options = d.data.options.map(option => {
+              return {
+                optionId: option.id,
+                option: option.data.option
+              }
+            })
+            return {
+              questionId: d.id,
+              question: d.data.question.question,
+              type_form: d.data.question.type_form,
+              options: options
+            }
+          }
+        })
+        this.setState({ questions })
+      }
+    } catch (e) {
+      console.error(e)
+    }
+  }
 
   render() {
-    const { uxerId, projectId, project, questions } = this.state
+    const { uxerId, projectId, project, questions, loading } = this.state
 
     return (
       <div>
         <NotSupport className='d-md-none' />
         <section id='questionnaire' className='d-none d-md-block'>
-          <NavbarUXer title={`${project && project.name}`} />
-          <SubNavbar uxerId={uxerId} projId={projectId} />
+          <NavbarUXer title={`${project && project.name}`} uxerId={uxerId} />
+          <SubNavbar uxerId={uxerId} projId={projectId} active={`note`} />
           <Container>
             <Form
               onSubmit={this.submitCreateTestnote}
@@ -125,7 +163,7 @@ class CreateTestnote extends Component {
                       <Col xs={12} md={12}>
                         <Row>
                           <Col xs={12} md={12} lg={12} className="space-side ">
-                            <h2>Usability Test Note : Web Development </h2>
+                            <h2>Usability Test Note : {`${project && project.name}`} </h2>
                           </Col>
                         </Row>
                         <Row>
@@ -146,15 +184,14 @@ class CreateTestnote extends Component {
                           <hr className="black-line" />
                         </Col>
                         <br />
-                        {questions.map((question, index) => (
-                          <>
-                            <Testnote
-                              question={question}
-                              setQuestion={(index, question) => this.setQuestion(index, question)}
-                              index={index}
-                              key={index}
-                            />
-                          </>
+                        {loading && questions.map((question, index) => (
+                          <Question
+                            question={question}
+                            setQuestion={(question) => this.setQuestion(index)(question)}
+                            setOption={options => this.setOption(index)(options)}
+                            index={index}
+                            key={index}
+                          />
                         ))}
                         <br />
                         <Row className="justify-content-center">

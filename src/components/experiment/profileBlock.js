@@ -177,6 +177,8 @@ class ProfileBlock extends React.Component {
                 </FormGroup>
               </Col>
             </Row>
+            <hr />
+            <br />
             <Row>
               <Col xs={12}>
                 <FormGroup>
@@ -199,8 +201,7 @@ class ProfileBlock extends React.Component {
                                       }}
                                       name='country'
                                       placeholder='Choose Your Country'
-                                      className='form-control '
-                                      required
+                                      className='form-control'
                                     >
                                       <option value='' disabled>Choose Your Country</option>
                                       {countries.map(country => (
@@ -231,7 +232,6 @@ class ProfileBlock extends React.Component {
                                       name='city'
                                       placeholder='Choose Your Province/City'
                                       className='form-control'
-                                      required
                                     >
                                       <option value='' disabled>Choose Your City/State</option>
                                       {this.props.country && countries.filter(country => {
@@ -253,8 +253,6 @@ class ProfileBlock extends React.Component {
                 </FormGroup>
               </Col>
             </Row>
-            <hr />
-            <br />
             <Row>
               <Col xs={12}>
                 <FormGroup>
@@ -269,7 +267,7 @@ class ProfileBlock extends React.Component {
                               </Col>
                               <Col xs={12} lg={8}>
                                 <Label className=' w-100'>
-                                  <Input {...input} required />
+                                  <Input {...input} />
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
                                 </Label>
                               </Col>
@@ -289,33 +287,6 @@ class ProfileBlock extends React.Component {
                               <Col xs={12} lg={8}>
                                 <Label className='w-100'>
                                   <Input {...input} />
-                                  {meta.touched && meta.error && <span>{meta.error}</span>}
-                                </Label>
-                              </Col>
-                            </Row>
-                          </>
-                        )}
-                      </Field>
-                    </Col>
-                  </Row>
-                </FormGroup>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={12}>
-                <FormGroup>
-                  <Row className='align-items-center'>
-                    <Col xs={12}>
-                      <Field name='lifestyle' type='text'>
-                        {({ input, meta }) => (
-                          <>
-                            <Row className='align-items-center'>
-                              <Col xs={12} lg={2}>
-                                <span>Lifestyle : </span>
-                              </Col>
-                              <Col xs={12} lg={10}>
-                                <Label className=' w-100'>
-                                  <Input {...input} placeholder='Jazz Music, Creative' />
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
                                 </Label>
                               </Col>

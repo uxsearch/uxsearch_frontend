@@ -66,14 +66,13 @@ const CheckboxGroup = ({ fields, options }) => {
 class AnswerTestnote extends React.Component {
   constructor(props) {
     super(props);
-    const { match } = props
+    const { computedMatch } = props
     this.state = {
-      uxerId: match.params.id,
-      projectId: match.params.projId,
-      experId: match.params.experId,
+      uxerId: computedMatch.params.id,
+      projectId: computedMatch.params.projId,
+      experId: computedMatch.params.experId,
       experiment: undefined,
       answer: [],
-      answerId: '934DlGsmzBo8JlZWoDRL',
       project: undefined,
       testnote: [],
       experList: [],
@@ -84,6 +83,8 @@ class AnswerTestnote extends React.Component {
     this.getProject()
     this.getTestnote()
     this.getExperimenter()
+    this.getAnswerTestnote()
+
   }
 
   getExperimenter = async () => {
@@ -105,17 +106,15 @@ class AnswerTestnote extends React.Component {
   }
 
   submitTestnote = async (values) => {
-    console.log(values)
-    console.log('test123')
-    // try {
-    //   const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.EXPERIMENTER}${this.state.experId}/${APIURI.ANSWER}${this.state.answerId}/update/`, values)
-    //   if (response.status !== 200) {
-    //     throw new Error('CANNOT SUBMIT TESTNOTE')
-    //   }
-    //   this.props.history.push(`/experimenter/${this.state.experId}/thanks`)
-    // } catch (e) {
-    //   console.error(e)
-    // }
+    try {
+      const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.EXPERIMENTER}${this.state.experId}/answer-note/update `, values)
+      if (response.status !== 200) {
+        throw new Error('CANNOT CREATE TESTNOTE')
+      }
+      this.props.history.push(`/uxer/${this.state.uxerId}/project/${this.state.projectId}/experiment/${this.state.experId}/answertestnote`)
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   getTestnote = async (props) => {
@@ -125,7 +124,22 @@ class AnswerTestnote extends React.Component {
       if (response.status !== 200) {
         throw new Error('CANNOT GET TESTNOTE')
       }
-      
+
+      this.setState({ testnote: response.data })
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  getAnswerTestnote = async (props) => {
+    console.log('getAnswerTestnote function')
+    try {
+      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.EXPERIMENTER}${this.state.experId}/${APIURI.NOTE}${this.state.noteId}/answer`)
+      console.log(">>> res :", response)
+      if (response.status !== 200) {
+        throw new Error('CANNOT GET ANSWER TESTNOTE')
+      }
+
       this.setState({ testnote: response.data })
     } catch (e) {
       console.error(e)
@@ -145,50 +159,59 @@ class AnswerTestnote extends React.Component {
   }
 
   render(props) {
-    const { testnote, project, experList, uxerId, projId, experiment } = this.state
+    const { testnote, project, experList, uxerId, projId, experiment, answer } = this.state
 
     return (
       <div>
         <section id='video-result' className='d-none d-md-block'>
-          <NavbarUXer title={`${project && project.name}`} />
-          <Container fluid className='space-bottom-video'>
-            <Row className='justify-content-center align-items-center'>
-              <Col xs={12} sm={8} md={6} lg={5}>
+          <NavbarUXer title={`${project && project.name} Test Note`} uxerId={uxerId} />
+          <Container className='space-bottom-video'>
+            <Row className=' align-items-center'>
+              {/* <Col xs={12} sm={8} md={6} lg={5}> */}
+              <Col xs={12} sm={8} md={6} lg={7}>
+                {/* <Row className='align-items-center justify-content-center'> */}
                 <Row className='align-items-center justify-content-center'>
-                  <Col xs={3} sm={4} xl={3}>
+                  <Col xs={1} sm={4} xl={3}>
                     <div className='profile-block'>
                       <img src='https://picsum.photos/200/300' alt='Profile Picture' className='profile-img' />
                     </div>
                   </Col>
-                  <Col xs={9} sm={8} xl={9}>
+                  <Col xs={10} sm={8} xl={9}>
                     <Row>
                       <Col xs={12}>
                         <p className='no-margin exper-name'>{experiment && `${experiment.firstname} ${experiment.lastname}`}</p>
                       </Col>
                     </Row>
-                    <Row className='d-sm-none space-btn-mobile'>
-                      <Col xs={12}>
+                    {/* <Row className='d-sm-none space-btn-mobile'>
+                      <Col xs={1}>
                         <FontAwesomeIcon
                           icon={faTimes}
-                          size='3x'
+                          size='2x'
                           color='#303030'
-                          className='plus'
+                          className='cross'
                           link={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/answertestnote`}
                         />
                       </Col>
-                    </Row>
+                    </Row> */}
                   </Col>
                 </Row>
               </Col>
               <Col md={3} xl={4} className='d-none d-md-block' />
-              <Col xs={12} sm={4} md={3} xl={2} className='d-none d-sm-block'>
-                <FontAwesomeIcon
-                  icon={faTimes}
-                  size='3x'
-                  color='#303030'
-                  className='plus'
-                  link={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/answertestnote`}
+              <Col xs={12} sm={4} md={1} xl={1} className='d-none d-sm-block'>
+                <img
+                  src={require('../../static/img/close.svg')}
+                  height='20px'
+                  className="close_btn"
+                  alt="close button"
+
                 />
+                {/* <FontAwesomeIcon
+                  icon={faTimes}
+                  size='2x'
+                  color='#303030'
+                  className='cross'
+                  link={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/answertestnote`}
+                /> */}
               </Col>
             </Row>
           </Container>
@@ -229,16 +252,17 @@ class AnswerTestnote extends React.Component {
                           <Col xs={12} className='answer-block'>
                             <Row className='space-head-block'>
                               <Col xs={12}>
-                                <h2 className='title'>'{project && `${project.name}`}' <span>Testnote</span></h2>
+                                <h2 className='title'> <span>Test Note Form</span></h2>
                               </Col>
                             </Row>
                             <br />
                             {testnote.map((question, index) => (
                               <>
-                              {console.log(question)}
+                                {console.log(question)}
                                 <Row key={question.id}>
                                   <Col xs={12}>
                                     <Label className='no-margin w-100'>
+                                      <Field component='input' type='hidden' name={`answers[${index}][answerId]`} initialValue={answer.id ? answer.id : ''} />
                                       <Row>
                                         <Col xs={12}>
                                           <Field component='input' type='hidden' name={`answers[${index}][question_key]`} initialValue={question.id} />

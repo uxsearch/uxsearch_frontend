@@ -32,23 +32,21 @@ const SearchField = withStyles({
 class ExperPage extends React.Component {
   constructor(props) {
     super(props)
-    const { match } = props
+    const { computedMatch } = props
     this.state = {
-      uxerId: match.params.id,
-      projectId: match.params.projId,
+      uxerId: computedMatch.params.id,
+      projectId: computedMatch.params.projId,
       project: undefined,
       experList: [],
     }
   }
 
   componentDidMount() {
-    console.log(">>> did mount this.state :", this.state)
     this.getAllExperiment()
     this.getProject()
   }
 
   componentDidUpdate() {
-    console.log(">>> this.state :", this.state)
   }
 
   getProject = async () => {
@@ -80,8 +78,8 @@ class ExperPage extends React.Component {
 
     return (
       <section id='exper-page'>
-        <NavbarUxer title={`${project && project.name}`} />
-        <SubNavbar uxerId={uxerId} projId={projectId} />
+        <NavbarUxer title={`${project && project.name}`} uxerId={uxerId} />
+        <SubNavbar uxerId={uxerId} projId={projectId} active={`result`} />
         <Container>
           <Row className='space-head-block justify-content-center align-items-end'>
             <Col xs={10} md={4}>

@@ -3,22 +3,23 @@ import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, Un
 import { Row, Col } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
-
+import { withRouter } from 'react-router-dom'
 
 import logo from '../../static/img/Logo_White.png'
+
 import '../../static/sass/navbar.scss'
 
 class NavbarUxer extends React.Component {
   constructor(props) {
     super(props);
-
     this.toggle = this.toggle.bind(this);
     this.toggleNavbar = this.toggleNavbar.bind(this);
-
     this.state = {
       isOpen: false,
-      collapsed: true
+      collapsed: true,
+      nameUser: localStorage.getItem('firstname')
     };
+    console.log(this.state.nameUser)
   }
 
   toggle() {
@@ -33,7 +34,14 @@ class NavbarUxer extends React.Component {
     });
   }
 
+  logout = async () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('firstname')
+    window.location.assign('/login')
+  }
+
   render() {
+    const { nameUser } = this.state
     return (
       <section id='uxer-navbar'>
         <Navbar dark className='nav-bgColoruxer-mobile d-md-none'>
@@ -44,17 +52,17 @@ class NavbarUxer extends React.Component {
           <Collapse isOpen={!this.state.collapsed} navbar>
             <Nav navbar>
               <NavItem>
-                <NavLink href='#' className='link-text'>Projects</NavLink>
+                <NavLink href={`/uxer/${this.props.uxerId}/projects`} className='link-text'>Projects</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href='#' className='link-text'>Activity</NavLink>
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret className='link-text'>
-                  Uxer 1
+                  {nameUser}
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem>
+                  <DropdownItem href={`/uxer/${this.props.uxerId}/account`}>
                     <FontAwesomeIcon icon={faUserAlt} size='sm' className='space-icon' />
                     <span>My Account</span>
                   </DropdownItem>
@@ -74,7 +82,7 @@ class NavbarUxer extends React.Component {
             <Col md={5}>
               <Nav className='ml-auto' navbar>
                 <NavItem>
-                  <NavLink href='#' className='link-text'>Projects</NavLink>
+                  <NavLink href={`/uxer/${this.props.uxerId}/projects`} className='link-text'>Projects</NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink href='#' className='link-text'>Activity</NavLink>
@@ -85,15 +93,15 @@ class NavbarUxer extends React.Component {
               <Nav>
                 <UncontrolledDropdown nav inNavbar className='dropdown-position'>
                   <DropdownToggle nav caret className='link-text'>
-                    Uxer 1
-                	</DropdownToggle>
+                    {nameUser}
+                  </DropdownToggle>
                   <DropdownMenu right>
-                    <DropdownItem>
+                    <DropdownItem href={`/uxer/${this.props.uxerId}/account`}>
                       <FontAwesomeIcon icon={faUserAlt} size='sm' className='space-icon' />
                       <span>My Account</span>
                     </DropdownItem>
                     <DropdownItem divider />
-                    <DropdownItem>
+                    <DropdownItem onClick={() => this.logout()}>
                       <FontAwesomeIcon icon={faSignOutAlt} size='sm' className='space-icon' />
                       <span>Sign out</span>
                     </DropdownItem>
@@ -118,4 +126,4 @@ class NavbarUxer extends React.Component {
   }
 }
 
-export default NavbarUxer
+export default withRouter(NavbarUxer)

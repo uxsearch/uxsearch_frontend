@@ -4,10 +4,11 @@ import { Form, Field } from 'react-final-form'
 import { Container, Row, Col, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalBody, Button, Label } from 'reactstrap'
 import { TextField, withStyles } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faBook, faLink, faCircle, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faSearch, faBook, faLink, faCircle, faPlus, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 
 import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
+import { delay } from '../../utils/delay'
 
 import NavbarUxer from '../../components/utils/navbarUXer'
 import ProjectBlock from '../../components/uxer/projectBlock'
@@ -49,15 +50,17 @@ const TextInput = withStyles({
 class ProjectPage extends React.Component {
   constructor(props) {
     super(props);
-    const { match } = props
+    const { computedMatch } = props
     this.toggleSort = this.toggleSort.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.state = {
-      uxerId: match.params.id,
+      uxerId: computedMatch.params.id,
       projectList: [],
       sortDropdownOpen: false,
       modal: false,
       redirect: false,
+      file: null,
+      imagePreviewUrl: null,
     };
   }
 
@@ -90,16 +93,22 @@ class ProjectPage extends React.Component {
   }
 
   submitCreateProject = async (values) => {
+    delay(100)
+    const coverPhoto = await this.uploadHandler(this.state.file)
+    const newValues= {
+      ...values,
+      cover_url: coverPhoto}
     try {
-      const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}add/`, values)
+      const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}add/`, newValues)
         .then(result => {
           this.setState({ redirect: true })
           return result
         })
       if (response.status !== 201) {
-        throw new Error('CANNOT CREATE UXER')
+        throw new Error('CANNOT CREATE PROJECT')
       }
-      this.props.history.push(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${response.data.projects.id}/experiments`)
+      this.setState({ modal : false })
+      await this.getProject()
     } catch (e) {
       console.error(e)
     }
@@ -111,23 +120,73 @@ class ProjectPage extends React.Component {
         const response = await axios.delete(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}delete`, projectId)
         if (response.status !== 200) {
           throw new Error('CANNOT DELETE PROJECT')
-        }     
+        }
+        this.getProject()
       }
-		} catch (e) {
-		  console.error(e)
-		}
+    } catch (e) {
+      console.error(e)
+    }
   }
+
+  submitUpdateProject = async (values, projectId) => {    
+    try {
+      const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${projectId}/update`, values)
+      if (response.status !== 200) {
+        throw new Error('CANNOT EDIT MY PROJECT')
+      }
+      this.getProject()
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+handleImageChange(e) {
+  e.preventDefault();
+
+  const reader = new FileReader();
+  const file = e.target.files[0];
+
+  reader.onloadend = () => {
+    this.setState({
+      file: file,
+      imagePreviewUrl: reader.result
+    });
+  }
+  reader.readAsDataURL(file)
+  
+}
+
+async uploadHandler (file) {
+  var formData = new FormData();
+  formData.append('file', file, file.name)
+  try {
+    const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}upload`, formData)
+    console.log(formData)
+    if (response.status !== 201) {
+      throw new Error('CANNOT UPLOAD COVER FILE')
+    }
+    return response.data.cover_url
+  } catch (e) {
+    console.error(e)
+  }
+}
 
   render() {
     const projectList = this.state.projectList
-    // const redirect = this.state.redirect
+    const uxerId = this.state.uxerId
 
-    // if (redirect) return <Redirect to={`/${APIURI.UXER}${this.state.uxerId}/${APIURI.PROJECT}`} />
+    let {imagePreviewUrl} = this.state;
+    let $imagePreview = null;
+    if (imagePreviewUrl) {
+      $imagePreview = (<img src={imagePreviewUrl} />);
+    } else {
+      $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
+    }
 
     return (
       <div>
         <section id='project-page'>
-          <NavbarUxer title='My Projects' />
+          <NavbarUxer title='My Projects' uxerId={uxerId} />
           <Container>
             <Row>
               <Col xs={11} sm={10} md={11}>
@@ -200,10 +259,14 @@ class ProjectPage extends React.Component {
                         <Col xs={12} sm={6} md={4} lg={3} key={project.id}>
                           <ProjectBlock
                             url={`/uxer/${this.state.uxerId}/project/${project.id}/experiments`}
+                            uxerId={this.state.uxerId}
                             title={project.data.name}
                             imgUrl={project.data.cover_url}
-                            projectId={project.id} 
+                            LinkUrl={project.data.file_url}
+                            description={project.data.description}
+                            projectId={project.id}
                             removeProject={this.removeProject}
+                            updateProject={this.submitUpdateProject}
                           />
                         </Col>
                       </>
@@ -231,14 +294,14 @@ class ProjectPage extends React.Component {
                     <form onSubmit={handleSubmit}>
                       <Row>
                         <Col xs={12}>
-                          <Field component='input' type='hidden' name='cover_url' initialValue={`https://picsum.photos/500/300`} />
+                          <Field component='input' type='image' name='cover_url'  />
                           <Row className='justify-content-center'>
                             <Col xs={12} className='text-center img-block'>
-                              <img
-                                src='https://picsum.photos/500/300'
-                                className='cover-size'
-                                alt='Project Cover'
-                              ></img>
+                            <div className='cover-size' alt='Project Cover'>
+                              {$imagePreview}
+                            </div>
+                              <br></br>
+                              <input type="file" name="file"onChange={(e)=>this.handleImageChange(e)}/> 
                             </Col>
                           </Row>
                           <Row className='justify-content-center'>
@@ -280,6 +343,39 @@ class ProjectPage extends React.Component {
                                 <Col xs={12} md={11}>
                                   <Row className='justify-content-center align-items-end no-gutters'>
                                     <Col xs={2} className='text-center'>
+                                      <FontAwesomeIcon icon={faPencilAlt} size='1x' color='#303030' />
+                                    </Col>
+                                    <Col xs={10} className='text-center'>
+                                      <Field name='description' type='text'>
+                                        {({ input, meta }) => (
+                                          <>
+                                            <Row className='align-items-center'>
+
+                                              <Col xs={12}>
+                                                <Label className='w-100'>
+                                                  <TextInput {...input}
+                                                    id='standard-description'
+                                                    label='Project Description'
+                                                    type='text'
+                                                    className='w-100 create-form space-bottom'
+                                                    margin='normal'
+                                                    required
+                                                  />
+                                                  {meta.touched && meta.error && <span>{meta.error}</span>}
+                                                </Label>
+                                              </Col>
+                                            </Row>
+                                          </>
+                                        )}
+                                      </Field>
+                                    </Col>
+                                  </Row>
+                                </Col>
+                              </Row>
+                              <Row className='justify-content-center'>
+                                <Col xs={12} md={11}>
+                                  <Row className='justify-content-center align-items-end no-gutters'>
+                                    <Col xs={2} className='text-center'>
                                       <FontAwesomeIcon icon={faLink} size='1x' color='#303030' />
                                     </Col>
                                     <Col xs={10} className='text-center'>
@@ -287,7 +383,6 @@ class ProjectPage extends React.Component {
                                         {({ input, meta }) => (
                                           <>
                                             <Row className='align-items-center'>
-
                                               <Col xs={12}>
                                                 <Label className=' w-100'>
                                                   <TextInput {...input}

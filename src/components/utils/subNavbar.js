@@ -5,12 +5,13 @@ import { Container, Row, Col } from 'reactstrap'
 class SubNavbar extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      active: props.active
+    }
   }
 
-  componentDidMount() {
-  }
-
-  render(props) {
+  render() {
+    const { active } = this.state
     return (
       <section id='sub-navbar'>
         <Container fluid className='nav-bgColoruxer d-none d-md-block'>
@@ -18,13 +19,13 @@ class SubNavbar extends React.Component {
             <Col md={1}></Col>
             <Col md={10} className='text-center'>
               <Nav navbar className='menu-line'>
-                <NavItem className='menu-block active'>
+                <NavItem className={`menu-block ${active === 'result' ? 'active' : ''}`}>
                   <NavLink href={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiments`} className='link-text'>Video Results</NavLink>
                 </NavItem>
-                <NavItem className='menu-block'>
+                <NavItem className={`menu-block ${active === 'questionnaire' ? 'active' : ''}`}>
                   <NavLink href={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/question`} className='link-text'>Create Questionnaire</NavLink>
                 </NavItem>
-                <NavItem className='menu-block' >
+                <NavItem className={`menu-block ${active === 'note' ? 'active' : ''}`} >
                   <NavLink href={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/testnote`} className='link-text'>Create Usability Test Note</NavLink>
                 </NavItem>
               </Nav>
@@ -33,13 +34,13 @@ class SubNavbar extends React.Component {
         </Container>
         <Container className='nav-bgColoruxer d-md-none'>
           <Nav navbar className='menu-line text-center'>
-            <NavItem className='menu-block'>
+            <NavItem className={`menu-block ${active === 'result' ? 'active' : ''}`}>
               <NavLink href={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiments`} className='link-text'>Video Results</NavLink>
             </NavItem>
-            <NavItem className='menu-block' active>
+            <NavItem className={`menu-block ${active === 'questionnaire' ? 'active' : ''}`}>
               <NavLink href={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/question`} className='link-text'>Create Questionnaire</NavLink>
             </NavItem>
-            <NavItem className='menu-block'>
+            <NavItem className={`menu-block ${active === 'note' ? 'active' : ''}`}>
               <NavLink href={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/testnote`} className='link-text'>Create Usability Test Note</NavLink>
             </NavItem>
           </Nav>
