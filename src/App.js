@@ -90,7 +90,9 @@ class App extends React.Component {
     return (
       <Router>
         <Switch>
-          <Route exact path='/' component={Test} />
+          <Route exact path='/'>
+            <Redirect to={{ pathname: '/login' }} />
+          </Route>
           <Route exact path='/login' component={SignIn} />
           <Route exact path='/:projId/experimenter' component={Experimenter} />
           <Route exact path='/:url' component={redirectURL} />
