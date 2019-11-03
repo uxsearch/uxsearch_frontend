@@ -168,7 +168,9 @@ handleImageChange(e) {
 
 async uploadHandler (file) {
   var formData = new FormData();
-  formData.append('file', file, file.name)
+  const date = new Date()
+  const newFilename =  date.getTime() + '_' + file.name
+  formData.append('file', file, newFilename)
   try {
     const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}upload`, formData)
     if (response.status !== 201) {
