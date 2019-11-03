@@ -32,10 +32,10 @@ const SearchField = withStyles({
   }
 })(TextField);
 
-class CreateQuestion extends Component {
+class CreateQuestion extends React.Component {
   constructor(props) {
     super(props)
-    const { computedMatch } = props
+    const { computedMatch, uxerId } = props
     this.state = {
       questions: [
         {
@@ -93,7 +93,7 @@ class CreateQuestion extends Component {
     }
   }
 
-  getProject = async (props) => {
+  getProject = async () => {
     try {
       const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}`)
       if (response.status !== 200) {
@@ -138,6 +138,18 @@ class CreateQuestion extends Component {
         })
         this.setState({ questions })
       }
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  deleteOption = async (optionId, questionId) => {
+    try {
+      const response = await axios.delete(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.QUESTION}${questionId}/delete-option`, optionId)
+      if (response.status !== 200) {
+        throw new Error('CANNOT DELETE OBJECT')
+      }
+      this.getProject()
     } catch (e) {
       console.error(e)
     }
@@ -191,6 +203,7 @@ class CreateQuestion extends Component {
                             setOption={options => this.setOption(index)(options)}
                             index={index}
                             key={index}
+                            deleteOption={this.deleteOption}
                           />
                         ))}
                         <br />
