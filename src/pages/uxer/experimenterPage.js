@@ -79,7 +79,7 @@ class ExperPage extends React.Component {
     return (
       <section id='exper-page'>
         <NavbarUxer title={`${project && project.name}`} uxerId={uxerId} />
-        <SubNavbar uxerId={uxerId} projId={projectId} />
+        <SubNavbar uxerId={uxerId} projId={projectId} active={`result`} />
         <Container>
           <Row className='space-head-block justify-content-center align-items-end'>
             <Col xs={10} md={4}>

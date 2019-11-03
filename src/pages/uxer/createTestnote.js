@@ -151,7 +151,7 @@ class CreateTestnote extends Component {
         <NotSupport className='d-md-none' />
         <section id='questionnaire' className='d-none d-md-block'>
           <NavbarUXer title={`${project && project.name}`} uxerId={uxerId} />
-          <SubNavbar uxerId={uxerId} projId={projectId} />
+          <SubNavbar uxerId={uxerId} projId={projectId} active={`note`} />
           <Container>
             <Form
               onSubmit={this.submitCreateTestnote}

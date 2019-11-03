@@ -151,7 +151,7 @@ class CreateQuestion extends Component {
         <NotSupport className='d-md-none' />
         <section id='questionnaire' className='d-none d-md-block'>
           <NavbarUXer title={`${project && project.name}`} uxerId={uxerId} />
-          <SubNavbar uxerId={uxerId} projId={projectId} />
+          <SubNavbar uxerId={uxerId} projId={projectId} active={`questionnaire`} />
           <Container>
             <Form
               onSubmit={this.submitCreateQuestionnaire}
