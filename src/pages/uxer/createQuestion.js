@@ -81,9 +81,9 @@ class CreateQuestion extends Component {
     }
   }
 
-  submitCreateTestnote = async () => {
+  submitCreateQuestionnaire = async () => {
     try {
-      const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/updatenote`, this.state.questions)
+      const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/updatequestionnaire`, this.state.questions)
       if (response.status !== 200) {
         throw new Error('CANNOT CREATE TESTNOTE')
       }
@@ -154,7 +154,7 @@ class CreateQuestion extends Component {
           <SubNavbar uxerId={uxerId} projId={projectId} />
           <Container>
             <Form
-              onSubmit={this.submitCreateTestnote}
+              onSubmit={this.submitCreateQuestionnaire}
               render={({
                 handleSubmit, form, submitting, pristine
               }) => (
