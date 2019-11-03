@@ -89,12 +89,13 @@ class IndexExperiment extends React.Component {
       const newValue = { ...values }
       const prepareEducate = newValue.educate ? newValue.educate : ''
       const prepareJob = newValue.job ? newValue.job : ''
-      const prepareLifestyle = newValue.lifestyle ? newValue.lifestyle : ''
+      if(this.state.country === '') {
+        newValue.province = ''
+      }
 
       newValue.country = this.state.country
       newValue.educate = prepareEducate
       newValue.job = prepareJob
-      newValue.lifestyle = prepareLifestyle
       const response = await axios.post(`${APIURI.EXPERIMENTER}add/`, newValue)
       if (response.status !== 201) {
         throw new Error('CANNOT CREATE EXPERIMENTER')
