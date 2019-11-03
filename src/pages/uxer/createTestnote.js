@@ -9,7 +9,7 @@ import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import NotSupport from "../../components/utils/notSupport";
 import NavbarUXer from "../../components/utils/navbarUXer";
 import SubNavbar from "../../components/utils/subNavbar";
-import Testnote from "../../components/uxer/testnote";
+import Question from "../../components/uxer/question";
 
 import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
@@ -151,7 +151,7 @@ class CreateTestnote extends Component {
         <NotSupport className='d-md-none' />
         <section id='questionnaire' className='d-none d-md-block'>
           <NavbarUXer title={`${project && project.name}`} uxerId={uxerId} />
-          <SubNavbar uxerId={uxerId} projId={projectId} />
+          <SubNavbar uxerId={uxerId} projId={projectId} active={`note`} />
           <Container>
             <Form
               onSubmit={this.submitCreateTestnote}
@@ -185,7 +185,7 @@ class CreateTestnote extends Component {
                         </Col>
                         <br />
                         {loading && questions.map((question, index) => (
-                          <Testnote
+                          <Question
                             question={question}
                             setQuestion={(question) => this.setQuestion(index)(question)}
                             setOption={options => this.setOption(index)(options)}

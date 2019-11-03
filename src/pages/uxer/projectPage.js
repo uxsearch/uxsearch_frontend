@@ -8,6 +8,7 @@ import { faSearch, faBook, faLink, faCircle, faPlus, faPencilAlt } from '@fortaw
 
 import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
+import { delay } from '../../utils/delay'
 
 import NavbarUxer from '../../components/utils/navbarUXer'
 import ProjectBlock from '../../components/uxer/projectBlock'
@@ -57,7 +58,9 @@ class ProjectPage extends React.Component {
       projectList: [],
       sortDropdownOpen: false,
       modal: false,
-      redirect: false
+      redirect: false,
+      file: null,
+      imagePreviewUrl: null,
     };
   }
 
@@ -90,8 +93,13 @@ class ProjectPage extends React.Component {
   }
 
   submitCreateProject = async (values) => {
+    delay(100)
+    const coverPhoto = await this.uploadHandler(this.state.file)
+    const newValues= {
+      ...values,
+      cover_url: coverPhoto}
     try {
-      const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}add/`, values)
+      const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}add/`, newValues)
         .then(result => {
           this.setState({ redirect: true })
           return result
@@ -101,7 +109,6 @@ class ProjectPage extends React.Component {
       }
       this.setState({ modal : false })
       await this.getProject()
-      // this.props.history.push(`/uxer/${this.state.uxerId}/project/${response.data.projects.id}/experiments`)
     } catch (e) {
       console.error(e)
     }
@@ -121,7 +128,7 @@ class ProjectPage extends React.Component {
     }
   }
 
-  submitUpdateProject = async (values, projectId) => {
+  submitUpdateProject = async (values, projectId) => {    
     try {
       const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${projectId}/update`, values)
       if (response.status !== 200) {
@@ -133,8 +140,48 @@ class ProjectPage extends React.Component {
     }
   }
 
+handleImageChange(e) {
+  e.preventDefault();
+
+  const reader = new FileReader();
+  const file = e.target.files[0];
+
+  reader.onloadend = () => {
+    this.setState({
+      file: file,
+      imagePreviewUrl: reader.result
+    });
+  }
+  reader.readAsDataURL(file)
+  
+}
+
+async uploadHandler (file) {
+  var formData = new FormData();
+  formData.append('file', file, file.name)
+  try {
+    const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}upload`, formData)
+    console.log(formData)
+    if (response.status !== 201) {
+      throw new Error('CANNOT UPLOAD COVER FILE')
+    }
+    return response.data.cover_url
+  } catch (e) {
+    console.error(e)
+  }
+}
+
   render() {
-    const { projectList, uxerId } = this.state
+    const projectList = this.state.projectList
+    const uxerId = this.state.uxerId
+
+    let {imagePreviewUrl} = this.state;
+    let $imagePreview = null;
+    if (imagePreviewUrl) {
+      $imagePreview = (<img src={imagePreviewUrl} />);
+    } else {
+      $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
+    }
 
     return (
       <div>
@@ -247,14 +294,14 @@ class ProjectPage extends React.Component {
                     <form onSubmit={handleSubmit}>
                       <Row>
                         <Col xs={12}>
-                          <Field component='input' type='hidden' name='cover_url' initialValue={`https://picsum.photos/500/300`} />
+                          <Field component='input' type='image' name='cover_url'  />
                           <Row className='justify-content-center'>
                             <Col xs={12} className='text-center img-block'>
-                              <img
-                                src='https://picsum.photos/500/300'
-                                className='cover-size'
-                                alt='Project Cover'
-                              ></img>
+                            <div className='cover-size' alt='Project Cover'>
+                              {$imagePreview}
+                            </div>
+                              <br></br>
+                              <input type="file" name="file"onChange={(e)=>this.handleImageChange(e)}/> 
                             </Col>
                           </Row>
                           <Row className='justify-content-center'>

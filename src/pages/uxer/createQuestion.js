@@ -81,9 +81,9 @@ class CreateQuestion extends React.Component {
     }
   }
 
-  submitCreateTestnote = async () => {
+  submitCreateQuestionnaire = async () => {
     try {
-      const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/updatenote`, this.state.questions)
+      const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/updatequestionnaire`, this.state.questions)
       if (response.status !== 200) {
         throw new Error('CANNOT CREATE TESTNOTE')
       }
@@ -163,10 +163,10 @@ class CreateQuestion extends React.Component {
         <NotSupport className='d-md-none' />
         <section id='questionnaire' className='d-none d-md-block'>
           <NavbarUXer title={`${project && project.name}`} uxerId={uxerId} />
-          <SubNavbar uxerId={uxerId} projId={projectId} />
+          <SubNavbar uxerId={uxerId} projId={projectId} active={`questionnaire`} />
           <Container>
             <Form
-              onSubmit={this.submitCreateTestnote}
+              onSubmit={this.submitCreateQuestionnaire}
               render={({
                 handleSubmit, form, submitting, pristine
               }) => (
