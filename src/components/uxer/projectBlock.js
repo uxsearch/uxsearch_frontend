@@ -57,7 +57,6 @@ class ProjectBlock extends React.Component {
 		this.props.removeProject(project, statusRemove)
 	}
 
-
 	toggleModal() {
 		this.setState(prevState => ({
 			modal: !prevState.modal
