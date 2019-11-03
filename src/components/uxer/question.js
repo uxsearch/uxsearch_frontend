@@ -29,8 +29,14 @@ class Question extends React.Component {
     super(props)
     this.state = {
       isOpen: false,
-      type: props.type || 'textbox',
+      type: '',
     }
+  }
+
+  componentDidMount() {
+    this.setState({
+      type: this.props.question.type_form,
+    })
   }
 
   changeQuestion(e) {
@@ -124,7 +130,6 @@ class Question extends React.Component {
               <Row>
                 <Col xs={12}>
                   <Row className='no-margin w-100'>
-                    {/* {console.log('question index', index)} */}
                     <Field name={`questions[${index}][question]`} type='text'>
                       {({ input, meta }) => (
                         <>
@@ -187,7 +192,6 @@ class Question extends React.Component {
                       </Dropdown>
                     </Col>
                   </Row>
-
                   <br />
                   {type === 'textbox' && (
                     <Row>
@@ -201,7 +205,6 @@ class Question extends React.Component {
                       </Col>
                     </Row>
                   )}
-
                   {type === 'multiple' &&
                     <>
                       {this.props.question.options.map((option, index) => (
@@ -250,7 +253,6 @@ class Question extends React.Component {
                       </Row>
                     </>
                   }
-
                   {type === 'checkbox' && (
                       <>
                         {this.props.question.options.map((option, index) => (

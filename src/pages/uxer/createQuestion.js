@@ -48,18 +48,20 @@ class CreateQuestion extends Component {
       uxerId: computedMatch.params.id,
       projectId: computedMatch.params.projId,
       project: undefined,
+      loading: false
     }
   }
 
   async componentDidMount() {
     await this.getProject()
     await this.getQuestionnaire()
+    this.setState({ loading: true })
   }
 
   setQuestion(index) {
     return (question) => {
       const newQuestions = [...this.state.questions]
-      newQuestions[index] = {...question}
+      newQuestions[index] = { ...question }
       this.setState({
         questions: newQuestions
       })
@@ -85,7 +87,7 @@ class CreateQuestion extends Component {
       if (response.status !== 200) {
         throw new Error('CANNOT CREATE TESTNOTE')
       }
-      this.props.history.push(`/uxer/${this.state.uxerId}/projects`)
+      await this.getQuestionnaire()
     } catch (e) {
       console.error(e)
     }
@@ -105,25 +107,50 @@ class CreateQuestion extends Component {
 
   getQuestionnaire = async (props) => {
     try {
-      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/test-note`)
-      console.log(">>> get test note res data :", response)      
+      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/questionnaire`)
       if (response.status !== 200) {
         throw new Error('CANNOT GET TESTNOTE')
       }
-      this.setState({ questions: response.data && response.data })
+      const { data } = response
+      if (data.length !== 0) {
+        const questions = data.map(d => {
+          if (d.data.question.type_form === "textbox") {
+            return {
+              questionId: d.id,
+              question: d.data.question.question,
+              value: '',
+              type_form: d.data.question.type_form
+            }
+          } else {
+            const options = d.data.options.map(option => {
+              return {
+                optionId: option.id,
+                option: option.data.option
+              }
+            })
+            return {
+              questionId: d.id,
+              question: d.data.question.question,
+              type_form: d.data.question.type_form,
+              options: options
+            }
+          }
+        })
+        this.setState({ questions })
+      }
     } catch (e) {
       console.error(e)
     }
   }
 
   render() {
-    const { uxerId, projectId, project, questions } = this.state
+    const { uxerId, projectId, project, questions, loading } = this.state
 
     return (
       <div>
         <NotSupport className='d-md-none' />
         <section id='questionnaire' className='d-none d-md-block'>
-          <NavbarUXer title={`${project && project.name}`} />
+          <NavbarUXer title={`${project && project.name}`} uxerId={uxerId} />
           <SubNavbar uxerId={uxerId} projId={projectId} />
           <Container>
             <Form
@@ -157,18 +184,15 @@ class CreateQuestion extends Component {
                           <hr className="black-line" />
                         </Col>
                         <br />
-
-                        {questions.map((question, index) => (
-                            <Question
-                              question={question}
-                              setQuestion={(question) => this.setQuestion(index)(question)}
-                              setOption={options => this.setOption(index)(options)}
-                              index={index}
-                              key={index}
-                            />
+                        {loading && questions.map((question, index) => (
+                          <Question
+                            question={question}
+                            setQuestion={(question) => this.setQuestion(index)(question)}
+                            setOption={options => this.setOption(index)(options)}
+                            index={index}
+                            key={index}
+                          />
                         ))}
-
-
                         <br />
                         <Row className="justify-content-center">
                           <Col xs={12} md={4} className="text-center">
