@@ -104,23 +104,13 @@ class ProjectPage extends React.Component {
           this.setState({ redirect: true })
           return result
         })
-<<<<<<< Updated upstream
       if (response.status !== 201) {
         throw new Error('CANNOT CREATE PROJECT')
       }
       this.setState({ modal : false })
       await this.getProject()
-      // this.props.history.push(`/uxer/${this.state.uxerId}/project/${response.data.projects.id}/experiments`)
     } catch (e) {
       console.error(e)
-=======
-        if (response.status !== 201) {
-          throw new Error('CANNOT CREATE PROJECT')
-        }
-        this.getProject()
-      } catch (e) {
-        console.error(e)
->>>>>>> Stashed changes
     }
   }
 
@@ -182,9 +172,6 @@ async uploadHandler (file) {
 }
 
   render() {
-<<<<<<< Updated upstream
-    const { projectList, uxerId } = this.state
-=======
     const projectList = this.state.projectList
 
     let {imagePreviewUrl} = this.state;
@@ -194,7 +181,6 @@ async uploadHandler (file) {
     } else {
       $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
     }
->>>>>>> Stashed changes
 
     return (
       <div>
