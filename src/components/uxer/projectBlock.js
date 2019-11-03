@@ -28,20 +28,18 @@ const TextInput = withStyles({
 class ProjectBlock extends React.Component {
 	constructor(props) {
 		super(props);
-		const projectId = this.props.projectId
-		const projectName = this.props.title
-		const projectLink = this.props.LinkUrl
-		const projectDescription = this.props.description
 		this.toggleModal = this.toggleModal.bind(this);
 		this.toggle = this.toggle.bind(this);
 		this.state = {
-			projectId: projectId,
-			projectName: projectName,
-			projectLink: projectLink,
-			projectDescription: projectDescription,
+			projectId: props.projectId,
+			projectName: props.title,
+			projectLink: props.LinkUrl,
+			projectDescription: props.description,
+			projectCover: props.imgUrl,
 			dropdownOpen: false,
 			statusRemove: undefined,
-			modal: false
+			modal: false,
+			file: null,
 		};
 	}
 
@@ -67,9 +65,15 @@ class ProjectBlock extends React.Component {
 		values = {
 			...values,
 			name: this.state.projectName,
-			description: this.state.projectDescription
+			description: this.state.projectDescription,
 		}
-		this.props.updateProject(values, this.state.projectId)
+		if(this.state.file === null) {
+			values = {
+				...values,
+				cover_url: this.state.projectCover
+			}
+		}
+		this.props.updateProject(values, this.state.file, this.state.projectId)
 		this.setState({modal: false})
 	}
 
@@ -81,10 +85,33 @@ class ProjectBlock extends React.Component {
 		this.setState({ projectDescription: event.target.value });
 	};
 
-	render() {
-		const { projectId, projectLink, projectName , projectDescription } = this.state
+	handleImageChange = (event) => {
+		event.preventDefault();
+		
+		const reader = new FileReader();
+		const file = event.target.files[0];
+	  
+		reader.onloadend = () => {
+		  this.setState({
+			file: file,
+			imagePreviewUrl: reader.result
+		  });
+		}
+		reader.readAsDataURL(file)
+	};
 
-		return (
+	render() {
+		const { projectId, projectLink, projectName , projectDescription, projectCover} = this.state
+
+    	let {imagePreviewUrl} = this.state;
+		let $imagePreview = projectCover;
+		if (imagePreviewUrl || projectCover) {
+			$imagePreview = (<img src={projectCover ? projectCover : imagePreviewUrl} />);
+		} else {
+			$imagePreview = (<img src={projectCover && projectCover} />);
+		}
+
+	return (
 			<div className='project'>
 				<Row className='justify-content-center'>
 					<Col xs={12} className='each-block'>
@@ -145,14 +172,15 @@ class ProjectBlock extends React.Component {
 										<form onSubmit={handleSubmit}>
 											<Row>
 												<Col xs={12}>
+												<Field component='input' type='image' name='cover_url'  />
 													<Row className='justify-content-center'>
-														<Col xs={12} className='text-center img-block'>
-															<img
-																src='https://picsum.photos/500/300'
-																className='cover-size'
-																alt='Project Cover'
-															></img>
-														</Col>
+													<Col xs={12} className='text-center img-block'>
+                            							<div className='cover-size' alt='Project Cover'>
+                              							{$imagePreview}
+                            						</div>
+                              							<br></br>
+                              						<input type="file" name="file"onChange={(event)=>this.handleImageChange(event)}/> 
+                            							</Col>
 													</Row>
 													<Row className='justify-content-center'>
 														<Col xs={12}>
@@ -163,7 +191,7 @@ class ProjectBlock extends React.Component {
 																			<FontAwesomeIcon icon={faBook} size='1x' color='#303030' />
 																		</Col>
 																		<Col xs={10} className='text-center'>
-																		<Field component='input' type='hidden' name='cover_url' initialValue={`https://picsum.photos/500/300`} />
+																		
 																			<Field name='name' type='text'>
 																				{({ input, meta }) => (
 																					<>
@@ -247,7 +275,7 @@ class ProjectBlock extends React.Component {
 																										type='text'
 																										className='w-100 create-form space-bottom'
 																										margin='normal'
-																										required
+																										readonly
 																									/>
 																									{meta.touched && meta.error && <span>{meta.error}</span>}
 																								</Label>

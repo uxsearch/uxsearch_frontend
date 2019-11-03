@@ -50,7 +50,7 @@ const TextInput = withStyles({
 class ProjectPage extends React.Component {
   constructor(props) {
     super(props);
-    const { computedMatch } = props
+    const { computedMatch , projectCover } = props
     this.toggleSort = this.toggleSort.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.state = {
@@ -61,6 +61,7 @@ class ProjectPage extends React.Component {
       redirect: false,
       file: null,
       imagePreviewUrl: null,
+      projectCover: projectCover
     };
   }
 
@@ -97,7 +98,8 @@ class ProjectPage extends React.Component {
     const coverPhoto = await this.uploadHandler(this.state.file)
     const newValues= {
       ...values,
-      cover_url: coverPhoto}
+      cover_url: coverPhoto
+    }
     try {
       const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}add/`, newValues)
         .then(result => {
@@ -128,13 +130,22 @@ class ProjectPage extends React.Component {
     }
   }
 
-  submitUpdateProject = async (values, projectId) => {    
+  submitUpdateProject = async (values, file, projectId) => {    
+    if(file !== null) {
+      delay(100)
+      const coverPhoto = await this.uploadHandler(file)
+      values= {
+        ...values,
+        cover_url: coverPhoto
+      }
+    }
     try {
       const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${projectId}/update`, values)
       if (response.status !== 200) {
         throw new Error('CANNOT EDIT MY PROJECT')
       }
-      this.getProject()
+      this.setState({ modal : false })
+      await this.getProject()
     } catch (e) {
       console.error(e)
     }
@@ -153,7 +164,6 @@ handleImageChange(e) {
     });
   }
   reader.readAsDataURL(file)
-  
 }
 
 async uploadHandler (file) {
@@ -161,7 +171,6 @@ async uploadHandler (file) {
   formData.append('file', file, file.name)
   try {
     const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}upload`, formData)
-    console.log(formData)
     if (response.status !== 201) {
       throw new Error('CANNOT UPLOAD COVER FILE')
     }
