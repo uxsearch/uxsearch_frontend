@@ -9,7 +9,7 @@ import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import NotSupport from "../../components/utils/notSupport";
 import NavbarUXer from "../../components/utils/navbarUXer";
 import SubNavbar from "../../components/utils/subNavbar";
-import Testnote from "../../components/uxer/testnote";
+import Question from "../../components/uxer/question";
 
 import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
@@ -185,7 +185,7 @@ class CreateTestnote extends Component {
                         </Col>
                         <br />
                         {loading && questions.map((question, index) => (
-                          <Testnote
+                          <Question
                             question={question}
                             setQuestion={(question) => this.setQuestion(index)(question)}
                             setOption={options => this.setOption(index)(options)}
