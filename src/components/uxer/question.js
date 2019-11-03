@@ -209,7 +209,6 @@ class Question extends React.Component {
                     <>
                       {this.props.question.options.map((option, index) => (
                         <Row className='no-margin w-100' key={index}>
-                          {console.log('index', index)}
                           <Col xs={1}>
                             <FontAwesomeIcon icon={faCircle} size='2x' color='#ced4da' className='icon-mul-check' />
                           </Col>

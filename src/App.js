@@ -60,9 +60,7 @@ const AuthService = {
     // MARK: otherwise
     return false
   },
-  // isAuthenticated: false,
   authenticate(cb) {
-    console.log(cb)
     AuthService.isAuthenticated = true
     setTimeout(cb, 100)
   },
@@ -74,8 +72,6 @@ const AuthService = {
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const isLoggedIn = AuthService.isAuthenticated()
-  console.log(isLoggedIn)
-  console.log('rest', rest)
   return (
     <Route
       render={({ location }) =>

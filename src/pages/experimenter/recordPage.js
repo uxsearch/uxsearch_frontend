@@ -77,7 +77,6 @@ class RecordPage extends React.Component {
       blob: cameraBlob
     }
     this.setState({ cameraBlob: Childcamara })
-    console.log(this.state.cameraBlob)
   }
 
   setParentScreenState = (screenBlob, timeDuration) => {
@@ -86,7 +85,6 @@ class RecordPage extends React.Component {
       blob: screenBlob
     }
     this.setState({ screenBlob: Childscreen })
-    console.log(this.state.screenBlob)
   }
 
   async uploadVideo(blob) {
