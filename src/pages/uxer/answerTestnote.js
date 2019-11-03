@@ -197,7 +197,7 @@ class AnswerTestnote extends React.Component {
                 </Row>
               </Col>
               <Col md={3} xl={4} className='d-none d-md-block' />
-              <Col xs={12} sm={4} md={3} xl={1} className='d-none d-sm-block'>
+              <Col xs={12} sm={4} md={1} xl={1} className='d-none d-sm-block'>
                 <img
                   src={require('../../static/img/close.svg')}
                   height='20px'
