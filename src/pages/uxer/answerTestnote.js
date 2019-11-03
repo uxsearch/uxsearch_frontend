@@ -5,19 +5,17 @@ import { Form, Field } from 'react-final-form'
 import { FieldArray } from 'react-final-form-arrays'
 import arrayMutators from 'final-form-arrays'
 import { Checkbox, Radio, RadioGroup, FormControlLabel, withStyles } from '@material-ui/core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 import NotSupport from '../../components/utils/notSupport'
 import NavbarUXer from '../../components/utils/navbarUXer'
 
-import '../../static/sass/experimenter/answer.scss'
+import '../../static/sass/uxer/answerTestnote.scss'
+
 import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
 
 import ExperProfile from '../../components/uxer/videoresult/profileBlock'
 
-import '../../static/sass/uxer/videoResult.scss'
 
 const RadioButton = withStyles({
   root: {
@@ -163,36 +161,24 @@ class AnswerTestnote extends React.Component {
 
     return (
       <div>
-        <section id='video-result' className='d-none d-md-block'>
+        <NotSupport className='d-md-none' />
+        <section id='answerTestnote' className='d-none d-md-block'>
           <NavbarUXer title={`${project && project.name} Test Note`} uxerId={uxerId} />
-          <Container className='space-bottom-video'>
+          <Container className='space-top'>
             <Row className=' align-items-center'>
-              {/* <Col xs={12} sm={8} md={6} lg={5}> */}
               <Col xs={12} sm={8} md={6} lg={7}>
-                {/* <Row className='align-items-center justify-content-center'> */}
                 <Row className='align-items-center justify-content-center'>
                   <Col xs={1} sm={4} xl={3}>
                     <div className='profile-block'>
                       <img src='https://picsum.photos/200/300' alt='Profile Picture' className='profile-img' />
                     </div>
                   </Col>
-                  <Col xs={10} sm={8} xl={9}>
+                  <Col xs={12} sm={8} xl={9}>
                     <Row>
                       <Col xs={12}>
                         <p className='no-margin exper-name'>{experiment && `${experiment.firstname} ${experiment.lastname}`}</p>
                       </Col>
                     </Row>
-                    {/* <Row className='d-sm-none space-btn-mobile'>
-                      <Col xs={1}>
-                        <FontAwesomeIcon
-                          icon={faTimes}
-                          size='2x'
-                          color='#303030'
-                          className='cross'
-                          link={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/answertestnote`}
-                        />
-                      </Col>
-                    </Row> */}
                   </Col>
                 </Row>
               </Col>
@@ -200,18 +186,9 @@ class AnswerTestnote extends React.Component {
               <Col xs={12} sm={4} md={1} xl={1} className='d-none d-sm-block'>
                 <img
                   src={require('../../static/img/close.svg')}
-                  height='20px'
                   className="close_btn"
                   alt="close button"
-
                 />
-                {/* <FontAwesomeIcon
-                  icon={faTimes}
-                  size='2x'
-                  color='#303030'
-                  className='cross'
-                  link={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/answertestnote`}
-                /> */}
               </Col>
             </Row>
           </Container>
@@ -234,10 +211,7 @@ class AnswerTestnote extends React.Component {
             }
             <br />
           </Container>
-        </section>
 
-        <NotSupport className='d-md-none' />
-        <section id='answer' className='d-none d-md-block'>
           <Container>
             <Row>
               <Col xs={12}>
@@ -314,7 +288,6 @@ class AnswerTestnote extends React.Component {
                                                 name={`answers[${index}][answer]`}
                                                 component={CheckboxGroup}
                                                 options={question.data.options}
-                                                className='MuiFormControlLabel-root'
                                               />
                                             </>
                                           }
@@ -329,7 +302,7 @@ class AnswerTestnote extends React.Component {
                           </Col>
                         </Row>
                         <Row className='justify-content-center space-btn'>
-                          <Col xs={12} md={4} className='text-center'>
+                          <Col xs={12} md={4} >
                             <Button className='btn-submit-test'>Submit</Button>
                           </Col>
                         </Row>

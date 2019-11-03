@@ -1,22 +1,43 @@
 @import "../variables";
 
-#answer {
+#answerTestnote {
   .no-margin {
-    margin: 0px;
+    margin: 0px !important;
   }
 
-  .no-margin-right {
-    margin-right: 0px;
+  .space-top {
+    margin-top: 50px;
   }
 
-  .space-head-block {
-    margin-top: 5px;
+  .profile-block {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 100%;
+  }
+
+  .profile-img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .exper-name {
+    font-size: 35px;
+    font-weight: 600;
+  }
+
+  .space-block {
+    margin: 50px auto;
   }
 
   .answer-block {
     background-color: $white;
     border-radius: 20px;
     padding: 30px;
+  }
+
+  .space-head-block {
+    margin-top: 5px;
   }
 
   .title {
@@ -30,11 +51,6 @@
 
   .text-style {
     font-size: 18px !important;
-  }
-
-  .text-checkbox {
-    position: absolute;
-    margin-top: 8px;
   }
 
   .space-btn {
@@ -53,5 +69,18 @@
   .btn-submit-test:hover {
     background-color: $blue-hover !important;
     border: 2px solid $blue-hover !important;
+  }
+
+  .bg-experprofile {
+    width: 100%;
+    height: auto;
+    padding: 30px;
+    background-color: $white;
+    border-radius: 20px;
+  }
+
+  .close_btn {
+    width: 30px;
+    height: 30px;
   }
 }
