@@ -165,8 +165,8 @@ class Question extends React.Component {
                         >
                           <Col xs={12} md={12}>
                             <Dropdown className='btn-multiple'>
-                              {type === 'textbox' && (
-                                <FontAwesomeIcon icon={faTextHeight} size='1x' color='#efefef' className='textHeight' />
+                              {type === 'textbox' && (                               
+                                <FontAwesomeIcon icon={faTextHeight} size='1x' color='#efefef' className='textHeight'/>                               
                               )}
                               {type === 'multiple' && (
                                 <FontAwesomeIcon icon={faCircle} size='1x' color='#efefef' className='textHeight' />
@@ -182,15 +182,12 @@ class Question extends React.Component {
                         <DropdownMenu className='btn-secondary indropdown text-center '>
                           <DropdownItem onClick={() => this.changeType('multiple')}>
                             <FontAwesomeIcon icon={faCircle} size='1x' color='#efefef' className='textHeight' />Multiple Choice
-                              {/* <Dropdown >Multiple Choice</Dropdown> */}
                           </DropdownItem>
                           <DropdownItem onClick={() => this.changeType('checkbox')}>
                             <FontAwesomeIcon icon={faSquare} size='1x' color='#efefef' className='textHeight' />Check Box
-                              {/* <Dropdown>Check box</Dropdown> */}
                           </DropdownItem>
                           <DropdownItem onClick={() => this.changeType('textbox')}>
                             <FontAwesomeIcon icon={faTextHeight} size='1x' color='#efefef' className='textHeight' />Text box
-                              {/* <Dropdown>Text box</Dropdown> */}
                           </DropdownItem>
                         </DropdownMenu>
                       </Dropdown>

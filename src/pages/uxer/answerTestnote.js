@@ -39,20 +39,54 @@ const CheckboxButton = withStyles({
   checked: {},
 })(props => <Checkbox color='default' className='MuiFormControlLabel-root no-margin-right' {...props} />)
 
-const CheckboxGroup = ({ fields, options }) => {
+const CheckboxGroup = ({ fields, options, answers, state }) => {
   const toggle = (event, option) => {
-    if (event.target.checked) fields.push(option);
-    else fields.remove(option);
+    console.log('event', event.target.checked)
+    if (!event.target.checked) {
+      console.log("PP")
+      state.map(e => {
+        if (e.question.type_form === "checkbox") {
+          e.answer.answer.map(x => {
+            if (x === event.target.value) {
+              e.answer.answer.splice(event.target.value, 1)
+            }
+          })
+        }
+      })
+    }
+
+    if (event.target.checked) {
+      fields.push(option)
+    } else fields.remove(option);
+  }
+
+  let optionAndActive = []
+  for (let i = 0; i < options.length; i++) {
+    let checkAnswer = false
+    for (let j = 0; j < answers.length; j++) {
+      if (answers[j] === options[i].data.option) {
+        checkAnswer = true
+      }
+    }
+    optionAndActive.push({
+      optionId: options[i].id,
+      option: options[i].data.option,
+      checked: checkAnswer
+    })
   }
 
   return (
     <div>
       <>
-        {options.map(option => (
+        {optionAndActive.map(option => (
           <div key={option.id} className=''>
             <Label className='no-margin w-100'>
-              <CheckboxButton value={option.data.option} onChange={event => toggle(event, option.data.option)} />
-              <span className='text-checkbox'>{option.data.option}</span>
+              {option.checked ? (
+                <CheckboxButton value={option.option} checked onChange={event => toggle(event, option.option)} />
+              ) : (
+                  <CheckboxButton value={option.option} onChange={event => toggle(event, option.option)} />
+                )}
+              <span className='text-checkbox'>{option.option}</span>
             </Label>
           </div>
         ))}
@@ -70,19 +104,17 @@ class AnswerTestnote extends React.Component {
       projectId: computedMatch.params.projId,
       experId: computedMatch.params.experId,
       experiment: undefined,
-      answer: [],
       project: undefined,
-      testnote: [],
-      experList: [],
+      noteAndAnswer: []
+
     }
+    this.handleChange = this.handleChange.bind(this);
   }
 
   async componentDidMount() {
-    this.getProject()
-    this.getTestnote()
-    this.getExperimenter()
-    this.getAnswerTestnote()
-
+    await this.getProject()
+    await this.getExperimenter()
+    await this.formatData()
   }
 
   getExperimenter = async () => {
@@ -104,6 +136,7 @@ class AnswerTestnote extends React.Component {
   }
 
   submitTestnote = async (values) => {
+    console.log('values', values)
     try {
       const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.EXPERIMENTER}${this.state.experId}/answer-note/update `, values)
       if (response.status !== 200) {
@@ -116,31 +149,57 @@ class AnswerTestnote extends React.Component {
   }
 
   getTestnote = async (props) => {
-    console.log('testnote function')
     try {
       const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/test-note`)
       if (response.status !== 200) {
         throw new Error('CANNOT GET TESTNOTE')
       }
-
-      this.setState({ testnote: response.data })
+      const testnote = response.data
+      return testnote
     } catch (e) {
       console.error(e)
     }
   }
 
   getAnswerTestnote = async (props) => {
-    console.log('getAnswerTestnote function')
     try {
-      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.EXPERIMENTER}${this.state.experId}/${APIURI.NOTE}${this.state.noteId}/answer`)
-      console.log(">>> res :", response)
+      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.EXPERIMENTER}${this.state.experId}/answer-note`)
       if (response.status !== 200) {
         throw new Error('CANNOT GET ANSWER TESTNOTE')
       }
-
-      this.setState({ testnote: response.data })
+      const answers = response.data
+      return answers
     } catch (e) {
       console.error(e)
+    }
+  }
+
+  formatData = async () => {
+    const questions = await this.getTestnote()
+    const answers = await this.getAnswerTestnote()
+
+    let questionAndAnswer = []
+    if (questions.length !== 0 && answers.length !== 0) {
+      for (let i = 0; i < questions.length; i++) {
+        questionAndAnswer.push({
+          question: {
+            questionId: questions[i].id,
+            question: questions[i].data.question.question,
+            type_form: questions[i].data.question.type_form,
+            options: questions[i].data.options
+          },
+          answer: {
+            answerId: answers[i].answer.id,
+            answer: answers[i].answer.answer
+          }
+        })
+
+        if (i === questions.length - 1) {
+          this.setState({ noteAndAnswer: questionAndAnswer })
+        }
+      }
+    } else {
+      this.setState({ noteAndAnswer: questionAndAnswer })
     }
   }
 
@@ -156,8 +215,18 @@ class AnswerTestnote extends React.Component {
     }
   }
 
+  handleChange(event) {
+    let { noteAndAnswer } = this.state
+    noteAndAnswer.map(e => {
+      if (e.question.type_form === "multiple") {
+        e.answer.answer = event.target.value
+      }
+    })
+    this.forceUpdate()
+  }
+
   render(props) {
-    const { testnote, project, experList, uxerId, projId, experiment, answer } = this.state
+    const { uxerId, project, projectId, experiment, noteAndAnswer } = this.state
 
     return (
       <div>
@@ -230,23 +299,22 @@ class AnswerTestnote extends React.Component {
                               </Col>
                             </Row>
                             <br />
-                            {testnote.map((question, index) => (
+                            {noteAndAnswer.map((qNa, index) => (
                               <>
-                                {console.log(question)}
-                                <Row key={question.id}>
+                                <Row key={qNa.question.id}>
                                   <Col xs={12}>
-                                    <Label className='no-margin w-100'>
-                                      <Field component='input' type='hidden' name={`answers[${index}][answerId]`} initialValue={answer.id ? answer.id : ''} />
+                                    <Label className='no-margin w-100' >
                                       <Row>
                                         <Col xs={12}>
-                                          <Field component='input' type='hidden' name={`answers[${index}][question_key]`} initialValue={question.id} />
-                                          <p className='question'>{question.data.question.question}</p>
+                                          <Field component='input' type='hidden' name={`answers[${index}][question_key]`} initialValue={qNa.question.questionId} />
+                                          <p className='question'>{qNa.question.question}</p>
                                         </Col>
                                       </Row>
+                                      <Field component='input' type='hidden' name={`answers[${index}][answerId]`} initialValue={qNa.answer.answerId ? qNa.answer.answerId : ''} />
                                       <Row>
                                         <Col xs={12}>
-                                          {question.data.question.type_form === 'textbox' &&
-                                            <Field name={`answers[${index}][answer]`} type='textarea'>
+                                          {qNa.question.type_form === 'textbox' &&
+                                            <Field name={`answers[${index}][answer]`} type='textarea' initialValue={qNa.answer.answer}>
                                               {({ input, meta }) => (
                                                 <>
                                                   <Row className='align-items-center'>
@@ -261,18 +329,18 @@ class AnswerTestnote extends React.Component {
                                               )}
                                             </Field>
                                           }
-                                          {question.data.question.type_form === 'multiple' &&
+                                          {qNa.question.type_form === 'multiple' &&
                                             <>
                                               <RadioGroup
                                                 aria-label='answer'
                                                 name={`answers[${index}][answer]`}
                                               >
-                                                {question.data.options.map(option => (
+                                                {qNa.question.options.map(option => (
                                                   <>
                                                     <Field name={`answers[${index}][answer]`} type='text' key={option.id}>
                                                       {({ input, meta }) => (
                                                         <>
-                                                          <FormControlLabel {...input} value={option.data.option} control={<RadioButton />} label={option.data.option} />
+                                                          <FormControlLabel {...input} value={option.data.option} control={option.data.option === qNa.answer.answer ? <RadioButton checked /> : <RadioButton />} label={option.data.option} onChange={this.handleChange} />
                                                           {meta.touched && meta.error && <span>{meta.error}</span>}
                                                         </>
                                                       )}
@@ -282,12 +350,14 @@ class AnswerTestnote extends React.Component {
                                               </RadioGroup>
                                             </>
                                           }
-                                          {question.data.question.type_form === 'checkbox' &&
+                                          {qNa.question.type_form === 'checkbox' &&
                                             <>
                                               <FieldArray
                                                 name={`answers[${index}][answer]`}
                                                 component={CheckboxGroup}
-                                                options={question.data.options}
+                                                options={qNa.question.options}
+                                                answers={qNa.answer.answer}
+                                                state={this.state.noteAndAnswer}
                                               />
                                             </>
                                           }
