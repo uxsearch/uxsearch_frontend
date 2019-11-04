@@ -47,6 +47,10 @@ class SignIn extends React.Component {
           this.setState({ redirect: true })
           localStorage.setItem('token', result.data.token)
           localStorage.setItem('firstname', result.data.data.firstname)
+          localStorage.setItem('lastname', result.data.data.lastname)
+          localStorage.setItem('email', result.data.data.email)
+          localStorage.setItem('company', result.data.data.company)
+          localStorage.setItem('img_url', result.data.data.img_url)
           return result
         })
       if (response.status !== 200) {
