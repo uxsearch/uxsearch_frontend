@@ -37,6 +37,10 @@ class NavbarUxer extends React.Component {
   logout = async () => {
     localStorage.removeItem('token')
     localStorage.removeItem('firstname')
+    localStorage.removeItem('lastname')
+    localStorage.removeItem('email')
+    localStorage.removeItem('company')
+    localStorage.removeItem('img_url')
     window.location.assign('/login')
   }
 
