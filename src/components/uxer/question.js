@@ -41,6 +41,7 @@ class Question extends React.Component {
     this.setState({
       type: this.props.question.type_form,
     })
+
   }
 
   changeQuestion(e) {
