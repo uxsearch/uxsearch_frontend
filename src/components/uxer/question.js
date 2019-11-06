@@ -2,7 +2,7 @@ import React from 'react'
 import { Row, Col, Form, FormGroup, Input, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Label } from 'reactstrap'
 import { withStyles, TextField } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSortDown, faGripLines, faTextHeight, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { faSortDown, faGripLines, faTextHeight, faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faCircle, faSquare, faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import { Field } from 'react-final-form'
 
@@ -31,7 +31,9 @@ class Question extends React.Component {
       isOpen: false,
       type: '',
       statusRemove: undefined,
-      index: null
+      index: null,
+      questionId: props.questionId,
+      file: null,
     }
   }
 
@@ -97,15 +99,6 @@ class Question extends React.Component {
     setQuestion(newQuestion)
   }
 
-  blockRemoveOption = (optionId, questionId, optionIndex) => {
-    const option = { optionId: optionId }
-    this.props.deleteOption(option, questionId)
-
-    const { question, setQuestion, index } = this.props
-    const newQuestion = { ...question }
-    newQuestion.options.splice(optionIndex, 1)
-    setQuestion(newQuestion)
-  }
 
   addOption() {
     const { question, setQuestion, index } = this.props
@@ -117,17 +110,48 @@ class Question extends React.Component {
     setQuestion(newQuestion)
   }
 
+  blockRemoveOption = (optionId, questionId, optionIndex) => {
+    const option = { optionId: optionId }
+    this.props.deleteOption(option, questionId)
+
+    const { question, setQuestion, index } = this.props
+    const newQuestion = { ...question }
+    newQuestion.options.splice(optionIndex, 1)
+    setQuestion(newQuestion)
+    console.log(">>>questionId222", questionId)
+
+  }
+
+  blockRemoveQuestion = (questionId) => {
+    const question = { questionId: questionId }
+    // this.props.deleteQuestion(question, questionId)
+
+    const statusRemove = true
+    this.props.removeQuestion(question, statusRemove)
+    console.log(">>>questionId small", questionId)
+  }
+
+
+
   render() {
     const { type, index } = this.state
-
+    const { projectId, projectLink, projectName, projectDescription, projectCover, questionId } = this.state
     return (
       <Row className='question-block' >
         <Col xs={12}>
           <Form>
             <FormGroup>
               <Row className='justify-content-center'>
-                <Col xs={12} className='text-center'>
-                  <FontAwesomeIcon icon={faGripLines} size='2x' color='#efefef' />
+                <Col xs={12} className='text-end' onClick={() => this.blockRemoveQuestion(this.props.question.questionId)}>
+
+                  {/* <FontAwesomeIcon icon={faGripLines} size='2x' color='#efefef' /> */}
+                  {/* <img
+                    src={require('../../static/img/close.svg')}
+                    className="close_btn"
+                    alt="close button"
+                  /> */}
+
+                  <FontAwesomeIcon icon={faTimes} color='#efefef' size='2x' className='close_btn' />
                 </Col>
               </Row>
               <br />
@@ -165,8 +189,8 @@ class Question extends React.Component {
                         >
                           <Col xs={12} md={12}>
                             <Dropdown className='btn-multiple'>
-                              {type === 'textbox' && (                               
-                                <FontAwesomeIcon icon={faTextHeight} size='1x' color='#efefef' className='textHeight'/>                               
+                              {type === 'textbox' && (
+                                <FontAwesomeIcon icon={faTextHeight} size='1x' color='#efefef' className='textHeight' />
                               )}
                               {type === 'multiple' && (
                                 <FontAwesomeIcon icon={faCircle} size='1x' color='#efefef' className='textHeight' />
@@ -217,6 +241,7 @@ class Question extends React.Component {
                             <Form>
                               <FormGroup>
                                 <Input
+                                  className='font'
                                   type='multiple'
                                   placeholder='AddOption'
                                   value={option.option}

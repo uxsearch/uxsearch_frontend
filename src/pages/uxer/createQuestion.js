@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { Container, Row, Col, Button } from "reactstrap";
 import { withStyles, TextField } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-import { Form, Field } from 'react-final-form'
+import { Form } from 'react-final-form'
 import { withRouter } from 'react-router-dom'
 
 import NotSupport from "../../components/utils/notSupport";
@@ -155,6 +155,27 @@ class CreateQuestion extends React.Component {
     }
   }
 
+  removeQuestion = async (questionId, statusRemove) => {
+    // console.log(">>>questionId large", questionId, statusRemove)
+    try {
+      if (statusRemove === true) {
+        // console.log(">>>questionId 5555555", questionId, statusRemove)
+        const response = await axios.delete(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/delete-question`, questionId)
+        console.log(">>>response", response, questionId, statusRemove)
+        if (response.status !== 200) {
+          throw new Error('CANNOT DELETE QUESTION')
+        }
+        this.getQuestionnaire()
+      }
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  popupSave() {
+    alert("Save Usability Successful")
+  }
+
   render() {
     const { uxerId, projectId, project, questions, loading } = this.state
 
@@ -204,8 +225,10 @@ class CreateQuestion extends React.Component {
                             index={index}
                             key={index}
                             deleteOption={this.deleteOption}
+                            removeQuestion={(questionId, statusRemove) => this.removeQuestion(questionId, statusRemove)}
                           />
                         ))}
+
                         <br />
                         <Row className="justify-content-center">
                           <Col xs={12} md={4} className="text-center">
