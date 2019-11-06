@@ -72,11 +72,11 @@ class RecordPage extends React.Component {
   }
 
   setParentCameraState = (cameraBlob, timeDuration) => {
-    const Childcamara = {
+    const Childcamera = {
       timeDuration: timeDuration,
       blob: cameraBlob
     }
-    this.setState({ cameraBlob: Childcamara })
+    this.setState({ cameraBlob: Childcamera })
   }
 
   setParentScreenState = (screenBlob, timeDuration) => {
