@@ -124,14 +124,10 @@ class Question extends React.Component {
 
   blockRemoveQuestion = (questionId) => {
     const question = { questionId: questionId }
-    // this.props.deleteQuestion(question, questionId)
-
     const statusRemove = true
     this.props.removeQuestion(question, statusRemove)
     console.log(">>>questionId small", questionId)
   }
-
-
 
   render() {
     const { type, index } = this.state
@@ -143,14 +139,12 @@ class Question extends React.Component {
             <FormGroup>
               <Row className='justify-content-center'>
                 <Col xs={12} className='text-end' onClick={() => this.blockRemoveQuestion(this.props.question.questionId)}>
-
                   {/* <FontAwesomeIcon icon={faGripLines} size='2x' color='#efefef' /> */}
                   {/* <img
                     src={require('../../static/img/close.svg')}
                     className="close_btn"
                     alt="close button"
                   /> */}
-
                   <FontAwesomeIcon icon={faTimes} color='#efefef' size='2x' className='close_btn' />
                 </Col>
               </Row>
