@@ -2,20 +2,16 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { Container, Row, Col, Button, Label, Input } from 'reactstrap'
 import { Form, Field } from 'react-final-form'
-import { FieldArray } from 'react-final-form-arrays'
 import arrayMutators from 'final-form-arrays'
-import { Checkbox, Radio, RadioGroup, FormControlLabel, withStyles } from '@material-ui/core'
-
-import NotSupport from '../../components/utils/notSupport'
-import NavbarUXer from '../../components/utils/navbarUXer'
-
-import '../../static/sass/uxer/answerTestnote.scss'
+import { Checkbox, Radio, RadioGroup, FormGroup, FormControlLabel, withStyles } from '@material-ui/core'
 
 import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
-
+import NotSupport from '../../components/utils/notSupport'
+import NavbarUXer from '../../components/utils/navbarUXer'
 import ExperProfile from '../../components/uxer/videoresult/profileBlock'
 
+import '../../static/sass/uxer/answerTestnote.scss'
 
 const RadioButton = withStyles({
   root: {
@@ -37,63 +33,7 @@ const CheckboxButton = withStyles({
     fontFamily: 'Muli'
   },
   checked: {},
-})(props => <Checkbox color='default' className='MuiFormControlLabel-root no-margin-right' {...props} />)
-
-const CheckboxGroup = ({ fields, options, answers, state }) => {
-  const toggle = (event, option) => {
-    console.log('event', event.target.checked)
-    if (!event.target.checked) {
-      console.log("PP")
-      state.map(e => {
-        if (e.question.type_form === "checkbox") {
-          e.answer.answer.map(x => {
-            if (x === event.target.value) {
-              e.answer.answer.splice(event.target.value, 1)
-            }
-          })
-        }
-      })
-    }
-
-    if (event.target.checked) {
-      fields.push(option)
-    } else fields.remove(option);
-  }
-
-  let optionAndActive = []
-  for (let i = 0; i < options.length; i++) {
-    let checkAnswer = false
-    for (let j = 0; j < answers.length; j++) {
-      if (answers[j] === options[i].data.option) {
-        checkAnswer = true
-      }
-    }
-    optionAndActive.push({
-      optionId: options[i].id,
-      option: options[i].data.option,
-      checked: checkAnswer
-    })
-  }
-
-  return (
-    <div>
-      <>
-        {optionAndActive.map(option => (
-          <div key={option.id} className=''>
-            <Label className='no-margin w-100'>
-              {option.checked ? (
-                <CheckboxButton value={option.option} checked onChange={event => toggle(event, option.option)} />
-              ) : (
-                  <CheckboxButton value={option.option} onChange={event => toggle(event, option.option)} />
-                )}
-              <span className='text-checkbox'>{option.option}</span>
-            </Label>
-          </div>
-        ))}
-      </>
-    </div>
-  );
-}
+})(props => <Checkbox color='default' {...props} />)
 
 class AnswerTestnote extends React.Component {
   constructor(props) {
@@ -105,8 +45,9 @@ class AnswerTestnote extends React.Component {
       experId: computedMatch.params.experId,
       experiment: undefined,
       project: undefined,
-      noteAndAnswer: []
-
+      noteAndAnswer: [],
+      checkboxState: {},
+      multipleState: {},
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -136,9 +77,44 @@ class AnswerTestnote extends React.Component {
   }
 
   submitTestnote = async (values) => {
-    console.log('values', values)
+    let form = []
+    this.state.noteAndAnswer.forEach((qNA, index) => {
+      if (qNA.question.type_form === 'textbox') {
+        form.push({
+          question_key: qNA.question.questionId,
+          answerId: qNA.answer.answerId,
+          answer: values.answers[index].answer
+        })
+      }
+
+      if (qNA.question.type_form === 'checkbox') {
+        let allAns = qNA.question.options.filter((option, index) => {
+          return this.state.checkboxState[qNA.question.questionId][index]
+        }).map(option => {
+          return option.data.option
+        })
+        form.push({
+          question_key: qNA.question.questionId,
+          answerId: qNA.answer.answerId,
+          answer: allAns
+        })
+      }
+
+      if (qNA.question.type_form === 'multiple') {
+        form.push({
+          question_key: qNA.question.questionId,
+          answerId: qNA.answer.answerId,
+          answer: this.state.multipleState[qNA.question.questionId]
+        })
+      }
+    })
+
+    let answerForm = {
+      answers: form
+    }
+
     try {
-      const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.EXPERIMENTER}${this.state.experId}/answer-note/update `, values)
+      const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.EXPERIMENTER}${this.state.experId}/answer-note/update `, answerForm)
       if (response.status !== 200) {
         throw new Error('CANNOT CREATE TESTNOTE')
       }
@@ -177,29 +153,69 @@ class AnswerTestnote extends React.Component {
   formatData = async () => {
     const questions = await this.getTestnote()
     const answers = await this.getAnswerTestnote()
-
     let questionAndAnswer = []
-    if (questions.length !== 0 && answers.length !== 0) {
-      for (let i = 0; i < questions.length; i++) {
-        questionAndAnswer.push({
-          question: {
-            questionId: questions[i].id,
-            question: questions[i].data.question.question,
-            type_form: questions[i].data.question.type_form,
-            options: questions[i].data.options
-          },
-          answer: {
-            answerId: answers[i].answer.id,
-            answer: answers[i].answer.answer
-          }
-        })
+    var checkboxState = {}
+    var multipleState = {}
 
-        if (i === questions.length - 1) {
-          this.setState({ noteAndAnswer: questionAndAnswer })
+    if (questions.length !== 0) {
+      for (let i = 0; i < questions.length; i++) {
+        if (answers.length !== 0) {
+          // MARK: beware idex out of bounds
+          questionAndAnswer.push({
+            question: {
+              questionId: questions[i].id,
+              question: questions[i].data.question.question,
+              type_form: questions[i].data.question.type_form,
+              options: questions[i].data.options
+            },
+            answer: {
+              answerId: answers[i].answer.id,
+              answer: answers[i].answer.answer
+            }
+          })
+          if (questions[i].data.question.type_form === 'checkbox') {
+            questions[i].data.options.forEach(({ data }) => {
+              const { option } = data
+              if (checkboxState[questions[i].id] !== undefined) {
+                checkboxState[questions[i].id] = [
+                  ...checkboxState[questions[i].id],
+                  answers[i].answer.answer.includes(option),
+                ]
+              } else {
+                checkboxState[questions[i].id] = [answers[i].answer.answer.includes(option)]
+              }
+            })
+          }
+          if (questions[i].data.question.type_form === 'multiple') {
+            multipleState[questions[i].id] = answers[i].answer.answer
+          }
+        } else {
+          if (checkboxState[questions[i].id] === undefined) {
+            checkboxState[questions[i].id] = [false]
+          } else {
+            checkboxState[questions[i].id] = [...checkboxState[questions[i].id], false]
+          }
+        }
+        if (answers.length === 0) {
+          questionAndAnswer.push({
+            question: {
+              questionId: questions[i].id,
+              question: questions[i].data.question.question,
+              type_form: questions[i].data.question.type_form,
+              options: questions[i].data.options
+            },
+            answer: {
+              answerId: undefined,
+              answer: undefined
+            }
+          })
         }
       }
-    } else {
-      this.setState({ noteAndAnswer: questionAndAnswer })
+      this.setState({
+        noteAndAnswer: questionAndAnswer,
+        checkboxState,
+        multipleState,
+      })
     }
   }
 
@@ -215,18 +231,31 @@ class AnswerTestnote extends React.Component {
     }
   }
 
-  handleChange(event) {
+  handleChange = questionId => event => {
     let { noteAndAnswer } = this.state
     noteAndAnswer.map(e => {
       if (e.question.type_form === "multiple") {
         e.answer.answer = event.target.value
+        let multipleState = { ...this.state.multipleState }
+        multipleState[questionId] = event.target.value
+        this.setState({ multipleState })
       }
     })
-    this.forceUpdate()
   }
 
-  render(props) {
-    const { uxerId, project, projectId, experiment, noteAndAnswer } = this.state
+  handleChangeCheckbox = (name, questionId, indexOption) => event => {
+    let checkboxState = [...this.state.checkboxState[questionId]]
+    checkboxState[indexOption] = event.target.checked
+    this.setState({
+      checkboxState: {
+        ...this.state.checkboxState,
+        [questionId]: checkboxState
+      }
+    })
+  }
+
+  render() {
+    const { uxerId, project, experiment, noteAndAnswer } = this.state
 
     return (
       <div>
@@ -320,7 +349,7 @@ class AnswerTestnote extends React.Component {
                                                   <Row className='align-items-center'>
                                                     <Col xs={12}>
                                                       <Label className=' w-100'>
-                                                        <Input {...input} rows='4' className='text-style' />
+                                                        <Input {...input} rows='4' className='text-style'/>
                                                         {meta.touched && meta.error && <span>{meta.error}</span>}
                                                       </Label>
                                                     </Col>
@@ -334,13 +363,19 @@ class AnswerTestnote extends React.Component {
                                               <RadioGroup
                                                 aria-label='answer'
                                                 name={`answers[${index}][answer]`}
+                                                value={qNa.answer.answer}
+                                                onChange={this.handleChange(qNa.question.questionId)}
                                               >
                                                 {qNa.question.options.map(option => (
                                                   <>
                                                     <Field name={`answers[${index}][answer]`} type='text' key={option.id}>
                                                       {({ input, meta }) => (
                                                         <>
-                                                          <FormControlLabel {...input} value={option.data.option} control={option.data.option === qNa.answer.answer ? <RadioButton checked /> : <RadioButton />} label={option.data.option} onChange={this.handleChange} />
+                                                          <FormControlLabel {...input}
+                                                            value={option.data.option}
+                                                            control={<RadioButton />}
+                                                            label={option.data.option}
+                                                          />
                                                           {meta.touched && meta.error && <span>{meta.error}</span>}
                                                         </>
                                                       )}
@@ -352,13 +387,30 @@ class AnswerTestnote extends React.Component {
                                           }
                                           {qNa.question.type_form === 'checkbox' &&
                                             <>
-                                              <FieldArray
-                                                name={`answers[${index}][answer]`}
-                                                component={CheckboxGroup}
-                                                options={qNa.question.options}
-                                                answers={qNa.answer.answer}
-                                                state={this.state.noteAndAnswer}
-                                              />
+                                              <FormGroup>
+                                                {qNa.question.options.map((option, indexOption) => (
+                                                  <Field name={`answers[${index}][answer]`} type='text' key={option.id}>
+                                                    {({ input, meta }) => (
+                                                      <>
+                                                        <>
+                                                          <FormControlLabel {...input}
+                                                            value={option.data.option}
+                                                            control={
+                                                              <CheckboxButton
+                                                                checked={this.state.checkboxState[qNa.question.questionId][indexOption]}
+                                                                onChange={this.handleChangeCheckbox(option.data.option, qNa.question.questionId, indexOption)}
+                                                              />
+                                                            }
+                                                            label={option.data.option}
+                                                          />
+                                                          {meta.touched && meta.error && <span>{meta.error}</span>}
+                                                        </>
+
+                                                      </>
+                                                    )}
+                                                  </Field>
+                                                ))}
+                                              </FormGroup>
                                             </>
                                           }
                                         </Col>
