@@ -12,6 +12,7 @@ import NotFound from './pages/error/not_found.js'
 import CreateQuestion from './pages/uxer/createQuestion'
 import CreateTestnote from './pages/uxer/createTestnote'
 import AnswerTestnote from './pages/uxer/answerTestnote'
+import Summarize from './pages/uxer/summarize'
 
 import SignIn from './pages/uxer/signin'
 import MyAccount from './pages/uxer/myAccount'
@@ -45,6 +46,7 @@ const UXer = (match) => {
         <PrivateRoute exact path={`${match.path}/:id/project/:projId/experiment/question`} component={CreateQuestion} />
         <PrivateRoute exact path={`${match.path}/:id/project/:projId/experiment/testnote`} component={CreateTestnote} />
         <PrivateRoute exact path={`${match.path}/:id/project/:projId/experiment/:experId/answertestnote`} component={AnswerTestnote} />
+        <PrivateRoute exact path={`${match.path}/:id/project/:projId/summarize`} component={Summarize} />
         <Route component={NotFound} />
       </Switch>
     </Router>

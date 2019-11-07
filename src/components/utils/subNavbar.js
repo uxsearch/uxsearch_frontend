@@ -28,6 +28,9 @@ class SubNavbar extends React.Component {
                 <NavItem className={`menu-block ${active === 'note' ? 'active' : ''}`} >
                   <NavLink href={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/testnote`} className='link-text'>Create Usability Test Note</NavLink>
                 </NavItem>
+                <NavItem className={`menu-block ${active === 'summarize' ? 'active' : ''}`}>
+                  <NavLink href={`/uxer/${this.props.uxerId}/project/${this.props.projId}/summarize`} className='link-text'>Summarize</NavLink>
+                </NavItem>
               </Nav>
             </Col>
           </Row>
@@ -42,6 +45,9 @@ class SubNavbar extends React.Component {
             </NavItem>
             <NavItem className={`menu-block ${active === 'note' ? 'active' : ''}`}>
               <NavLink href={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/testnote`} className='link-text'>Create Usability Test Note</NavLink>
+            </NavItem>
+            <NavItem className={`menu-block ${active === 'summarize' ? 'active' : ''}`}>
+              <NavLink href={`/uxer/${this.props.uxerId}/project/${this.props.projId}/summarize`} className='link-text'>Summarize</NavLink>
             </NavItem>
           </Nav>
         </Container>
