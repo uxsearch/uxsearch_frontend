@@ -137,7 +137,7 @@ class CreateQuestion extends React.Component {
       const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/questionnaire`)
       console.log('data', response.data)
       if (response.status !== 200) {
-        throw new Error('CANNOT GET TESTNOTE')
+        throw new Error('CANNOT GET QUESTIONNAIRE')
       }
       const { data } = response
       if (data.length === 0) {

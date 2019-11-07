@@ -218,7 +218,7 @@ class Question extends React.Component {
                       <Col xs={12} md={12}>
                         <Form>
                           <FormGroup>
-                            <Input type='textbox' name='answer1' rows='5' className='text-style ' />
+                            <Input type='textbox' name='answer1' rows='5' className='text-style ' disabled />
                             <Field component='input' type='hidden' name={`answers[0][options]`} initialValue={[]} />
                           </FormGroup>
                         </Form>
