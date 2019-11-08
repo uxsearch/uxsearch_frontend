@@ -140,12 +140,6 @@ class Question extends React.Component {
             <FormGroup>
               <Row className='justify-content-center'>
                 <Col xs={12} className='text-end' onClick={() => this.blockRemoveQuestion(this.props.question.questionId)}>
-                  {/* <FontAwesomeIcon icon={faGripLines} size='2x' color='#efefef' /> */}
-                  {/* <img
-                    src={require('../../static/img/close.svg')}
-                    className="close_btn"
-                    alt="close button"
-                  /> */}
                   <FontAwesomeIcon icon={faTimes} color='#efefef' size='2x' className='close_btn' />
                 </Col>
               </Row>
@@ -218,7 +212,7 @@ class Question extends React.Component {
                       <Col xs={12} md={12}>
                         <Form>
                           <FormGroup>
-                            <Input type='textbox' name='answer1' rows='5' className='text-style ' />
+                            <Input type='textbox' name='answer1' rows='5' className='text-style' disabled />
                             <Field component='input' type='hidden' name={`answers[0][options]`} />
                           </FormGroup>
                         </Form>

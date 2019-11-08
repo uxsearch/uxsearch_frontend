@@ -132,10 +132,8 @@ class CreateQuestion extends React.Component {
   }
 
   getQuestionnaire = async (props) => {
-    console.log('get question')
     try {
       const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/questionnaire`)
-      console.log('data', response.data)
       if (response.status !== 200) {
         throw new Error('CANNOT GET QUESTIONNAIRE')
       }
@@ -188,27 +186,13 @@ class CreateQuestion extends React.Component {
   }
 
   removeQuestion = async (questionId, statusRemove) => {
-    console.log(">>>questionId large", questionId, statusRemove)
     try {
       if (statusRemove === true) {
-        console.log(">>>questionId 5555555", questionId, statusRemove)
         const response = await axios.delete(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/delete-question`, questionId)
-        console.log(">>>response", response, questionId, statusRemove)
         if (response.status !== 200) {
           throw new Error('CANNOT DELETE QUESTION')
         }
         this.getQuestionnaire()
-        // this.setState
-        //   ({
-        //     questions: [
-        //       {
-        //         questionId: '',
-        //         question: '',
-        //         value: '',
-        //         type_form: 'textbox'
-        //       }
-        //     ]
-        //   })
       }
     } catch (e) {
       console.error(e)
@@ -217,7 +201,6 @@ class CreateQuestion extends React.Component {
 
   popupSave() {
     alert("Save Usability Successful")
-    // window.location.reload();
   }
 
   render() {
