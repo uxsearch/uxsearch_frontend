@@ -48,7 +48,7 @@ class IndexExperiment extends React.Component {
     super(props)
     const { match } = props
     this.state = {
-      uxerId: 'Ra5yR8oqRlP0Inxx1BJYzuupjoV2',
+      uxerId: '3Am80mAF4zOSzxrXbsFlDZTRq202',
       projectId: match.params.projId,
       project: undefined,
       country: '',

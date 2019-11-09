@@ -38,23 +38,47 @@ class CreateTestnote extends Component {
     const { computedMatch } = props
     this.state = {
       questions: [
-        {
-          questionId: '',
-          question: '',
-          value: '',
-          type_form: 'textbox'
-        }
+
       ],
       uxerId: computedMatch.params.id,
       projectId: computedMatch.params.projId,
       project: undefined,
-      loading: false
+      loading: false,
+      question: undefined,
+      redirect: false,
+      file: null,
+      defaultQuestion: {
+        questionId: '',
+        question: '',
+        value: '',
+        type_form: 'textbox'
+      }
     }
+  }
+
+  togglePopup() {
+    this.setState({
+      showPopup: !this.state.showPopup
+    });
+  }
+
+  toggleModal() {
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
   }
 
   async componentDidMount() {
     await this.getProject()
     await this.getTestnote()
+    console.log(this.state.questions.length)
+    if (this.state.questions.length === 0) {
+      this.setState({
+        questions: [this.state.defaultQuestion]
+      })
+    } else {
+
+    }
     this.setState({ loading: true })
   }
 
@@ -69,7 +93,8 @@ class CreateTestnote extends Component {
   }
 
   addQuestion() {
-    if (this.state.questions.length < 15) {
+    console.log(this.state.questions)
+    if (this.state.questions) {
       const questions = [...this.state.questions];
       questions.push({
         questionId: '',
@@ -87,7 +112,7 @@ class CreateTestnote extends Component {
       if (response.status !== 200) {
         throw new Error('CANNOT CREATE TESTNOTE')
       }
-      await this.getProject()
+      await this.getTestnote()
     } catch (e) {
       console.error(e)
     }
@@ -112,6 +137,10 @@ class CreateTestnote extends Component {
         throw new Error('CANNOT GET TESTNOTE')
       }
       const { data } = response
+      if (data.length === 0) {
+        const questions = [];
+        this.setState({ questions })
+      }
       if (data.length !== 0) {
         const questions = data.map(d => {
           if (d.data.question.type_form === "textbox") {
@@ -141,6 +170,39 @@ class CreateTestnote extends Component {
     } catch (e) {
       console.error(e)
     }
+  }
+
+  deleteOption = async (optionId, questionId) => {
+    try {
+      const response = await axios.delete(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.QUESTION}${questionId}/delete-option`, optionId)
+      if (response.status !== 200) {
+        throw new Error('CANNOT DELETE OBJECT')
+      }
+      this.getTestnote()
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  removeQuestion = async (questionId, statusRemove) => {
+    console.log(">>>questionId large", questionId, statusRemove)
+    try {
+      if (statusRemove === true) {
+        console.log(">>>questionId 5555555", questionId, statusRemove)
+        const response = await axios.delete(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/delete-question`, questionId)
+        console.log(">>>response", response, questionId, statusRemove)
+        if (response.status !== 200) {
+          throw new Error('CANNOT DELETE TESTNOTE')
+        }
+        this.getTestnote()
+      }
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  popupSave() {
+    alert("Save Usability Successful")
   }
 
   render() {
@@ -191,6 +253,8 @@ class CreateTestnote extends Component {
                             setOption={options => this.setOption(index)(options)}
                             index={index}
                             key={index}
+                            deleteOption={this.deleteOption}
+                            removeQuestion={(questionId, statusRemove) => this.removeQuestion(questionId, statusRemove)}
                           />
                         ))}
                         <br />
@@ -216,7 +280,7 @@ class CreateTestnote extends Component {
                     </Row >
                     <Row className='justify-content-center space-btn'>
                       <Col xs={12} md={4} className='text-center'>
-                        <Button type="submit" className='btn-save-questionnaire'>Save Usability Test Note</Button>
+                        <Button type="submit" className='btn-save-questionnaire' onClick={() => this.popupSave()}>Save Usability Test Note</Button>
                       </Col>
                     </Row>
                   </form>

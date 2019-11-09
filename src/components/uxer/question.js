@@ -2,7 +2,7 @@ import React from 'react'
 import { Row, Col, Form, FormGroup, Input, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Label } from 'reactstrap'
 import { withStyles, TextField } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSortDown, faGripLines, faTextHeight, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { faSortDown, faGripLines, faTextHeight, faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faCircle, faSquare, faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import { Field } from 'react-final-form'
 
@@ -31,7 +31,9 @@ class Question extends React.Component {
       isOpen: false,
       type: '',
       statusRemove: undefined,
-      index: null
+      index: null,
+      questionId: props.questionId,
+      file: null,
     }
   }
 
@@ -39,6 +41,7 @@ class Question extends React.Component {
     this.setState({
       type: this.props.question.type_form,
     })
+
   }
 
   changeQuestion(e) {
@@ -97,15 +100,6 @@ class Question extends React.Component {
     setQuestion(newQuestion)
   }
 
-  blockRemoveOption = (optionId, questionId, optionIndex) => {
-    const option = { optionId: optionId }
-    this.props.deleteOption(option, questionId)
-
-    const { question, setQuestion, index } = this.props
-    const newQuestion = { ...question }
-    newQuestion.options.splice(optionIndex, 1)
-    setQuestion(newQuestion)
-  }
 
   addOption() {
     const { question, setQuestion, index } = this.props
@@ -117,17 +111,36 @@ class Question extends React.Component {
     setQuestion(newQuestion)
   }
 
+  blockRemoveOption = (optionId, questionId, optionIndex) => {
+    const option = { optionId: optionId }
+    this.props.deleteOption(option, questionId)
+
+    const { question, setQuestion, index } = this.props
+    const newQuestion = { ...question }
+    newQuestion.options.splice(optionIndex, 1)
+    setQuestion(newQuestion)
+    console.log(">>>questionId222", questionId)
+
+  }
+
+  blockRemoveQuestion = (questionId) => {
+    const question = { questionId: questionId }
+    const statusRemove = true
+    this.props.removeQuestion(question, statusRemove)
+    console.log(">>>questionId small", questionId)
+  }
+
   render() {
     const { type, index } = this.state
-
+    const { projectId, projectLink, projectName, projectDescription, projectCover, questionId } = this.state
     return (
       <Row className='question-block' >
         <Col xs={12}>
           <Form>
             <FormGroup>
               <Row className='justify-content-center'>
-                <Col xs={12} className='text-center'>
-                  <FontAwesomeIcon icon={faGripLines} size='2x' color='#efefef' />
+                <Col xs={12} className='text-end' onClick={() => this.blockRemoveQuestion(this.props.question.questionId)}>
+                  <FontAwesomeIcon icon={faTimes} color='#efefef' size='2x' className='close_btn' />
                 </Col>
               </Row>
               <br />
@@ -182,15 +195,12 @@ class Question extends React.Component {
                         <DropdownMenu className='btn-secondary indropdown text-center '>
                           <DropdownItem onClick={() => this.changeType('multiple')}>
                             <FontAwesomeIcon icon={faCircle} size='1x' color='#efefef' className='textHeight' />Multiple Choice
-                              {/* <Dropdown >Multiple Choice</Dropdown> */}
                           </DropdownItem>
                           <DropdownItem onClick={() => this.changeType('checkbox')}>
                             <FontAwesomeIcon icon={faSquare} size='1x' color='#efefef' className='textHeight' />Check Box
-                              {/* <Dropdown>Check box</Dropdown> */}
                           </DropdownItem>
                           <DropdownItem onClick={() => this.changeType('textbox')}>
                             <FontAwesomeIcon icon={faTextHeight} size='1x' color='#efefef' className='textHeight' />Text box
-                              {/* <Dropdown>Text box</Dropdown> */}
                           </DropdownItem>
                         </DropdownMenu>
                       </Dropdown>
@@ -202,8 +212,8 @@ class Question extends React.Component {
                       <Col xs={12} md={12}>
                         <Form>
                           <FormGroup>
-                            <Input type='textbox' name='answer1' rows='5' className='text-style ' />
-                            <Field component='input' type='hidden' name={`answers[0][options]`} initialValue={[]} />
+                            <Input type='textbox' name='answer1' rows='5' className='text-style' disabled />
+                            <Field component='input' type='hidden' name={`answers[0][options]`} />
                           </FormGroup>
                         </Form>
                       </Col>
@@ -220,6 +230,7 @@ class Question extends React.Component {
                             <Form>
                               <FormGroup>
                                 <Input
+                                  className='font'
                                   type='multiple'
                                   placeholder='AddOption'
                                   value={option.option}

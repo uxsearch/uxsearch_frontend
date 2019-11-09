@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom'
-import Test from './pages/experimenter/test'
 import IndexExperiment from './pages/experimenter/index'
 import Answer from './pages/experimenter/answer'
 import ThanksPage from './pages/experimenter/thanks'
@@ -12,6 +11,7 @@ import NotFound from './pages/error/not_found.js'
 import CreateQuestion from './pages/uxer/createQuestion'
 import CreateTestnote from './pages/uxer/createTestnote'
 import AnswerTestnote from './pages/uxer/answerTestnote'
+import Summarize from './pages/uxer/summarize'
 
 import SignIn from './pages/uxer/signin'
 import MyAccount from './pages/uxer/myAccount'
@@ -45,6 +45,7 @@ const UXer = (match) => {
         <PrivateRoute exact path={`${match.path}/:id/project/:projId/experiment/question`} component={CreateQuestion} />
         <PrivateRoute exact path={`${match.path}/:id/project/:projId/experiment/testnote`} component={CreateTestnote} />
         <PrivateRoute exact path={`${match.path}/:id/project/:projId/experiment/:experId/answertestnote`} component={AnswerTestnote} />
+        <PrivateRoute exact path={`${match.path}/:id/project/:projId/summarize`} component={Summarize} />
         <Route component={NotFound} />
       </Switch>
     </Router>

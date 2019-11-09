@@ -10,7 +10,7 @@ class RedirectURL extends React.Component {
     super(props)
     const { match } = props
     this.state = {
-      uxerId: 'Ra5yR8oqRlP0Inxx1BJYzuupjoV2',
+      uxerId: '3Am80mAF4zOSzxrXbsFlDZTRq202',
       path: match.params.url,
       project: undefined,
       redirect: false,

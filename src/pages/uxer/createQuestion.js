@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { Container, Row, Col, Button } from "reactstrap";
 import { withStyles, TextField } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
-import { Form, Field } from 'react-final-form'
+import { Form } from 'react-final-form'
 import { withRouter } from 'react-router-dom'
 
 import NotSupport from "../../components/utils/notSupport";
@@ -35,26 +35,51 @@ const SearchField = withStyles({
 class CreateQuestion extends React.Component {
   constructor(props) {
     super(props)
-    const { computedMatch, uxerId } = props
+    const { computedMatch } = props
     this.state = {
       questions: [
-        {
-          questionId: '',
-          question: '',
-          value: '',
-          type_form: 'textbox'
-        }
+
       ],
       uxerId: computedMatch.params.id,
       projectId: computedMatch.params.projId,
       project: undefined,
-      loading: false
+      loading: false,
+      question: undefined,
+      redirect: false,
+      file: null,
+      defaultQuestion: {
+        questionId: '',
+        question: '',
+        value: '',
+        type_form: 'textbox'
+      }
     }
+  }
+
+
+  togglePopup() {
+    this.setState({
+      showPopup: !this.state.showPopup
+    });
+  }
+
+  toggleModal() {
+    this.setState(prevState => ({
+      modal: !prevState.modal
+    }));
   }
 
   async componentDidMount() {
     await this.getProject()
     await this.getQuestionnaire()
+    console.log(this.state.questions.length)
+    if (this.state.questions.length === 0) {
+      this.setState({
+        questions: [this.state.defaultQuestion]
+      })
+    } else {
+
+    }
     this.setState({ loading: true })
   }
 
@@ -69,7 +94,8 @@ class CreateQuestion extends React.Component {
   }
 
   addQuestion() {
-    if (this.state.questions.length < 15) {
+    console.log(this.state.questions)
+    if (this.state.questions) {
       const questions = [...this.state.questions];
       questions.push({
         questionId: '',
@@ -109,9 +135,13 @@ class CreateQuestion extends React.Component {
     try {
       const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/questionnaire`)
       if (response.status !== 200) {
-        throw new Error('CANNOT GET TESTNOTE')
+        throw new Error('CANNOT GET QUESTIONNAIRE')
       }
       const { data } = response
+      if (data.length === 0) {
+        const questions = [];
+        this.setState({ questions })
+      }
       if (data.length !== 0) {
         const questions = data.map(d => {
           if (d.data.question.type_form === "textbox") {
@@ -149,10 +179,28 @@ class CreateQuestion extends React.Component {
       if (response.status !== 200) {
         throw new Error('CANNOT DELETE OBJECT')
       }
-      this.getProject()
+      this.getQuestionnaire()
     } catch (e) {
       console.error(e)
     }
+  }
+
+  removeQuestion = async (questionId, statusRemove) => {
+    try {
+      if (statusRemove === true) {
+        const response = await axios.delete(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/delete-question`, questionId)
+        if (response.status !== 200) {
+          throw new Error('CANNOT DELETE QUESTION')
+        }
+        this.getQuestionnaire()
+      }
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  popupSave() {
+    alert("Save Usability Successful")
   }
 
   render() {
@@ -196,6 +244,7 @@ class CreateQuestion extends React.Component {
                           <hr className="black-line" />
                         </Col>
                         <br />
+
                         {loading && questions.map((question, index) => (
                           <Question
                             question={question}
@@ -204,8 +253,10 @@ class CreateQuestion extends React.Component {
                             index={index}
                             key={index}
                             deleteOption={this.deleteOption}
+                            removeQuestion={(questionId, statusRemove) => this.removeQuestion(questionId, statusRemove)}
                           />
                         ))}
+
                         <br />
                         <Row className="justify-content-center">
                           <Col xs={12} md={4} className="text-center">
@@ -229,7 +280,8 @@ class CreateQuestion extends React.Component {
                     </Row >
                     <Row className='justify-content-center space-btn'>
                       <Col xs={12} md={4} className='text-center'>
-                        <Button type="submit" className='btn-save-questionnaire'>Save Usability Test Note</Button>
+                        <Button type="submit" className='btn-save-questionnaire' onClick={() => this.popupSave()}>Save Questionnaire</Button>
+
                       </Col>
                     </Row>
                   </form>

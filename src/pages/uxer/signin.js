@@ -9,12 +9,12 @@ import APIURI from '../../utils/apiuri'
 import NotSupport from '../../components/utils/notSupport'
 
 import '../../static/sass/experimenter/index.scss'
+import "../../static/sass/uxer/signin.scss";
 
 import { withStyles, TextField, Grid } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faUserAlt, faLock } from '@fortawesome/free-solid-svg-icons'
-import "../../static/sass/uxer/signin.scss";
 import logo from '../../static/img/full_logo.png'
 import background1 from '../../static/img/background.jpg'
 
@@ -47,6 +47,10 @@ class SignIn extends React.Component {
           this.setState({ redirect: true })
           localStorage.setItem('token', result.data.token)
           localStorage.setItem('firstname', result.data.data.firstname)
+          localStorage.setItem('lastname', result.data.data.lastname)
+          localStorage.setItem('email', result.data.data.email)
+          localStorage.setItem('company', result.data.data.company)
+          localStorage.setItem('img_url', result.data.data.img_url)
           return result
         })
       if (response.status !== 200) {

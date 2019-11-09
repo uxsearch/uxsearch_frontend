@@ -50,7 +50,7 @@ const TextInput = withStyles({
 class ProjectPage extends React.Component {
   constructor(props) {
     super(props);
-    const { computedMatch } = props
+    const { computedMatch, projectCover } = props
     this.toggleSort = this.toggleSort.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.state = {
@@ -61,6 +61,7 @@ class ProjectPage extends React.Component {
       redirect: false,
       file: null,
       imagePreviewUrl: null,
+      projectCover: projectCover
     };
   }
 
@@ -95,9 +96,10 @@ class ProjectPage extends React.Component {
   submitCreateProject = async (values) => {
     delay(100)
     const coverPhoto = await this.uploadHandler(this.state.file)
-    const newValues= {
+    const newValues = {
       ...values,
-      cover_url: coverPhoto}
+      cover_url: coverPhoto
+    }
     try {
       const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}add/`, newValues)
         .then(result => {
@@ -107,7 +109,7 @@ class ProjectPage extends React.Component {
       if (response.status !== 201) {
         throw new Error('CANNOT CREATE PROJECT')
       }
-      this.setState({ modal : false })
+      this.setState({ modal: false })
       await this.getProject()
     } catch (e) {
       console.error(e)
@@ -128,54 +130,63 @@ class ProjectPage extends React.Component {
     }
   }
 
-  submitUpdateProject = async (values, projectId) => {    
+  submitUpdateProject = async (values, file, projectId) => {
+    if (file !== null) {
+      delay(100)
+      const coverPhoto = await this.uploadHandler(file)
+      values = {
+        ...values,
+        cover_url: coverPhoto
+      }
+    }
     try {
       const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${projectId}/update`, values)
       if (response.status !== 200) {
         throw new Error('CANNOT EDIT MY PROJECT')
       }
-      this.getProject()
+      this.setState({ modal: false })
+      await this.getProject()
     } catch (e) {
       console.error(e)
     }
   }
 
-handleImageChange(e) {
-  e.preventDefault();
+  handleImageChange(e) {
+    e.preventDefault();
 
-  const reader = new FileReader();
-  const file = e.target.files[0];
+    const reader = new FileReader();
+    const file = e.target.files[0];
 
-  reader.onloadend = () => {
-    this.setState({
-      file: file,
-      imagePreviewUrl: reader.result
-    });
-  }
-  reader.readAsDataURL(file)
-  
-}
-
-async uploadHandler (file) {
-  var formData = new FormData();
-  formData.append('file', file, file.name)
-  try {
-    const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}upload`, formData)
-    console.log(formData)
-    if (response.status !== 201) {
-      throw new Error('CANNOT UPLOAD COVER FILE')
+    reader.onloadend = () => {
+      this.setState({
+        file: file,
+        imagePreviewUrl: reader.result
+      });
     }
-    return response.data.cover_url
-  } catch (e) {
-    console.error(e)
+    reader.readAsDataURL(file)
   }
-}
+
+  async uploadHandler(file) {
+    var formData = new FormData();
+    const date = new Date()
+    const newFilename = date.getTime() + '_' + file.name
+    formData.append('file', file, newFilename)
+    try {
+      const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}upload`, formData)
+      if (response.status !== 201) {
+        throw new Error('CANNOT UPLOAD COVER FILE')
+      }
+      return response.data.cover_url
+    } catch (e) {
+      console.error(e)
+    }
+  }
 
   render() {
     const projectList = this.state.projectList
     const uxerId = this.state.uxerId
 
-    let {imagePreviewUrl} = this.state;
+    let { imagePreviewUrl } = this.state;
     let $imagePreview = null;
     if (imagePreviewUrl) {
       $imagePreview = (<img src={imagePreviewUrl} />);
@@ -294,14 +305,14 @@ async uploadHandler (file) {
                     <form onSubmit={handleSubmit}>
                       <Row>
                         <Col xs={12}>
-                          <Field component='input' type='image' name='cover_url'  />
+                          <Field component='input' type='image' name='cover_url' />
                           <Row className='justify-content-center'>
                             <Col xs={12} className='text-center img-block'>
-                            <div className='cover-size' alt='Project Cover'>
-                              {$imagePreview}
-                            </div>
+                              <div className='cover-size' alt='Project Cover'>
+                                {$imagePreview}
+                              </div>
                               <br></br>
-                              <input type="file" name="file"onChange={(e)=>this.handleImageChange(e)}/> 
+                              <input type="file" name="file" onChange={(e) => this.handleImageChange(e)} />
                             </Col>
                           </Row>
                           <Row className='justify-content-center'>

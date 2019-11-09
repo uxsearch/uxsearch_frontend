@@ -2,22 +2,16 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { Container, Row, Col, Button, Label, Input } from 'reactstrap'
 import { Form, Field } from 'react-final-form'
-import { FieldArray } from 'react-final-form-arrays'
 import arrayMutators from 'final-form-arrays'
-import { Checkbox, Radio, RadioGroup, FormControlLabel, withStyles } from '@material-ui/core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { Checkbox, Radio, RadioGroup, FormGroup, FormControlLabel, withStyles } from '@material-ui/core'
 
-import NotSupport from '../../components/utils/notSupport'
-import NavbarUXer from '../../components/utils/navbarUXer'
-
-import '../../static/sass/experimenter/answer.scss'
 import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
-
+import NotSupport from '../../components/utils/notSupport'
+import NavbarUXer from '../../components/utils/navbarUXer'
 import ExperProfile from '../../components/uxer/videoresult/profileBlock'
 
-import '../../static/sass/uxer/videoResult.scss'
+import '../../static/sass/uxer/answerTestnote.scss'
 
 const RadioButton = withStyles({
   root: {
@@ -39,29 +33,7 @@ const CheckboxButton = withStyles({
     fontFamily: 'Muli'
   },
   checked: {},
-})(props => <Checkbox color='default' className='MuiFormControlLabel-root no-margin-right' {...props} />)
-
-const CheckboxGroup = ({ fields, options }) => {
-  const toggle = (event, option) => {
-    if (event.target.checked) fields.push(option);
-    else fields.remove(option);
-  }
-
-  return (
-    <div>
-      <>
-        {options.map(option => (
-          <div key={option.id} className=''>
-            <Label className='no-margin w-100'>
-              <CheckboxButton value={option.data.option} onChange={event => toggle(event, option.data.option)} />
-              <span className='text-checkbox'>{option.data.option}</span>
-            </Label>
-          </div>
-        ))}
-      </>
-    </div>
-  );
-}
+})(props => <Checkbox color='default' {...props} />)
 
 class AnswerTestnote extends React.Component {
   constructor(props) {
@@ -72,19 +44,18 @@ class AnswerTestnote extends React.Component {
       projectId: computedMatch.params.projId,
       experId: computedMatch.params.experId,
       experiment: undefined,
-      answer: [],
       project: undefined,
-      testnote: [],
-      experList: [],
+      noteAndAnswer: [],
+      checkboxState: {},
+      multipleState: {},
     }
+    this.handleChange = this.handleChange.bind(this);
   }
 
   async componentDidMount() {
-    this.getProject()
-    this.getTestnote()
-    this.getExperimenter()
-    this.getAnswerTestnote()
-
+    await this.getProject()
+    await this.getExperimenter()
+    await this.formatData()
   }
 
   getExperimenter = async () => {
@@ -106,8 +77,44 @@ class AnswerTestnote extends React.Component {
   }
 
   submitTestnote = async (values) => {
+    let form = []
+    this.state.noteAndAnswer.forEach((qNA, index) => {
+      if (qNA.question.type_form === 'textbox') {
+        form.push({
+          question_key: qNA.question.questionId,
+          answerId: qNA.answer.answerId,
+          answer: values.answers[index].answer
+        })
+      }
+
+      if (qNA.question.type_form === 'checkbox') {
+        let allAns = qNA.question.options.filter((option, index) => {
+          return this.state.checkboxState[qNA.question.questionId][index]
+        }).map(option => {
+          return option.data.option
+        })
+        form.push({
+          question_key: qNA.question.questionId,
+          answerId: qNA.answer.answerId,
+          answer: allAns
+        })
+      }
+
+      if (qNA.question.type_form === 'multiple') {
+        form.push({
+          question_key: qNA.question.questionId,
+          answerId: qNA.answer.answerId,
+          answer: this.state.multipleState[qNA.question.questionId]
+        })
+      }
+    })
+
+    let answerForm = {
+      answers: form
+    }
+
     try {
-      const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.EXPERIMENTER}${this.state.experId}/answer-note/update `, values)
+      const response = await axios.put(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.EXPERIMENTER}${this.state.experId}/answer-note/update `, answerForm)
       if (response.status !== 200) {
         throw new Error('CANNOT CREATE TESTNOTE')
       }
@@ -118,31 +125,97 @@ class AnswerTestnote extends React.Component {
   }
 
   getTestnote = async (props) => {
-    console.log('testnote function')
     try {
       const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/test-note`)
       if (response.status !== 200) {
         throw new Error('CANNOT GET TESTNOTE')
       }
-
-      this.setState({ testnote: response.data })
+      const testnote = response.data
+      return testnote
     } catch (e) {
       console.error(e)
     }
   }
 
   getAnswerTestnote = async (props) => {
-    console.log('getAnswerTestnote function')
     try {
-      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.EXPERIMENTER}${this.state.experId}/${APIURI.NOTE}${this.state.noteId}/answer`)
-      console.log(">>> res :", response)
+      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.EXPERIMENTER}${this.state.experId}/answer-note`)
       if (response.status !== 200) {
         throw new Error('CANNOT GET ANSWER TESTNOTE')
       }
-
-      this.setState({ testnote: response.data })
+      const answers = response.data
+      return answers
     } catch (e) {
       console.error(e)
+    }
+  }
+
+  formatData = async () => {
+    const questions = await this.getTestnote()
+    const answers = await this.getAnswerTestnote()
+    let questionAndAnswer = []
+    var checkboxState = {}
+    var multipleState = {}
+
+    if (questions.length !== 0) {
+      for (let i = 0; i < questions.length; i++) {
+        if (answers.length !== 0) {
+          // MARK: beware idex out of bounds
+          questionAndAnswer.push({
+            question: {
+              questionId: questions[i].id,
+              question: questions[i].data.question.question,
+              type_form: questions[i].data.question.type_form,
+              options: questions[i].data.options
+            },
+            answer: {
+              answerId: answers[i].answer.id,
+              answer: answers[i].answer.answer
+            }
+          })
+          if (questions[i].data.question.type_form === 'checkbox') {
+            questions[i].data.options.forEach(({ data }) => {
+              const { option } = data
+              if (checkboxState[questions[i].id] !== undefined) {
+                checkboxState[questions[i].id] = [
+                  ...checkboxState[questions[i].id],
+                  answers[i].answer.answer.includes(option),
+                ]
+              } else {
+                checkboxState[questions[i].id] = [answers[i].answer.answer.includes(option)]
+              }
+            })
+          }
+          if (questions[i].data.question.type_form === 'multiple') {
+            multipleState[questions[i].id] = answers[i].answer.answer
+          }
+        } else {
+          if (checkboxState[questions[i].id] === undefined) {
+            checkboxState[questions[i].id] = [false]
+          } else {
+            checkboxState[questions[i].id] = [...checkboxState[questions[i].id], false]
+          }
+        }
+        if (answers.length === 0) {
+          questionAndAnswer.push({
+            question: {
+              questionId: questions[i].id,
+              question: questions[i].data.question.question,
+              type_form: questions[i].data.question.type_form,
+              options: questions[i].data.options
+            },
+            answer: {
+              answerId: undefined,
+              answer: undefined
+            }
+          })
+        }
+      }
+      this.setState({
+        noteAndAnswer: questionAndAnswer,
+        checkboxState,
+        multipleState,
+      })
     }
   }
 
@@ -158,41 +231,52 @@ class AnswerTestnote extends React.Component {
     }
   }
 
-  render(props) {
-    const { testnote, project, experList, uxerId, projId, experiment, answer } = this.state
+  handleChange = questionId => event => {
+    let { noteAndAnswer } = this.state
+    noteAndAnswer.map(e => {
+      if (e.question.type_form === "multiple") {
+        e.answer.answer = event.target.value
+        let multipleState = { ...this.state.multipleState }
+        multipleState[questionId] = event.target.value
+        this.setState({ multipleState })
+      }
+    })
+  }
+
+  handleChangeCheckbox = (name, questionId, indexOption) => event => {
+    let checkboxState = [...this.state.checkboxState[questionId]]
+    checkboxState[indexOption] = event.target.checked
+    this.setState({
+      checkboxState: {
+        ...this.state.checkboxState,
+        [questionId]: checkboxState
+      }
+    })
+  }
+
+  render() {
+    const { uxerId, project, experiment, noteAndAnswer } = this.state
 
     return (
       <div>
-        <section id='video-result' className='d-none d-md-block'>
+        <NotSupport className='d-md-none' />
+        <section id='answerTestnote' className='d-none d-md-block'>
           <NavbarUXer title={`${project && project.name} Test Note`} uxerId={uxerId} />
-          <Container className='space-bottom-video'>
+          <Container className='space-top'>
             <Row className=' align-items-center'>
-              {/* <Col xs={12} sm={8} md={6} lg={5}> */}
               <Col xs={12} sm={8} md={6} lg={7}>
-                {/* <Row className='align-items-center justify-content-center'> */}
                 <Row className='align-items-center justify-content-center'>
                   <Col xs={1} sm={4} xl={3}>
                     <div className='profile-block'>
                       <img src='https://picsum.photos/200/300' alt='Profile Picture' className='profile-img' />
                     </div>
                   </Col>
-                  <Col xs={10} sm={8} xl={9}>
+                  <Col xs={12} sm={8} xl={9}>
                     <Row>
                       <Col xs={12}>
                         <p className='no-margin exper-name'>{experiment && `${experiment.firstname} ${experiment.lastname}`}</p>
                       </Col>
                     </Row>
-                    {/* <Row className='d-sm-none space-btn-mobile'>
-                      <Col xs={1}>
-                        <FontAwesomeIcon
-                          icon={faTimes}
-                          size='2x'
-                          color='#303030'
-                          className='cross'
-                          link={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/answertestnote`}
-                        />
-                      </Col>
-                    </Row> */}
                   </Col>
                 </Row>
               </Col>
@@ -200,18 +284,9 @@ class AnswerTestnote extends React.Component {
               <Col xs={12} sm={4} md={1} xl={1} className='d-none d-sm-block'>
                 <img
                   src={require('../../static/img/close.svg')}
-                  height='20px'
                   className="close_btn"
                   alt="close button"
-
                 />
-                {/* <FontAwesomeIcon
-                  icon={faTimes}
-                  size='2x'
-                  color='#303030'
-                  className='cross'
-                  link={`/uxer/${this.props.uxerId}/project/${this.props.projId}/experiment/answertestnote`}
-                /> */}
               </Col>
             </Row>
           </Container>
@@ -234,10 +309,7 @@ class AnswerTestnote extends React.Component {
             }
             <br />
           </Container>
-        </section>
 
-        <NotSupport className='d-md-none' />
-        <section id='answer' className='d-none d-md-block'>
           <Container>
             <Row>
               <Col xs={12}>
@@ -256,29 +328,28 @@ class AnswerTestnote extends React.Component {
                               </Col>
                             </Row>
                             <br />
-                            {testnote.map((question, index) => (
+                            {noteAndAnswer.map((qNa, index) => (
                               <>
-                                {console.log(question)}
-                                <Row key={question.id}>
+                                <Row key={qNa.question.id}>
                                   <Col xs={12}>
-                                    <Label className='no-margin w-100'>
-                                      <Field component='input' type='hidden' name={`answers[${index}][answerId]`} initialValue={answer.id ? answer.id : ''} />
+                                    <Label className='no-margin w-100' >
                                       <Row>
                                         <Col xs={12}>
-                                          <Field component='input' type='hidden' name={`answers[${index}][question_key]`} initialValue={question.id} />
-                                          <p className='question'>{question.data.question.question}</p>
+                                          <Field component='input' type='hidden' name={`answers[${index}][question_key]`} initialValue={qNa.question.questionId} />
+                                          <p className='question'>{qNa.question.question}</p>
                                         </Col>
                                       </Row>
+                                      <Field component='input' type='hidden' name={`answers[${index}][answerId]`} initialValue={qNa.answer.answerId ? qNa.answer.answerId : ''} />
                                       <Row>
                                         <Col xs={12}>
-                                          {question.data.question.type_form === 'textbox' &&
-                                            <Field name={`answers[${index}][answer]`} type='textarea'>
+                                          {qNa.question.type_form === 'textbox' &&
+                                            <Field name={`answers[${index}][answer]`} type='textarea' initialValue={qNa.answer.answer}>
                                               {({ input, meta }) => (
                                                 <>
                                                   <Row className='align-items-center'>
                                                     <Col xs={12}>
                                                       <Label className=' w-100'>
-                                                        <Input {...input} rows='4' className='text-style' />
+                                                        <Input {...input} rows='4' className='text-style'/>
                                                         {meta.touched && meta.error && <span>{meta.error}</span>}
                                                       </Label>
                                                     </Col>
@@ -287,18 +358,24 @@ class AnswerTestnote extends React.Component {
                                               )}
                                             </Field>
                                           }
-                                          {question.data.question.type_form === 'multiple' &&
+                                          {qNa.question.type_form === 'multiple' &&
                                             <>
                                               <RadioGroup
                                                 aria-label='answer'
                                                 name={`answers[${index}][answer]`}
+                                                value={qNa.answer.answer}
+                                                onChange={this.handleChange(qNa.question.questionId)}
                                               >
-                                                {question.data.options.map(option => (
+                                                {qNa.question.options.map(option => (
                                                   <>
                                                     <Field name={`answers[${index}][answer]`} type='text' key={option.id}>
                                                       {({ input, meta }) => (
                                                         <>
-                                                          <FormControlLabel {...input} value={option.data.option} control={<RadioButton />} label={option.data.option} />
+                                                          <FormControlLabel {...input}
+                                                            value={option.data.option}
+                                                            control={<RadioButton />}
+                                                            label={option.data.option}
+                                                          />
                                                           {meta.touched && meta.error && <span>{meta.error}</span>}
                                                         </>
                                                       )}
@@ -308,14 +385,32 @@ class AnswerTestnote extends React.Component {
                                               </RadioGroup>
                                             </>
                                           }
-                                          {question.data.question.type_form === 'checkbox' &&
+                                          {qNa.question.type_form === 'checkbox' &&
                                             <>
-                                              <FieldArray
-                                                name={`answers[${index}][answer]`}
-                                                component={CheckboxGroup}
-                                                options={question.data.options}
-                                                className='MuiFormControlLabel-root'
-                                              />
+                                              <FormGroup>
+                                                {qNa.question.options.map((option, indexOption) => (
+                                                  <Field name={`answers[${index}][answer]`} type='text' key={option.id}>
+                                                    {({ input, meta }) => (
+                                                      <>
+                                                        <>
+                                                          <FormControlLabel {...input}
+                                                            value={option.data.option}
+                                                            control={
+                                                              <CheckboxButton
+                                                                checked={this.state.checkboxState[qNa.question.questionId][indexOption]}
+                                                                onChange={this.handleChangeCheckbox(option.data.option, qNa.question.questionId, indexOption)}
+                                                              />
+                                                            }
+                                                            label={option.data.option}
+                                                          />
+                                                          {meta.touched && meta.error && <span>{meta.error}</span>}
+                                                        </>
+
+                                                      </>
+                                                    )}
+                                                  </Field>
+                                                ))}
+                                              </FormGroup>
                                             </>
                                           }
                                         </Col>
@@ -329,7 +424,7 @@ class AnswerTestnote extends React.Component {
                           </Col>
                         </Row>
                         <Row className='justify-content-center space-btn'>
-                          <Col xs={12} md={4} className='text-center'>
+                          <Col xs={12} md={4} >
                             <Button className='btn-submit-test'>Submit</Button>
                           </Col>
                         </Row>
