@@ -5,6 +5,7 @@ import { Form } from 'react-final-form'
 import { withStyles, TextField } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import swal from 'sweetalert'
 
 import NotSupport from "../../components/utils/notSupport";
 import NavbarUXer from "../../components/utils/navbarUXer";
@@ -201,8 +202,12 @@ class CreateTestnote extends Component {
     }
   }
 
-  popupSave() {
-    alert("Save Usability Successful")
+  modalSubmit = () => {
+    swal("Save Questionnaire Successful", {
+      icon: "success",
+      timer: 1000,
+      buttons: false
+    });
   }
 
   render() {
@@ -280,7 +285,7 @@ class CreateTestnote extends Component {
                     </Row >
                     <Row className='justify-content-center space-btn'>
                       <Col xs={12} md={4} className='text-center'>
-                        <Button type="submit" className='btn-save-questionnaire' onClick={() => this.popupSave()}>Save Usability Test Note</Button>
+                        <Button type="submit" className='btn-save-questionnaire' onClick={() => this.modalSubmit()}>Save Usability Test Note</Button>
                       </Col>
                     </Row>
                   </form>
