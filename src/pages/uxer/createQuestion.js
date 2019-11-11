@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { Form } from 'react-final-form'
 import { withRouter } from 'react-router-dom'
+import swal from 'sweetalert'
 
 import NotSupport from "../../components/utils/notSupport";
 import NavbarUXer from "../../components/utils/navbarUXer";
@@ -199,13 +200,17 @@ class CreateQuestion extends React.Component {
     }
   }
 
-  popupSave() {
-    alert("Save Usability Successful")
+  modalSubmit = () => {
+    swal("Save Questionnaire Successful", {
+      icon: "success",
+      timer: 1000,
+      buttons: false
+    });
   }
 
   render() {
     const { uxerId, projectId, project, questions, loading } = this.state
-
+    const swal = require('sweetalert')
     return (
       <div>
         <NotSupport className='d-md-none' />
@@ -280,7 +285,7 @@ class CreateQuestion extends React.Component {
                     </Row >
                     <Row className='justify-content-center space-btn'>
                       <Col xs={12} md={4} className='text-center'>
-                        <Button type="submit" className='btn-save-questionnaire' onClick={() => this.popupSave()}>Save Questionnaire</Button>
+                        <Button type="submit" className='btn-save-questionnaire' onClick={() => this.modalSubmit()}>Save Questionnaire</Button>
 
                       </Col>
                     </Row>
