@@ -1,13 +1,25 @@
 import React from 'react'
 import { Row, Col, Button } from 'reactstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons'
 
 class PlayVideo extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			faceVideoTime: props.faceVideo,
-			screenVideoTime: props.screenVideo
+			faceVideoTime: props.faceVideoTime,
+			faceVideo: props.faceVideo,
+			screenVideoTime: props.screenVideoTime,
+			screenVideo: props.screenVideo
 		};
+	}
+
+	componentDidMount = () => {
+		this.loadStartTime()
+	}
+
+	loadStartTime = () => {
+		document.getElementById('facevideo').currentTime = this.state.faceVideoTime - this.state.screenVideoTime
 	}
 
 	playAndPauseVideo = () => {
@@ -34,7 +46,7 @@ class PlayVideo extends React.Component {
 	}
 
 	render() {
-		const { faceVideoTime, screenVideoTime } = this.state
+		const { faceVideo, screenVideo } = this.state
 
 		return (
 			<div>
@@ -43,27 +55,30 @@ class PlayVideo extends React.Component {
 						<Row className='no-gutters justify-content-center'>
 							<Col xs={12} md={6}>
 								<video controls className='play-video' id='facevideo'>
-									<source src={faceVideoTime} type='video/webm' />
+									<source src={faceVideo} type='video/webm' />
 								</video>
 							</Col>
 							<Col xs={12} md={6}>
 								<video controls className='play-video' id='screenvideo'>
-									<source src={screenVideoTime} type='video/webm' />
+									<source src={screenVideo} type='video/webm' />
 								</video>
 							</Col>
 						</Row>
 					</Col>
 				</Row>
-				<br />
-				<Row className='justify-content-center'>
-					<Col xs={2}>
-						<Button id='backward' className='control-btn' onClick={() => this.skip(-10)}>Backward</Button>
+				<Row className='justify-content-center control-bar'>
+					<Col xs={3} md={2} lg={1}>
+						<Button id='backward' className='control-btn' onClick={() => this.skip(-10)}>
+							<span>10s </span><FontAwesomeIcon icon={faBackward} size='1x' color='#fff' />
+						</Button>
 					</Col>
-					<Col xs={2}>
+					<Col xs={3} md={2} lg={1}>
 						<Button id='playNpauseBtn' className='control-btn' onClick={() => this.playAndPauseVideo()}>Play</Button>
 					</Col>
-					<Col xs={2}>
-						<Button id='forward' className='control-btn' onClick={() => this.skip(10)}>Forward</Button>
+					<Col xs={3} md={2} lg={1}>
+						<Button id='forward' className='control-btn' onClick={() => this.skip(10)}>
+							<FontAwesomeIcon icon={faForward} size='1x' color='#fff' /><span> 10s</span>
+						</Button>
 					</Col>
 				</Row>
 			</div>
