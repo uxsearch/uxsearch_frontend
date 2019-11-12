@@ -9,15 +9,27 @@
     margin: 50px auto;
   }
 
-  .card-video{
+  .card-video {
     background-color: $black;
     padding: 10px;
     margin-top: 0px;
   }
 
-  .play-video{
+  .play-video {
     width: 100%;
     height: 200px;
+  }
+
+  .control-btn {
+    width: 100%;
+    background-color: $blue;
+    border: $blue;
+    border-radius: 10px;
+
+    &:hover {
+      background-color: $blue-hover;
+      border: $blue-hover;
+    }
   }
 
   .space-bottom-video {
