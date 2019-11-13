@@ -15,35 +15,6 @@ import NotSupport from '../../components/utils/notSupport'
 import '../../static/sass/experimenter/record.scss'
 import { delay } from '../../utils/delay'
 
-const modalSubmit = () => {
-  swal({
-    title: "Are you sure?",
-    text: `You won't be able to reverse this!`,
-    icon: "warning",
-    buttons: {
-      cancel: {
-        text: "Cancel",
-        value: null,
-        visible: true,
-      },
-      confirm: {
-        text: "Confirm",
-        value: true,
-        visible: true,
-      }
-    },
-    dangerMode: false,
-  }).then((willSubmit) => {
-    if (willSubmit) {
-      swal("Thank you very much", {
-        icon: "success",
-        timer: 1000,
-        buttons: false
-      });
-    }
-  });
-}
-
 class RecordPage extends React.Component {
   constructor(props) {
     super(props)

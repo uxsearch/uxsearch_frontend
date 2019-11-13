@@ -352,7 +352,7 @@ class AnswerTestnote extends React.Component {
                                                   <Row className='align-items-center'>
                                                     <Col xs={12}>
                                                       <Label className=' w-100'>
-                                                        <Input {...input} rows='4' className='text-style'/>
+                                                        <Input {...input} rows='4' className='text-style' />
                                                         {meta.touched && meta.error && <span>{meta.error}</span>}
                                                       </Label>
                                                     </Col>

@@ -1,23 +1,17 @@
 import React from 'react'
 import { Container, Row, Col, Button, Label } from 'reactstrap'
 import { Form, Field } from 'react-final-form'
-import swal from 'sweetalert'
-
-import axios from '../../utils/axios'
-import APIURI from '../../utils/apiuri'
+import { withStyles, TextField } from "@material-ui/core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserAlt, faLock } from '@fortawesome/free-solid-svg-icons'
 
 import NotSupport from '../../components/utils/notSupport'
+import background1 from '../../static/img/background.jpg'
+import logo from '../../static/img/full_logo.png'
+import axios from '../../utils/axios'
 
 import '../../static/sass/experimenter/index.scss'
 import "../../static/sass/uxer/signin.scss";
-
-import { withStyles, TextField, Grid } from "@material-ui/core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { faUserAlt, faLock } from '@fortawesome/free-solid-svg-icons'
-import logo from '../../static/img/full_logo.png'
-import background1 from '../../static/img/background.jpg'
-
 
 const TextInput = withStyles({
   root: {
@@ -36,10 +30,6 @@ const TextInput = withStyles({
 })(TextField);
 
 class SignIn extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   submitLogin = async (values) => {
     try {
       const response = await axios.post(`authen/signin`, values)

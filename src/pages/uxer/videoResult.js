@@ -13,8 +13,7 @@ import ResultQuestion from '../../components/uxer/videoresult/resultBlock'
 
 import '../../static/sass/uxer/videoResult.scss'
 
-class VideoResult extends React.
-  Component {
+class VideoResult extends React.Component {
   constructor(props) {
     super(props);
     const { computedMatch } = props
