@@ -42,6 +42,7 @@ class ProfileBlock extends React.Component {
                           <>
                             <Row className='align-items-center'>
                               <Col xs={12} lg={4} className='space'>
+                                <span className="star">* </span>
                                 <span>Firstname : </span>
                               </Col>
                               <Col xs={12} lg={8}>
@@ -61,6 +62,7 @@ class ProfileBlock extends React.Component {
                           <>
                             <Row className='align-items-center'>
                               <Col xs={12} lg={4}>
+                                <span className="star">* </span>
                                 <span>Lastname : </span>
                               </Col>
                               <Col xs={12} lg={8}>
@@ -88,6 +90,7 @@ class ProfileBlock extends React.Component {
                           <>
                             <Row className='align-items-center'>
                               <Col xs={12} lg={4} className='space'>
+                                <span className="star">* </span>
                                 <span>Birthdate : </span>
                               </Col>
                               <Col xs={12} lg={8} >
@@ -107,10 +110,11 @@ class ProfileBlock extends React.Component {
                           <>
                             <Row className='align-items-center'>
                               <Col xs={12} lg={4}>
+                                <span className="star">* </span>
                                 <span>Gender : </span>
                               </Col>
                               <Col xs={12} lg={8}>
-                                <Label className='no-margin w-100'> 
+                                <Label className='no-margin w-100'>
                                   <Label className='no-margin w-100'>
                                     <select {...input} name='gender' placeholder='Choose Your Gender' className='form-control' required id="gender">
                                       <option value='' disabled>Choose Your Gender</option>
@@ -141,6 +145,7 @@ class ProfileBlock extends React.Component {
                           <>
                             <Row className='align-items-center'>
                               <Col xs={12} lg={4}>
+                                <span className="star">* </span>
                                 <span>Tel : </span>
                               </Col>
                               <Col xs={12} lg={8}>
@@ -160,11 +165,12 @@ class ProfileBlock extends React.Component {
                           <>
                             <Row className='align-items-center'>
                               <Col xs={12} lg={4}>
+                                <span className="star">* </span>
                                 <span>Email : </span>
                               </Col>
                               <Col xs={12} lg={8}>
                                 <Label className='no-margin w-100'  >
-                                  <Input {...input} placeholder='example@uxsearch.com' required id="email"/>
+                                  <Input {...input} placeholder='example@uxsearch.com' required id="email" />
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
                                 </Label>
                               </Col>
@@ -189,6 +195,7 @@ class ProfileBlock extends React.Component {
                           <>
                             <Row className='align-items-center'>
                               <Col xs={12} lg={4}>
+                                <span className="star">* </span>
                                 <span>Country : </span>
                               </Col>
                               <Col xs={12} lg={8}>
@@ -224,6 +231,7 @@ class ProfileBlock extends React.Component {
                           <>
                             <Row className='align-items-center'>
                               <Col xs={12} lg={4}>
+                                <span className="star">* </span>
                                 <span>City/State : </span>
                               </Col>
                               <Col xs={12} lg={8}>

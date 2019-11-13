@@ -1,4 +1,4 @@
-@import '../variables';
+@import "../variables";
 
 #video-result {
   .no-margin {
@@ -44,7 +44,6 @@
   .profile-block {
     width: 100px;
     height: 100px;
-    overflow: hidden;
     border-radius: 100%;
   }
 
@@ -75,12 +74,12 @@
     }
   }
 
-  .bg-experprofile{
+  .bg-experprofile {
     width: 100%;
     height: auto;
     padding: 30px;
     background-color: $white;
-    border-radius: 20px; 
+    border-radius: 20px;
   }
 
   .topic-text {
@@ -94,7 +93,7 @@
     color: $dark;
   }
 
-  .bg-questionnaire{
+  .bg-questionnaire {
     width: 100%;
     height: auto;
     padding: 30px;
@@ -107,7 +106,7 @@
   }
 
   @media (min-width: 768px) {
-    .play-video{
+    .play-video {
       height: 300px;
     }
 
@@ -117,13 +116,13 @@
   }
 
   @media (min-width: 992px) {
-    .play-video{
+    .play-video {
       height: 400px;
     }
   }
 
   @media (min-width: 1200px) {
-    .play-video{
+    .play-video {
       height: 500px;
     }
   }
