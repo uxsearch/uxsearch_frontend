@@ -115,7 +115,6 @@ class MyAccount extends React.Component {
   };
   
   async uploadHandler (file) {
-    console.log('file', file)
     var formData = new FormData();
     const date = new Date()
     const newFilename =  date.getTime() + '_' + file.name

@@ -119,7 +119,6 @@ class Question extends React.Component {
     const newQuestion = { ...question }
     newQuestion.options.splice(optionIndex, 1)
     setQuestion(newQuestion)
-    console.log(">>>questionId222", questionId)
 
   }
 
@@ -166,16 +165,16 @@ class Question extends React.Component {
             <FormGroup>
               <Row className='justify-content-center'>
                 <Col xs={12} className='text-end'
-              
 
-                 onClick={ async () => {
-                  const confirm = await this.modalSubmit()
-                  if (confirm) {
-                    
-                    this.blockRemoveQuestion(this.props.question.questionId)
-                  }
-                }}
-                 >
+
+                  onClick={async () => {
+                    const confirm = await this.modalSubmit()
+                    if (confirm) {
+
+                      this.blockRemoveQuestion(this.props.question.questionId)
+                    }
+                  }}
+                >
                   <FontAwesomeIcon icon={faTimes} color='#efefef' size='2x' className='close_btn' />
                 </Col>
               </Row>
@@ -333,10 +332,9 @@ class Question extends React.Component {
                               size='2x'
                               color='#909090'
                               className='icon-delete'
-                              onClick={ async () => {
+                              onClick={async () => {
                                 const confirm = await this.modalSubmit()
                                 if (confirm) {
-                                  
                                   this.blockRemoveOption(option.optionId, this.props.question.questionId, index)
                                 }
                               }}

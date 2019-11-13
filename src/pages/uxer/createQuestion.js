@@ -73,7 +73,6 @@ class CreateQuestion extends React.Component {
   async componentDidMount() {
     await this.getProject()
     await this.getQuestionnaire()
-    console.log(this.state.questions.length)
     if (this.state.questions.length === 0) {
       this.setState({
         questions: [this.state.defaultQuestion]
@@ -95,7 +94,6 @@ class CreateQuestion extends React.Component {
   }
 
   addQuestion() {
-    console.log(this.state.questions)
     if (this.state.questions) {
       const questions = [...this.state.questions];
       questions.push({
