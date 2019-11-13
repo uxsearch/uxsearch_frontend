@@ -174,6 +174,14 @@ class CreateQuestion extends React.Component {
     }
   }
 
+  deleteQuestion(index) {
+    const newQuestions = [...this.state.questions]
+    newQuestions.splice(index, 1)
+    this.setState({
+      questions: newQuestions
+    })
+  }
+
   deleteOption = async (optionId, questionId) => {
     try {
       const response = await axios.delete(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.QUESTION}${questionId}/delete-option`, optionId)
@@ -211,6 +219,7 @@ class CreateQuestion extends React.Component {
   render() {
     const { uxerId, projectId, project, questions, loading } = this.state
     const swal = require('sweetalert')
+    
     return (
       <div>
         <NotSupport className='d-md-none' />
@@ -231,7 +240,7 @@ class CreateQuestion extends React.Component {
                             <h2>{`${project && project.name}`} Questionnaire</h2>
                           </Col>
                         </Row>
-                        <Row>
+                        {/* <Row>
                           <Col xs={1} md={1}></Col>
                           <Col xs={12} md={10} lg={10}>
                             <SearchField
@@ -243,8 +252,8 @@ class CreateQuestion extends React.Component {
                             />
                           </Col>
                           <Col xs={1} md={1}></Col>
-                        </Row>
-                        <br />
+                        </Row> */}
+                        {/* <br /> */}
                         <Col xs={12} md={12}>
                           <hr className="black-line" />
                         </Col>
@@ -259,6 +268,7 @@ class CreateQuestion extends React.Component {
                             key={index}
                             deleteOption={this.deleteOption}
                             removeQuestion={(questionId, statusRemove) => this.removeQuestion(questionId, statusRemove)}
+                            deleteQuestion={() => this.deleteQuestion(index)}
                           />
                         ))}
 

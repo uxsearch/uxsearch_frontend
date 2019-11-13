@@ -93,6 +93,14 @@ class CreateTestnote extends Component {
     }
   }
 
+  deleteQuestion(index) {
+    const newQuestions = [...this.state.questions]
+    newQuestions.splice(index, 1)
+    this.setState({
+      questions: newQuestions
+    })
+  }
+
   addQuestion() {
     console.log(this.state.questions)
     if (this.state.questions) {
@@ -184,7 +192,6 @@ class CreateTestnote extends Component {
       console.error(e)
     }
   }
-
   removeQuestion = async (questionId, statusRemove) => {
     console.log(">>>questionId large", questionId, statusRemove)
     try {
@@ -203,7 +210,7 @@ class CreateTestnote extends Component {
   }
 
   modalSubmit = () => {
-    swal("Save Questionnaire Successful", {
+    swal("Save Usability Test Note Successful", {
       icon: "success",
       timer: 1000,
       buttons: false
@@ -233,7 +240,7 @@ class CreateTestnote extends Component {
                             <h2>Usability Test Note : {`${project && project.name}`} </h2>
                           </Col>
                         </Row>
-                        <Row>
+                        {/* <Row>
                           <Col xs={1} md={1}></Col>
                           <Col xs={12} md={10} lg={10}>
                             <SearchField
@@ -246,7 +253,7 @@ class CreateTestnote extends Component {
                           </Col>
                           <Col xs={1} md={1}></Col>
                         </Row>
-                        <br />
+                        <br /> */}
                         <Col xs={12} md={12}>
                           <hr className="black-line" />
                         </Col>
@@ -260,6 +267,7 @@ class CreateTestnote extends Component {
                             key={index}
                             deleteOption={this.deleteOption}
                             removeQuestion={(questionId, statusRemove) => this.removeQuestion(questionId, statusRemove)}
+                            deleteQuestion={() => this.deleteQuestion(index)}
                           />
                         ))}
                         <br />
@@ -294,7 +302,7 @@ class CreateTestnote extends Component {
           </Container>
         </section>
       </div>
-    );
+    )
   }
 }
 
