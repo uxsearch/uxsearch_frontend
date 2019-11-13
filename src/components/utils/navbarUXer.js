@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { withRouter } from 'react-router-dom'
 
-import logo from '../../static/img/Logo_White.png'
+import logo from '../../static/img/logo_uxsearch.png'
 
 import '../../static/sass/navbar.scss'
 

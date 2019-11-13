@@ -7,7 +7,8 @@ import { faUserAlt, faLock } from '@fortawesome/free-solid-svg-icons'
 
 import NotSupport from '../../components/utils/notSupport'
 import background1 from '../../static/img/background.jpg'
-import logo from '../../static/img/full_logo.png'
+import logo from '../../static/img/logo.png'
+
 import axios from '../../utils/axios'
 
 import '../../static/sass/experimenter/index.scss'
@@ -67,7 +68,6 @@ class SignIn extends React.Component {
                     <img className='logo-icon' src={logo} />
                   </Col>
                 </Row>
-                <br />
 
                 <Form
                   onSubmit={this.submitLogin}
