@@ -82,6 +82,7 @@ class Answer extends React.Component {
       if (response.status !== 200) {
         throw new Error('CANNOT SUBMIT QUESTIONNAIRE')
       }
+      await this.modalSubmit()
       this.props.history.push(`/${this.state.projectId}/experimenter/${this.state.experId}/thanks`)
     } catch (e) {
       console.error(e)
@@ -110,6 +111,34 @@ class Answer extends React.Component {
     } catch (e) {
       console.error(e)
     }
+  }
+
+  confirmQuestionnaire = async (value) => {
+    const confirm = await this.modalConfirm()
+    if (confirm) {
+      this.submitQuestionnaire(value)
+    }
+  }
+
+  modalConfirm = async () => {
+    let willSubmit = await swal({
+      title: 'Are you sure?',
+      icon: 'warning',
+      buttons: {
+        cancel: {
+          text: 'Cancel',
+          value: false,
+          visible: true,
+        },
+        confirm: {
+          text: 'Confirm',
+          value: true,
+          visible: true,
+        }
+      },
+      dangerMode: false,
+    })
+    return willSubmit
   }
 
   modalSubmit = () => {
@@ -144,7 +173,7 @@ class Answer extends React.Component {
                 </Row>
                 <br />
                 <Form
-                  onSubmit={this.submitQuestionnaire}
+                  onSubmit={this.confirmQuestionnaire}
                   mutators={{ ...arrayMutators }}
                   render={({
                     handleSubmit, form, submitting, pristine
@@ -224,7 +253,7 @@ class Answer extends React.Component {
                         </Row>
                         <Row className='justify-content-center space-btn'>
                           <Col xs={12} md={4} className='text-center'>
-                            <Button className='btn-submit-test' onClick={() => this.modalSubmit()}>Submit</Button>
+                            <Button className='btn-submit-test'>Submit</Button>
                           </Col>
                         </Row>
                       </form>
