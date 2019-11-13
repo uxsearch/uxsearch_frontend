@@ -3,6 +3,7 @@ import { withRouter } from "react-router"
 import { Container, Row, Col, Button } from 'reactstrap'
 import { Form } from 'react-final-form'
 import swal from 'sweetalert'
+import { isEmpty, isNull } from 'lodash'
 
 import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
@@ -70,20 +71,23 @@ class IndexExperiment extends React.Component {
       if (response.status !== 201) {
         throw new Error('CANNOT CREATE EXPERIMENTER')
       }
-      this.props.history.push(`/${this.state.projectId}/experimenter/${response.data.experimenter.id}/record`)
+      const confirm = await this.modalSubmit()
+      if (confirm) {
+        this.props.history.push(`/${this.state.projectId}/experimenter/${response.data.experimenter.id}/record`)
+      }
     } catch (e) {
       console.error(e)
     }
   }
 
-  modalSubmit = () => {
-    swal({
+  modalSubmit = async () => {
+    let willSubmit = await swal({
       title: 'Are you sure?',
       icon: 'warning',
       buttons: {
         cancel: {
           text: 'Cancel',
-          value: null,
+          value: false,
           visible: true,
         },
         confirm: {
@@ -93,17 +97,45 @@ class IndexExperiment extends React.Component {
         }
       },
       dangerMode: false,
-    }).then((willSubmit) => {
-      if (willSubmit) {
-        swal({
-          title: 'Thank you very much',
-          text: 'If you complete test, press button to complete, please.',
-          icon: 'success',
-          timer: 2500,
-          buttons: false
-        });
-      }
-    });
+    })
+    if (willSubmit) {
+      willSubmit = await swal({
+        title: 'Thank you very much',
+        text: 'Next, Please share your screen and Click share button. If you complete test, press "Finish Testing" Thankyou.',
+        icon: 'success',
+        buttons: {
+          cancel: {
+            text: 'Cancel',
+            value: false,
+            visible: false
+          },
+          confirm: {
+            text: 'OK',
+            value: true,
+            visible: true,
+          }
+        },
+      });
+    }
+    console.log('>>> willSubmit ', willSubmit)
+    return willSubmit
+  }
+
+  isEmptyValue() {
+    const firstname = document.querySelector('#firstname')
+    const lastname = document.querySelector('#lastname')
+    const birthdate = document.querySelector('#birthdate')
+    const gender = document.querySelector('#gender')
+    const tel = document.querySelector('#tel')
+    const email = document.querySelector('#email')
+    const country = document.querySelector('#country')
+    const city = document.querySelector('#city')
+    const education = document.querySelector('#education')
+    const job = document.querySelector('#job')
+    return isNull(firstname) || isNull(lastname) || isNull(birthdate) || isNull(gender) || isNull(tel) || isNull(email) || isNull(country) || isNull(city)
+      || isNull(education) || isNull(job) || isEmpty(firstname.value) || isEmpty(lastname.value) || isEmpty(birthdate.value) || isEmpty(gender.value)
+      || isEmpty(tel.value) || isEmpty(email.value) || isEmpty(country.value) || isEmpty(city.value) || isEmpty(education.value)
+      || isEmpty(job.value)
   }
 
   render() {
@@ -145,7 +177,7 @@ class IndexExperiment extends React.Component {
                         </Row>
                         <Row className='justify-content-center space-btn'>
                           <Col xs={12} md={4} className='text-center'>
-                            <Button className='btn-start-test' type='submit' onClick={() => this.modalSubmit()} >Start Usability Testing</Button>
+                            <Button className='btn-start-test' type='submit' disabled={this.isEmptyValue()}>Start Usability Testing</Button>
                           </Col>
                         </Row>
                       </form>
