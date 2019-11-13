@@ -72,7 +72,6 @@ class CreateTestnote extends Component {
   async componentDidMount() {
     await this.getProject()
     await this.getTestnote()
-    console.log(this.state.questions.length)
     if (this.state.questions.length === 0) {
       this.setState({
         questions: [this.state.defaultQuestion]
@@ -94,7 +93,6 @@ class CreateTestnote extends Component {
   }
 
   addQuestion() {
-    console.log(this.state.questions)
     if (this.state.questions) {
       const questions = [...this.state.questions];
       questions.push({
@@ -186,12 +184,9 @@ class CreateTestnote extends Component {
   }
 
   removeQuestion = async (questionId, statusRemove) => {
-    console.log(">>>questionId large", questionId, statusRemove)
     try {
       if (statusRemove === true) {
-        console.log(">>>questionId 5555555", questionId, statusRemove)
         const response = await axios.delete(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/delete-question`, questionId)
-        console.log(">>>response", response, questionId, statusRemove)
         if (response.status !== 200) {
           throw new Error('CANNOT DELETE TESTNOTE')
         }

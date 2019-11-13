@@ -119,7 +119,6 @@ class Question extends React.Component {
     const newQuestion = { ...question }
     newQuestion.options.splice(optionIndex, 1)
     setQuestion(newQuestion)
-    console.log(">>>questionId222", questionId)
 
   }
 
@@ -127,7 +126,6 @@ class Question extends React.Component {
     const question = { questionId: questionId }
     const statusRemove = true
     this.props.removeQuestion(question, statusRemove)
-    console.log(">>>questionId small", questionId)
   }
 
   render() {

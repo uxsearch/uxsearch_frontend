@@ -19,7 +19,6 @@ class NavbarUxer extends React.Component {
       collapsed: true,
       nameUser: localStorage.getItem('firstname')
     };
-    console.log(this.state.nameUser)
   }
 
   toggle() {
