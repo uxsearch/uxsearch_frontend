@@ -130,7 +130,7 @@ class ExperPage extends React.Component {
           <Row>
             {experList.map(experiment => (
               <>
-                <Col xs={6} md={4} lg={3} key={experiment.id}>
+                <Col xs={12} sm={6} md={4} lg={3} key={experiment.id}>
                   <ExperBlock
                     link={`/uxer/${this.state.uxerId}/project/${this.state.projectId}/experiment/${experiment.data.experimenter_key}/result`}
                     firstname={experiment.data.firstname}
