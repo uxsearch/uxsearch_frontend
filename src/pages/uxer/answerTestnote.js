@@ -257,8 +257,17 @@ class AnswerTestnote extends React.Component {
     })
   }
 
+  modalSubmit = () => {
+    swal("Submit Successful", {
+      icon: "success",
+      timer: 1000,
+      buttons: false
+    });
+  }
+
   render() {
     const { uxerId, project, experiment, noteAndAnswer } = this.state
+    const swal = require('sweetalert')
 
     return (
       <div>
@@ -352,7 +361,7 @@ class AnswerTestnote extends React.Component {
                                                   <Row className='align-items-center'>
                                                     <Col xs={12}>
                                                       <Label className=' w-100'>
-                                                        <Input {...input} rows='4' className='text-style'/>
+                                                        <Input {...input} rows='4' className='text-style' />
                                                         {meta.touched && meta.error && <span>{meta.error}</span>}
                                                       </Label>
                                                     </Col>
@@ -428,7 +437,8 @@ class AnswerTestnote extends React.Component {
                         </Row>
                         <Row className='justify-content-center space-btn'>
                           <Col xs={12} md={4} >
-                            <Button className='btn-submit-test'>Submit</Button>
+                            <Button className='btn-submit-test' >Submit</Button>
+                            {/* <Button className='btn-submit-test' onClick={() => this.modalSubmit()} disabled={noteAndAnswer.length === 0}>Submit</Button> */}
                           </Col>
                         </Row>
                       </form>
