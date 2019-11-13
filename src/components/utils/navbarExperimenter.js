@@ -10,7 +10,7 @@ class NavbarExp extends React.Component {
       <section id='exper-navbar'>
         <Navbar className='nav-bgColor'>
           <img
-            src={require('../../static/img/full_logo.png')}
+            src={require('../../static/img/logo_uxsearch.png')}
             className="d-inline-block align-top logo-icon"
             alt="UX Search Logo"
           />
