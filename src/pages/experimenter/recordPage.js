@@ -47,6 +47,7 @@ class RecordPage extends React.Component {
       timeDuration: timeDuration,
       blob: cameraBlob
     }
+    console.log('camera', cameraBlob, timeDuration)
     this.setState({ cameraBlob: Childcamera })
   }
 
@@ -88,9 +89,11 @@ class RecordPage extends React.Component {
       if (response.status !== 201) {
         throw new Error('CANNOT CREATE FORM RECORD')
       }
-      const willSubmit = await this.modalSubmit()
-      if (willSubmit) {
-        this.props.history.push(`/${this.state.projectId}/experimenter/${this.state.experId}/answer`)
+      if (response.status === 201) {
+        const willSubmit = await this.modalSubmit()
+        if (willSubmit) {
+          this.props.history.push(`/${this.state.projectId}/experimenter/${this.state.experId}/answer`)
+        }
       }
     } catch (e) {
       console.error(e)
@@ -122,13 +125,14 @@ class RecordPage extends React.Component {
   }
 
   stopRecord = async (value) => {
-    const confirm = await this.modalSubmit()
+    const confirm = await this.modalConfirm()
     if (confirm) {
-      this.setState({ stopStatus: value })
+      this.setState({ stopStatus: true })
+      this.submitResult(value)
     }
   }
 
-  modalSubmit = async () => {
+  modalConfirm = async () => {
     let willSubmit = await swal({
       title: 'Are you sure?',
       icon: 'warning',
@@ -146,31 +150,27 @@ class RecordPage extends React.Component {
       },
       dangerMode: false,
     })
-    if (willSubmit) {
-      willSubmit = await swal({
-        title: 'Thank you for your test',
-        text: 'Next, Please answer the questionnaire for further program development. Thank you .',
-        icon: 'success',
-        buttons: {
-          cancel: {
-            text: 'Cancel',
-            value: false,
-            visible: false
-          },
-          confirm: {
-            text: 'OK',
-            value: true,
-            visible: true,
-          }
-        },
-      });
-    }
+    return willSubmit
+  }
+
+  modalSubmit = async () => {
+    let willSubmit = await swal({
+      title: 'Thank you for your test',
+      text: 'Next, Please answer the questionnaire for further program development. Thank you .',
+      icon: 'success',
+      buttons: {
+        confirm: {
+          text: 'OK',
+          value: true,
+          visible: true,
+        }
+      },
+    })
     return willSubmit
   }
 
   render() {
     const project = this.state.project
-    const swal = require('sweetalert')
 
     return (
       <div>
@@ -186,7 +186,7 @@ class RecordPage extends React.Component {
                   </Col>
                 </Row>
                 <Form
-                  onSubmit={this.submitResult}
+                  onSubmit={this.stopRecord}
                   render={({
                     handleSubmit, form, submitting, pristine
                   }) => (
@@ -207,7 +207,7 @@ class RecordPage extends React.Component {
                             <br />
                             <Row className='justify-content-center'>
                               <Col xs={12} md={3} className='text-center'>
-                                <Button onClick={() => this.stopRecord(true)} type='submit' className='btn-finish-test'>Finish Testing</Button>
+                                <Button type='submit' className='btn-finish-test'>Finish Testing</Button>
                               </Col>
                             </Row>
                           </Col>
