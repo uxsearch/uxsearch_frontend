@@ -37,16 +37,14 @@ class Summarize extends React.Component {
     super(props)
     const { computedMatch } = props
     this.state = {
-      questions: [
-
-      ],
+      questions: [],
       uxerId: computedMatch.params.id,
       projectId: computedMatch.params.projId,
       project: undefined,
       loading: false,
       question: undefined,
       avgTime: undefined,
-      resultSummarize: []
+      resultSummarize: undefined
     }
   }
 
@@ -86,7 +84,6 @@ class Summarize extends React.Component {
       if (response.status !== 200) {
         throw new Error('CANNOT GET RESULT')
       }
-      console.log(response)
       this.setState({ avgTime: response.data })
     } catch (e) {
       console.error(e)
@@ -101,72 +98,88 @@ class Summarize extends React.Component {
           <NavbarUXer title={`${project && project.name}`} uxerId={uxerId} />
           <SubNavbar uxerId={uxerId} projId={projectId} active={`summarize`} />
           <Container>
-            <Row className='summary-block'>
-              <Col xs={12} md={12}>
-                <br />
-                <Row className='justify-content-center'>
-                  <Col xs={10} className='space-side '>
-                    <h1>{`${project && project.name}`} Summarize</h1>
-                  </Col>
-                </Row>
-                <br />
-                <Row className='justify-content-center'>
-                  <Col xs={10}>
-                    <Row className='align-items-center'>
-                      <Col xs={12} md={4} lg={3} >
-                        <p className='title-head'>Average Time Test : </p>
-                      </Col>
-                      <Col xs={12} md={8} lg={9}>
-                        <p className='avg-time'>{avgTime}</p>
-                      </Col>
-                    </Row>
-                  </Col>
-                </Row>
-                <hr />
-                {resultSummarize.map(result => (
-                  <>
+            {resultSummarize &&
+              <>
+                <Row className='summary-block'>
+                  <Col xs={12} md={12}>
+                    <br />
                     <Row className='justify-content-center'>
-                      <Col xs={10}>
-                        <p className='title-head'>{result.question}</p>
-                        {result.type_form === 'textbox' ? (
-                          <Row>
-                            <Col xs={12}>
-                              <Table className='table table-fixed'>
-                                <tbody>
-                                  {result.answer.map(answer => (
-                                    <tr>
-                                      <td className='table-col'>{answer}</td>
-                                    </tr>
-                                  ))}
-                                </tbody>
-                              </Table>
-                            </Col>
-                          </Row>
-                        ) : (
-                            <Row className='justify-content-start align-items-center'>
-                              {result.options.map((option, index) => (
-                                <Col xs={12} md={6} lg={4}>
-                                  <div className='block-result'>
-                                    <Row className='align-items-center'>
-                                      <Col xs={10} >
-                                        <p className='no-margin'>{option}</p>
-                                      </Col>
-                                      <Col xs={2} className='no-padding text-center'>
-                                        <p className='no-margin count-text'>{result.answer[index]}</p>
-                                      </Col>
-                                    </Row>
-                                  </div>
-                                </Col>
-                              ))}
-                            </Row>
-                          )}
+                      <Col xs={10} className='space-side '>
+                        <h1>{`${project && project.name}`} Summarize</h1>
                       </Col>
                     </Row>
                     <br />
-                  </>
-                ))}
-              </Col>
-            </Row >
+                    <Row className='justify-content-center'>
+                      <Col xs={10}>
+                        <Row className='align-items-center'>
+                          <Col xs={12} md={4} lg={3} >
+                            <p className='title-head'>Average Time Test : </p>
+                          </Col>
+                          <Col xs={12} md={8} lg={9}>
+                            <p className='avg-time'>{resultSummarize.allExper <= 1 ? 'No Average' : avgTime}</p>
+                          </Col>
+                        </Row>
+                        <Row className='align-items-center'>
+                          <Col xs={12} md={4} lg={3} >
+                            <p className='title-head'>Number of Note : </p>
+                          </Col>
+                          <Col xs={12} md={8} lg={9}>
+                            {resultSummarize.allExper <= 1 ? (
+                              <p>{`${resultSummarize.takeNoteExper} / ${resultSummarize.allExper} person`}</p>
+                            ) : (
+                                <p>{`${resultSummarize.takeNoteExper} / ${resultSummarize.allExper} persons`}</p>
+                              )}
+                          </Col>
+                        </Row>
+                      </Col>
+                    </Row>
+                    <hr />
+                    {resultSummarize.summary.map(result => (
+                      <>
+                        <Row className='justify-content-center'>
+                          <Col xs={10}>
+                            <p className='title-head'>{result.question}</p>
+                            {result.type_form === 'textbox' ? (
+                              <Row>
+                                <Col xs={12}>
+                                  <Table className='table table-fixed'>
+                                    <tbody>
+                                      {result.answer.map(answer => (
+                                        <tr>
+                                          <td className='table-col'>{answer}</td>
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </Table>
+                                </Col>
+                              </Row>
+                            ) : (
+                                <Row className='justify-content-start align-items-center'>
+                                  {result.options.map((option, index) => (
+                                    <Col xs={12} md={6} lg={4}>
+                                      <div className='block-result'>
+                                        <Row className='align-items-center'>
+                                          <Col xs={10} >
+                                            <p className='no-margin'>{option}</p>
+                                          </Col>
+                                          <Col xs={2} className='no-padding text-center'>
+                                            <p className='no-margin count-text'>{result.answer[index]}</p>
+                                          </Col>
+                                        </Row>
+                                      </div>
+                                    </Col>
+                                  ))}
+                                </Row>
+                              )}
+                          </Col>
+                        </Row>
+                        <br />
+                      </>
+                    ))}
+                  </Col>
+                </Row>
+              </>
+            }
           </Container>
         </section>
       </div>
