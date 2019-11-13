@@ -1,7 +1,6 @@
 import React from 'react'
 import { Container, Row, Col, Button, Label, FormGroup, Input } from 'reactstrap'
 import { Form, Field } from 'react-final-form'
-import { withStyles, TextField } from "@material-ui/core";
 
 import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
@@ -13,22 +12,6 @@ import NavbarUXer from "../../../src/components/utils/navbarUXer";
 
 import "../../static/sass/uxer/signin.scss";
 import '../../static/sass/navbar.scss'
-
-const TextInput = withStyles({
-  root: {
-    '& label.Mui-focused': {
-      color: '#28a1f2'
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: '#28a1f2',
-    },
-    '& .MuiOutlinedInput-root': {
-      '&.Mui-focused fieldset': {
-        borderColor: '#28a1f2',
-      },
-    },
-  },
-})(TextField);
 
 class MyAccount extends React.Component {
   constructor(props) {
@@ -47,24 +30,24 @@ class MyAccount extends React.Component {
       }
     }
   }
-  
+
   submitAccountUpdate = async (values) => {
     values = {
       ...values,
-			firstname: this.state.uxerProfile.firstname,
+      firstname: this.state.uxerProfile.firstname,
       lastname: this.state.uxerProfile.lastname,
       email: this.state.uxerProfile.email,
-      company: this.state.uxerProfile.company,  
+      company: this.state.uxerProfile.company,
     }
-    if(this.state.file === null) {
+    if (this.state.file === null) {
       values = {
         ...values,
-				img_url: this.state.uxerProfile.img_url
-      } 
-		} else {
+        img_url: this.state.uxerProfile.img_url
+      }
+    } else {
       delay(100)
       const profilePhoto = await this.uploadHandler(this.state.file)
-      values= {
+      values = {
         ...values,
         img_url: profilePhoto
       }
@@ -81,43 +64,43 @@ class MyAccount extends React.Component {
 
   handleFirstNameChange = (event) => {
     const uxerProfile = this.state.uxerProfile
-		this.setState({ uxerProfile: {...uxerProfile, firstname: event.target.value} });
+    this.setState({ uxerProfile: { ...uxerProfile, firstname: event.target.value } });
   };
-  
+
   handleLastNameChange = (event) => {
     const uxerProfile = this.state.uxerProfile
-		this.setState({ uxerProfile: {...uxerProfile, lastname: event.target.value} });
-	};
+    this.setState({ uxerProfile: { ...uxerProfile, lastname: event.target.value } });
+  };
 
   handleEmailChange = (event) => {
     const uxerProfile = this.state.uxerProfile
-		this.setState({ uxerProfile: {...uxerProfile, email: event.target.value} });
-	};
-  
+    this.setState({ uxerProfile: { ...uxerProfile, email: event.target.value } });
+  };
+
   handleCompanyChange = (event) => {
     const uxerProfile = this.state.uxerProfile
-		this.setState({ uxerProfile: {...uxerProfile, company: event.target.value} });
+    this.setState({ uxerProfile: { ...uxerProfile, company: event.target.value } });
   };
 
   handleImageChange = (event) => {
-		event.preventDefault();
-		
-		const reader = new FileReader();
-		const file = event.target.files[0];
-	  
-		reader.onloadend = () => {
-		  this.setState({
-			file: file,
-			imagePreviewUrl: reader.result
-		  });
-		}
-		reader.readAsDataURL(file)
+    event.preventDefault();
+
+    const reader = new FileReader();
+    const file = event.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({
+        file: file,
+        imagePreviewUrl: reader.result
+      });
+    }
+    reader.readAsDataURL(file)
   };
-  
-  async uploadHandler (file) {
+
+  async uploadHandler(file) {
     var formData = new FormData();
     const date = new Date()
-    const newFilename =  date.getTime() + '_' + file.name
+    const newFilename = date.getTime() + '_' + file.name
     formData.append('file', file, newFilename)
     try {
       const response = await axios.post(`${APIURI.UXER}${this.state.uxerId}/upload`, formData)
@@ -129,17 +112,17 @@ class MyAccount extends React.Component {
       console.error(e)
     }
   }
-  
-  render() {
-    const {uxerProfile} = this.state
 
-    let {imagePreviewUrl} = this.state;
-		let $imagePreview = uxerProfile.img_url;
-		if (imagePreviewUrl || uxerProfile.img_url ) {
-			$imagePreview = (<img src={uxerProfile.img_url? uxerProfile.img_url : imagePreviewUrl} alt='Profile Picture' className='profile-img'/>);
-		} else {
-			$imagePreview = (<img src={uxerProfile.img_url && uxerProfile.img_url} alt='Profile Picture' className='profile-img'/>);
-		}
+  render() {
+    const { uxerProfile } = this.state
+
+    let { imagePreviewUrl } = this.state;
+    let $imagePreview = uxerProfile.img_url;
+    if (imagePreviewUrl || uxerProfile.img_url) {
+      $imagePreview = (<img src={uxerProfile.img_url ? uxerProfile.img_url : imagePreviewUrl} alt='Profile Picture' className='profile-img' />);
+    } else {
+      $imagePreview = (<img src={uxerProfile.img_url && uxerProfile.img_url} alt='Profile Picture' className='profile-img' />);
+    }
 
     return (
       <div>
@@ -151,8 +134,8 @@ class MyAccount extends React.Component {
               <Col xs={4} className='block-account '>
                 <Row >
                   <Col xs={5} sm={4} xl={3}>
-                  {$imagePreview}
-                    <input type="file" name="file" onChange={(event)=>this.handleImageChange(event)}/>                   
+                    {$imagePreview}
+                    <input type="file" name="file" onChange={(event) => this.handleImageChange(event)} />
                   </Col>
                 </Row>
                 <br />
@@ -176,11 +159,11 @@ class MyAccount extends React.Component {
                                           </Col>
                                           <Col xs={12} lg={12}>
                                             <Label className=' w-100'>
-                                              <Input {...input} 
-                                              value={uxerProfile.firstname}
-                                              onChange={this.handleFirstNameChange}
-                                              type='text'
-                                              required 
+                                              <Input {...input}
+                                                value={uxerProfile.firstname}
+                                                onChange={this.handleFirstNameChange}
+                                                type='text'
+                                                required
                                               />
                                               {meta.touched && meta.error && <span>{meta.error}</span>}
                                             </Label>
@@ -201,11 +184,11 @@ class MyAccount extends React.Component {
                                           </Col>
                                           <Col xs={12} lg={12}>
                                             <Label className=' w-100'>
-                                              <Input {...input} 
-                                              value={uxerProfile.lastname}
-                                              onChange={this.handleLastNameChange}
-                                              type='text'
-                                              required 
+                                              <Input {...input}
+                                                value={uxerProfile.lastname}
+                                                onChange={this.handleLastNameChange}
+                                                type='text'
+                                                required
                                               />
                                               {meta.touched && meta.error && <span>{meta.error}</span>}
                                             </Label>
@@ -227,12 +210,12 @@ class MyAccount extends React.Component {
                                           <Col xs={12} lg={12}>
                                             <Label className=' w-100'>
                                               <Input {...input}
-                                              className='background-input'
-                                              value={uxerProfile.email}
-                                              onChange={this.handleEmailChange}
-                                              type='text'
-                                              readOnly
-                                               />
+                                                className='background-input'
+                                                value={uxerProfile.email}
+                                                onChange={this.handleEmailChange}
+                                                type='text'
+                                                readOnly
+                                              />
                                               {meta.touched && meta.error && <span>{meta.error}</span>}
                                             </Label>
                                           </Col>
@@ -252,11 +235,11 @@ class MyAccount extends React.Component {
                                           </Col>
                                           <Col xs={12} lg={12}>
                                             <Label className=' w-100'>
-                                              <Input {...input} 
-                                              value={uxerProfile.company}
-                                              onChange={this.handleCompanyChange}
-                                              type='text'
-                                              required />
+                                              <Input {...input}
+                                                value={uxerProfile.company}
+                                                onChange={this.handleCompanyChange}
+                                                type='text'
+                                                required />
                                               {meta.touched && meta.error && <span>{meta.error}</span>}
                                             </Label>
                                           </Col>

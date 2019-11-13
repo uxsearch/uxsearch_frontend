@@ -1,8 +1,8 @@
 import React from 'react'
-import { Row, Col, Form, FormGroup, Input, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Label } from 'reactstrap'
+import { Row, Col, Form, FormGroup, Input, Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from 'reactstrap'
 import { withStyles, TextField } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSortDown, faGripLines, faTextHeight, faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faSortDown, faTextHeight, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faCircle, faSquare, faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import { Field } from 'react-final-form'
 import swal from 'sweetalert'
@@ -102,7 +102,7 @@ class Question extends React.Component {
 
 
   addOption() {
-    const { question, setQuestion, index } = this.props
+    const { question, setQuestion } = this.props
     const newQuestion = { ...question }
     newQuestion.options.push({
       optionId: '',
@@ -115,7 +115,7 @@ class Question extends React.Component {
     const option = { optionId: optionId }
     this.props.deleteOption(option, questionId)
 
-    const { question, setQuestion, index } = this.props
+    const { question, setQuestion } = this.props
     const newQuestion = { ...question }
     newQuestion.options.splice(optionIndex, 1)
     setQuestion(newQuestion)
@@ -127,11 +127,9 @@ class Question extends React.Component {
     const statusRemove = true
     this.props.removeQuestion(question, statusRemove)
     this.props.deleteQuestion()
-    console.log(">>>questionId small", questionId)
   }
 
   modalSubmit = async () => {
-    console.log("")
     let willSubmit = await swal({
       title: 'Are you sure?',
       icon: 'warning',
@@ -149,14 +147,11 @@ class Question extends React.Component {
       },
       dangerMode: false,
     })
-    console.log('>>> willSubmit ', willSubmit)
     return willSubmit
   }
 
   render() {
     const { type, index } = this.state
-    const { projectId, projectLink, projectName, projectDescription, projectCover, questionId } = this.state
-    const swal = require('sweetalert')
 
     return (
       <Row className='question-block' >

@@ -1,6 +1,5 @@
 import React from "react";
 import { Container, Row, Col, Button } from "reactstrap";
-import { withStyles, TextField } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { Form } from 'react-final-form'
@@ -16,22 +15,6 @@ import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
 
 import "../../static/sass/uxer/createQuestion.scss";
-
-const SearchField = withStyles({
-  root: {
-    "& label.Mui-focused": {
-      color: "#28a1f2"
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#28a1f2"
-    },
-    "& .MuiOutlinedInput-root": {
-      "&.Mui-focused fieldset": {
-        borderColor: "#28a1f2"
-      }
-    }
-  }
-})(TextField);
 
 class CreateQuestion extends React.Component {
   constructor(props) {
@@ -217,7 +200,7 @@ class CreateQuestion extends React.Component {
   render() {
     const { uxerId, projectId, project, questions, loading } = this.state
     const swal = require('sweetalert')
-    
+
     return (
       <div>
         <NotSupport className='d-md-none' />

@@ -14,11 +14,10 @@ const ExperBlock = (props) => {
           <Col xs={12}>
             <Row className='justify-content-center'>
               <Col xs={12} className='profile-block'>
-                <FontAwesomeIcon icon={faUserCircle} size='6x' />
+                <FontAwesomeIcon icon={faUserCircle} className='logo-icon-user' />
               </Col>
             </Row>
-            <br />
-            <Row className='justify-content-center'>
+            <Row className='justify-content-center text-box-name'>
               <Col xs={12}>
                 <p className='no-margin'>{props.firstname}</p>
                 <p className='no-margin'>{props.lastname}</p>

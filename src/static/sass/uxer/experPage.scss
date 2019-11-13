@@ -95,16 +95,25 @@
   .profile-block {
     justify-items: center;
     width: 100px;
-    height: 100px;
   }
 
-  .profile-img {
-    width: 100px;
+  .logo-icon-user {
+    width: 75px;
     height: 100%;
-    border-radius: 100%;
+  }
+
+  .text-box-name {
+    margin-top: 5px;
   }
 
   .link {
     color: $dark;
+  }
+  
+  @media (min-width: 992px) {
+    .logo-icon-user {
+      width: 100px;
+      height: 100%;
+    }
   }
 }

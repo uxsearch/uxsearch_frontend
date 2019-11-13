@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { withRouter } from 'react-router-dom'
 import { Container, Row, Col, Button } from "reactstrap";
 import { Form } from 'react-final-form'
-import { withStyles, TextField } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import swal from 'sweetalert'
@@ -16,22 +15,6 @@ import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
 
 import "../../static/sass/uxer/createQuestion.scss";
-
-const SearchField = withStyles({
-  root: {
-    "& label.Mui-focused": {
-      color: "#28a1f2"
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#28a1f2"
-    },
-    "& .MuiOutlinedInput-root": {
-      "&.Mui-focused fieldset": {
-        borderColor: "#28a1f2"
-      }
-    }
-  }
-})(TextField);
 
 class CreateTestnote extends Component {
   constructor(props) {

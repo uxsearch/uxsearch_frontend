@@ -2,10 +2,6 @@ import React from 'react'
 import { Row, Col, Label, Input } from 'reactstrap'
 
 class ExperProfile extends React.Component {
-	constructor(props) {
-		super(props)
-	}
-
 	render() {
 		return (
 			<Row>
