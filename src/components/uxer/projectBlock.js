@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Form, Field } from 'react-final-form'
-import { Container, Row, Col, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalBody, Button, Label } from 'reactstrap'
+import { Row, Col, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalBody, Button, Label } from 'reactstrap'
 import { TextField, withStyles } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisV, faTrash, faShare, faEdit, faBook, faLink, faPencilAlt } from '@fortawesome/free-solid-svg-icons'

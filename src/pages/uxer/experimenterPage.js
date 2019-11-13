@@ -133,7 +133,6 @@ class ExperPage extends React.Component {
                 <Col xs={6} md={4} lg={3} key={experiment.id}>
                   <ExperBlock
                     link={`/uxer/${this.state.uxerId}/project/${this.state.projectId}/experiment/${experiment.data.experimenter_key}/result`}
-                    imgUrl={'https://picsum.photos/200/300'}
                     firstname={experiment.data.firstname}
                     lastname={experiment.data.lastname}
                   />

@@ -19,7 +19,6 @@ class NavbarUxer extends React.Component {
       collapsed: true,
       nameUser: localStorage.getItem('firstname')
     };
-    console.log(this.state.nameUser)
   }
 
   toggle() {
@@ -58,9 +57,9 @@ class NavbarUxer extends React.Component {
               <NavItem>
                 <NavLink href={`/uxer/${this.props.uxerId}/projects`} className='link-text'>Projects</NavLink>
               </NavItem>
-              <NavItem>
+              {/* <NavItem>
                 <NavLink href='#' className='link-text'>Activity</NavLink>
-              </NavItem>
+              </NavItem> */}
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret className='link-text'>
                   {nameUser}
@@ -88,9 +87,9 @@ class NavbarUxer extends React.Component {
                 <NavItem>
                   <NavLink href={`/uxer/${this.props.uxerId}/projects`} className='link-text'>Projects</NavLink>
                 </NavItem>
-                <NavItem>
+                {/* <NavItem>
                   <NavLink href='#' className='link-text'>Activity</NavLink>
-                </NavItem>
+                </NavItem> */}
               </Nav>
             </Col>
             <Col md={5} className='account-box'>

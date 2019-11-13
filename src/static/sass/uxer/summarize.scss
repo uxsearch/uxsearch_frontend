@@ -53,36 +53,4 @@
     width: 100%;
     display: block;
   }
-
-  .block-result {
-    border: 1px solid $blue;
-    border-radius: 10px;
-    margin: 10px 0px;
-    padding: 10px;
-  }
-
-  
-  .count-text {
-    width: 35px;
-    height: 35px;
-    padding-top: 4px;
-    color: $white;
-    background: $blue;
-    border-radius: 100%;
-  }
-
-  .column-width {
-    width: 100vw !important;
-    border-radius: 15px;
-    background-color: #ffff;
-    border-color: #efefef;
-  }
-
-  .showMultiple {
-    background-color: #efefef;
-    margin: 0px !important;
-    padding: 0px !important;
-    border-radius: 10px;
-    border: aqua;
-  }
 }

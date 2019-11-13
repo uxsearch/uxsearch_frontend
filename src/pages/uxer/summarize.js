@@ -1,52 +1,29 @@
-import React from 'react';
-import { Container, Row, Col, Button } from 'reactstrap';
-import { withStyles, TextField, Table } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import { Form } from 'react-final-form'
-import { withRouter } from 'react-router-dom'
+import React from 'react'
+import { Container, Row, Col } from 'reactstrap'
+import { Table } from '@material-ui/core'
+import { Pie } from 'react-chartjs-2'
 
-import NotSupport from '../../components/utils/notSupport';
-import NavbarUXer from '../../components/utils/navbarUXer';
-import SubNavbar from '../../components/utils/subNavbar';
-import Question from '../../components/uxer/question';
+import NavbarUXer from '../../components/utils/navbarUXer'
+import SubNavbar from '../../components/utils/subNavbar'
 
 import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
 
-import '../../static/sass/uxer/summarize.scss';
-
-const SearchField = withStyles({
-  root: {
-    '& label.Mui-focused': {
-      color: '#28a1f2'
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: '#28a1f2'
-    },
-    '& .MuiOutlinedInput-root': {
-      '&.Mui-focused fieldset': {
-        borderColor: '#28a1f2'
-      }
-    }
-  }
-})(TextField);
+import '../../static/sass/uxer/summarize.scss'
 
 class Summarize extends React.Component {
   constructor(props) {
     super(props)
     const { computedMatch } = props
     this.state = {
-      questions: [
-
-      ],
+      questions: [],
       uxerId: computedMatch.params.id,
       projectId: computedMatch.params.projId,
       project: undefined,
       loading: false,
       question: undefined,
       avgTime: undefined,
-      resultSummarize: []
+      resultSummarize: undefined
     }
   }
 
@@ -86,11 +63,25 @@ class Summarize extends React.Component {
       if (response.status !== 200) {
         throw new Error('CANNOT GET RESULT')
       }
-      console.log(response)
       this.setState({ avgTime: response.data })
     } catch (e) {
       console.error(e)
     }
+  }
+
+  data = (option, results) => {
+    const data = {
+      labels: option,
+      datasets: [{
+        data: results,
+        backgroundColor: [
+          '#FF6384', '#ff8364', '#FFCE56', '#36A2EB', '#7f78d2',
+          '#e8647c', '#ff8080', '#ffd369', '#52de97', '#51dacf',
+          '#4BC0C0', '#2d3561', '#540e33', '#de356a', '#fc7fb2',
+        ],
+      }],
+    }
+    return data
   }
 
   render() {
@@ -101,77 +92,89 @@ class Summarize extends React.Component {
           <NavbarUXer title={`${project && project.name}`} uxerId={uxerId} />
           <SubNavbar uxerId={uxerId} projId={projectId} active={`summarize`} />
           <Container>
-            <Row className='summary-block'>
-              <Col xs={12} md={12}>
-                <br />
-                <Row className='justify-content-center'>
-                  <Col xs={10} className='space-side '>
-                    <h1>{`${project && project.name}`} Summarize</h1>
-                  </Col>
-                </Row>
-                <br />
-                <Row className='justify-content-center'>
-                  <Col xs={10}>
-                    <Row className='align-items-center'>
-                      <Col xs={12} md={4} lg={3} >
-                        <p className='title-head'>Average Time Test : </p>
-                      </Col>
-                      <Col xs={12} md={8} lg={9}>
-                        <p className='avg-time'>{avgTime}</p>
-                      </Col>
-                    </Row>
-                  </Col>
-                </Row>
-                <hr />
-                {resultSummarize.map(result => (
-                  <>
+            {resultSummarize &&
+              <>
+                <Row className='summary-block'>
+                  <Col xs={12} md={12}>
+                    <br />
                     <Row className='justify-content-center'>
-                      <Col xs={10}>
-                        <p className='title-head'>{result.question}</p>
-                        {result.type_form === 'textbox' ? (
-                          <Row>
-                            <Col xs={12}>
-                              <Table className='table table-fixed'>
-                                <tbody>
-                                  {result.answer.map(answer => (
-                                    <tr>
-                                      <td className='table-col'>{answer}</td>
-                                    </tr>
-                                  ))}
-                                </tbody>
-                              </Table>
-                            </Col>
-                          </Row>
-                        ) : (
-                            <Row className='justify-content-start align-items-center'>
-                              {result.options.map((option, index) => (
-                                <Col xs={12} md={6} lg={4}>
-                                  <div className='block-result'>
-                                    <Row className='align-items-center'>
-                                      <Col xs={10} >
-                                        <p className='no-margin'>{option}</p>
-                                      </Col>
-                                      <Col xs={2} className='no-padding text-center'>
-                                        <p className='no-margin count-text'>{result.answer[index]}</p>
-                                      </Col>
-                                    </Row>
-                                  </div>
-                                </Col>
-                              ))}
-                            </Row>
-                          )}
+                      <Col xs={10} className='space-side '>
+                        <h1>{`${project && project.name}`} Summarize</h1>
                       </Col>
                     </Row>
                     <br />
-                  </>
-                ))}
-              </Col>
-            </Row >
+                    <Row className='justify-content-center'>
+                      <Col xs={10}>
+                        <Row className='align-items-center'>
+                          <Col xs={12} md={4} lg={3} >
+                            <p className='title-head'>Average Time Test : </p>
+                          </Col>
+                          <Col xs={12} md={8} lg={9}>
+                            <p className='avg-time'>{resultSummarize.allExper <= 1 ? 'No Average' : avgTime}</p>
+                          </Col>
+                        </Row>
+                        <Row className='align-items-center'>
+                          <Col xs={12} md={4} lg={3} >
+                            <p className='title-head'>Number of Note : </p>
+                          </Col>
+                          <Col xs={12} md={8} lg={9}>
+                            {resultSummarize.allExper <= 1 ? (
+                              <p>{`${resultSummarize.takeNoteExper} / ${resultSummarize.allExper} person`}</p>
+                            ) : (
+                                <p>{`${resultSummarize.takeNoteExper} / ${resultSummarize.allExper} persons`}</p>
+                              )}
+                          </Col>
+                        </Row>
+                      </Col>
+                    </Row>
+                    <hr />
+                    {resultSummarize.summary.map(result => (
+                      <>
+                        <Row className='justify-content-center'>
+                          <Col xs={10}>
+                            <p className='title-head'>{result.question}</p>
+                            {result.type_form === 'textbox' ? (
+                              <Row>
+                                <Col xs={12}>
+                                  <Table className='table table-fixed'>
+                                    <tbody>
+                                      {result.answer.map(answer => (
+                                        <tr>
+                                          <td className='table-col'>{answer}</td>
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </Table>
+                                </Col>
+                              </Row>
+                            ) : (
+                                <Row className='justify-content-start'>
+                                  <Col xs={12}>
+                                    <Pie
+                                      data={this.data(result.options, result.answer)}
+                                      legend={{
+                                        position: 'bottom',
+                                      }}
+                                      width={100}
+                                      height={35}
+                                    />
+                                  </Col>
+                                </Row>
+                              )}
+                          </Col>
+                        </Row>
+                        <br />
+                      </>
+                    ))}
+                  </Col>
+                </Row>
+              </>
+            }
           </Container>
         </section>
       </div>
-    );
+    )
   }
 }
 
-export default withRouter(Summarize)
+export default Summarize

@@ -1,10 +1,11 @@
 import React from 'react'
-import { Row, Col, Form, FormGroup, Input, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Label } from 'reactstrap'
+import { Row, Col, Form, FormGroup, Input, Dropdown, DropdownItem, DropdownToggle, DropdownMenu } from 'reactstrap'
 import { withStyles, TextField } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSortDown, faGripLines, faTextHeight, faPlusCircle, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faSortDown, faTextHeight, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faCircle, faSquare, faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import { Field } from 'react-final-form'
+import swal from 'sweetalert'
 
 import '../../static/sass/uxer/createQuestion.scss'
 
@@ -41,7 +42,6 @@ class Question extends React.Component {
     this.setState({
       type: this.props.question.type_form,
     })
-
   }
 
   changeQuestion(e) {
@@ -64,7 +64,7 @@ class Question extends React.Component {
           options: [
             {
               optionId: '',
-              option: 'option',
+              option: '',
             }
           ]
         })
@@ -77,7 +77,7 @@ class Question extends React.Component {
           options: [
             {
               optionId: '',
-              option: 'option',
+              option: '',
             }
           ]
         })
@@ -102,11 +102,11 @@ class Question extends React.Component {
 
 
   addOption() {
-    const { question, setQuestion, index } = this.props
+    const { question, setQuestion } = this.props
     const newQuestion = { ...question }
     newQuestion.options.push({
       optionId: '',
-      option: 'option',
+      option: '',
     })
     setQuestion(newQuestion)
   }
@@ -115,11 +115,10 @@ class Question extends React.Component {
     const option = { optionId: optionId }
     this.props.deleteOption(option, questionId)
 
-    const { question, setQuestion, index } = this.props
+    const { question, setQuestion } = this.props
     const newQuestion = { ...question }
     newQuestion.options.splice(optionIndex, 1)
     setQuestion(newQuestion)
-    console.log(">>>questionId222", questionId)
 
   }
 
@@ -127,19 +126,50 @@ class Question extends React.Component {
     const question = { questionId: questionId }
     const statusRemove = true
     this.props.removeQuestion(question, statusRemove)
-    console.log(">>>questionId small", questionId)
+    this.props.deleteQuestion()
+  }
+
+  modalSubmit = async () => {
+    let willSubmit = await swal({
+      title: 'Are you sure?',
+      icon: 'warning',
+      buttons: {
+        cancel: {
+          text: 'Cancel',
+          value: false,
+          visible: true,
+        },
+        confirm: {
+          text: 'Confirm',
+          value: true,
+          visible: true,
+        }
+      },
+      dangerMode: false,
+    })
+    return willSubmit
   }
 
   render() {
     const { type, index } = this.state
-    const { projectId, projectLink, projectName, projectDescription, projectCover, questionId } = this.state
+
     return (
       <Row className='question-block' >
         <Col xs={12}>
           <Form>
             <FormGroup>
               <Row className='justify-content-center'>
-                <Col xs={12} className='text-end' onClick={() => this.blockRemoveQuestion(this.props.question.questionId)}>
+                <Col xs={12} className='text-end'
+
+
+                  onClick={async () => {
+                    const confirm = await this.modalSubmit()
+                    if (confirm) {
+
+                      this.blockRemoveQuestion(this.props.question.questionId)
+                    }
+                  }}
+                >
                   <FontAwesomeIcon icon={faTimes} color='#efefef' size='2x' className='close_btn' />
                 </Col>
               </Row>
@@ -232,7 +262,7 @@ class Question extends React.Component {
                                 <Input
                                   className='font'
                                   type='multiple'
-                                  placeholder='AddOption'
+                                  placeholder='Addoption'
                                   value={option.option}
                                   onChange={e => {
                                     this.changeOption(e.target.value, index)
@@ -297,8 +327,11 @@ class Question extends React.Component {
                               size='2x'
                               color='#909090'
                               className='icon-delete'
-                              onClick={() => {
-                                this.blockRemoveOption(option.optionId, this.props.question.questionId, index)
+                              onClick={async () => {
+                                const confirm = await this.modalSubmit()
+                                if (confirm) {
+                                  this.blockRemoveOption(option.optionId, this.props.question.questionId, index)
+                                }
                               }}
                             />
                           </Col>

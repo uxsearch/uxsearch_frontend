@@ -4,6 +4,9 @@ import { Container, Row, Col, Button, Label, Input } from 'reactstrap'
 import { Form, Field } from 'react-final-form'
 import arrayMutators from 'final-form-arrays'
 import { Checkbox, Radio, RadioGroup, FormGroup, FormControlLabel, withStyles } from '@material-ui/core'
+import swal from 'sweetalert'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
 import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
@@ -268,7 +271,7 @@ class AnswerTestnote extends React.Component {
                 <Row className='align-items-center justify-content-center'>
                   <Col xs={1} sm={4} xl={3}>
                     <div className='profile-block'>
-                      <img src='https://picsum.photos/200/300' alt='Profile Picture' className='profile-img' />
+                      <FontAwesomeIcon icon={faUserCircle} size='6x' />
                     </div>
                   </Col>
                   <Col xs={12} sm={8} xl={9}>
@@ -349,7 +352,7 @@ class AnswerTestnote extends React.Component {
                                                   <Row className='align-items-center'>
                                                     <Col xs={12}>
                                                       <Label className=' w-100'>
-                                                        <Input {...input} rows='4' className='text-style'/>
+                                                        <Input {...input} rows='4' className='text-style' />
                                                         {meta.touched && meta.error && <span>{meta.error}</span>}
                                                       </Label>
                                                     </Col>

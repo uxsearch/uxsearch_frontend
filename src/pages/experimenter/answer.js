@@ -5,6 +5,7 @@ import { Form, Field } from 'react-final-form'
 import { FieldArray } from 'react-final-form-arrays'
 import arrayMutators from 'final-form-arrays'
 import { Checkbox, Radio, RadioGroup, FormControlLabel, withStyles } from '@material-ui/core'
+import swal from 'sweetalert'
 
 import NavbarExp from '../../components/utils/navbarExperimenter'
 import NotSupport from '../../components/utils/notSupport'
@@ -111,8 +112,17 @@ class Answer extends React.Component {
     }
   }
 
+  modalSubmit = () => {
+    swal("Submit Successful", {
+      icon: "success",
+      timer: 1000,
+      buttons: false
+    });
+  }
+
   render() {
     const { questionnaire, project } = this.state
+    const swal = require('sweetalert')
 
     return (
       <div>
@@ -214,7 +224,7 @@ class Answer extends React.Component {
                         </Row>
                         <Row className='justify-content-center space-btn'>
                           <Col xs={12} md={4} className='text-center'>
-                            <Button className='btn-submit-test'>Submit</Button>
+                            <Button className='btn-submit-test' onClick={() => this.modalSubmit()}>Submit</Button>
                           </Col>
                         </Row>
                       </form>

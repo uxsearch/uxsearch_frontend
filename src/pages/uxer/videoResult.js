@@ -1,5 +1,7 @@
 import React from 'react'
 import { Container, Row, Col, Button } from 'reactstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
 import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
@@ -11,8 +13,7 @@ import ResultQuestion from '../../components/uxer/videoresult/resultBlock'
 
 import '../../static/sass/uxer/videoResult.scss'
 
-class VideoResult extends React.
-  Component {
+class VideoResult extends React.Component {
   constructor(props) {
     super(props);
     const { computedMatch } = props
@@ -113,7 +114,7 @@ class VideoResult extends React.
               <Row className='align-items-center justify-content-center'>
                 <Col xs={3} sm={4} xl={3}>
                   <div className='profile-block'>
-                    <img src='https://picsum.photos/200/300' alt='Profile Picture' className='profile-img' />
+                    <FontAwesomeIcon icon={faUserCircle} size='6x' />
                   </div>
                 </Col>
                 <Col xs={9} sm={8} xl={9}>

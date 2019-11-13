@@ -1,10 +1,10 @@
 import React from "react";
 import { Container, Row, Col, Button } from "reactstrap";
-import { withStyles, TextField } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { Form } from 'react-final-form'
 import { withRouter } from 'react-router-dom'
+import swal from 'sweetalert'
 
 import NotSupport from "../../components/utils/notSupport";
 import NavbarUXer from "../../components/utils/navbarUXer";
@@ -15,22 +15,6 @@ import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
 
 import "../../static/sass/uxer/createQuestion.scss";
-
-const SearchField = withStyles({
-  root: {
-    "& label.Mui-focused": {
-      color: "#28a1f2"
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#28a1f2"
-    },
-    "& .MuiOutlinedInput-root": {
-      "&.Mui-focused fieldset": {
-        borderColor: "#28a1f2"
-      }
-    }
-  }
-})(TextField);
 
 class CreateQuestion extends React.Component {
   constructor(props) {
@@ -72,7 +56,6 @@ class CreateQuestion extends React.Component {
   async componentDidMount() {
     await this.getProject()
     await this.getQuestionnaire()
-    console.log(this.state.questions.length)
     if (this.state.questions.length === 0) {
       this.setState({
         questions: [this.state.defaultQuestion]
@@ -94,7 +77,6 @@ class CreateQuestion extends React.Component {
   }
 
   addQuestion() {
-    console.log(this.state.questions)
     if (this.state.questions) {
       const questions = [...this.state.questions];
       questions.push({
@@ -173,6 +155,14 @@ class CreateQuestion extends React.Component {
     }
   }
 
+  deleteQuestion(index) {
+    const newQuestions = [...this.state.questions]
+    newQuestions.splice(index, 1)
+    this.setState({
+      questions: newQuestions
+    })
+  }
+
   deleteOption = async (optionId, questionId) => {
     try {
       const response = await axios.delete(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/${APIURI.QUESTION}${questionId}/delete-option`, optionId)
@@ -199,12 +189,17 @@ class CreateQuestion extends React.Component {
     }
   }
 
-  popupSave() {
-    alert("Save Usability Successful")
+  modalSubmit = () => {
+    swal("Save Questionnaire Successful", {
+      icon: "success",
+      timer: 1000,
+      buttons: false
+    });
   }
 
   render() {
     const { uxerId, projectId, project, questions, loading } = this.state
+    const swal = require('sweetalert')
 
     return (
       <div>
@@ -226,7 +221,7 @@ class CreateQuestion extends React.Component {
                             <h2>{`${project && project.name}`} Questionnaire</h2>
                           </Col>
                         </Row>
-                        <Row>
+                        {/* <Row>
                           <Col xs={1} md={1}></Col>
                           <Col xs={12} md={10} lg={10}>
                             <SearchField
@@ -238,8 +233,8 @@ class CreateQuestion extends React.Component {
                             />
                           </Col>
                           <Col xs={1} md={1}></Col>
-                        </Row>
-                        <br />
+                        </Row> */}
+                        {/* <br /> */}
                         <Col xs={12} md={12}>
                           <hr className="black-line" />
                         </Col>
@@ -254,6 +249,7 @@ class CreateQuestion extends React.Component {
                             key={index}
                             deleteOption={this.deleteOption}
                             removeQuestion={(questionId, statusRemove) => this.removeQuestion(questionId, statusRemove)}
+                            deleteQuestion={() => this.deleteQuestion(index)}
                           />
                         ))}
 
@@ -280,7 +276,7 @@ class CreateQuestion extends React.Component {
                     </Row >
                     <Row className='justify-content-center space-btn'>
                       <Col xs={12} md={4} className='text-center'>
-                        <Button type="submit" className='btn-save-questionnaire' onClick={() => this.popupSave()}>Save Questionnaire</Button>
+                        <Button type="submit" className='btn-save-questionnaire' onClick={() => this.modalSubmit()}>Save Questionnaire</Button>
 
                       </Col>
                     </Row>
