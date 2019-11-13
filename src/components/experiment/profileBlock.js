@@ -195,7 +195,6 @@ class ProfileBlock extends React.Component {
                           <>
                             <Row className='align-items-center'>
                               <Col xs={12} lg={4}>
-                                <span className="star">* </span>
                                 <span>Country : </span>
                               </Col>
                               <Col xs={12} lg={8}>
@@ -231,7 +230,6 @@ class ProfileBlock extends React.Component {
                           <>
                             <Row className='align-items-center'>
                               <Col xs={12} lg={4}>
-                                <span className="star">* </span>
                                 <span>City/State : </span>
                               </Col>
                               <Col xs={12} lg={8}>

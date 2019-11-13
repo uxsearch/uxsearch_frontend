@@ -127,12 +127,10 @@ class IndexExperiment extends React.Component {
     const gender = document.querySelector('#gender')
     const tel = document.querySelector('#tel')
     const email = document.querySelector('#email')
-    const country = document.querySelector('#country')
-    const city = document.querySelector('#city')
 
-    return isNull(firstname) || isNull(lastname) || isNull(birthdate) || isNull(gender) || isNull(tel) || isNull(email) || isNull(country) || isNull(city)
+    return isNull(firstname) || isNull(lastname) || isNull(birthdate) || isNull(gender) || isNull(tel) || isNull(email)
       || isEmpty(firstname.value) || isEmpty(lastname.value) || isEmpty(birthdate.value) || isEmpty(gender.value)
-      || isEmpty(tel.value) || isEmpty(email.value) || isEmpty(country.value) || isEmpty(city.value)
+      || isEmpty(tel.value) || isEmpty(email.value) 
   }
 
   render() {
