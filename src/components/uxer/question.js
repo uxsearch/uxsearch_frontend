@@ -64,7 +64,7 @@ class Question extends React.Component {
           options: [
             {
               optionId: '',
-              option: 'option',
+              option: '',
             }
           ]
         })
@@ -77,7 +77,7 @@ class Question extends React.Component {
           options: [
             {
               optionId: '',
-              option: 'option',
+              option: '',
             }
           ]
         })
@@ -106,7 +106,7 @@ class Question extends React.Component {
     const newQuestion = { ...question }
     newQuestion.options.push({
       optionId: '',
-      option: 'option',
+      option: '',
     })
     setQuestion(newQuestion)
   }
