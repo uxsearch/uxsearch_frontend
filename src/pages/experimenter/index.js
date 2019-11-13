@@ -117,7 +117,6 @@ class IndexExperiment extends React.Component {
         },
       });
     }
-    console.log('>>> willSubmit ', willSubmit)
     return willSubmit
   }
 
