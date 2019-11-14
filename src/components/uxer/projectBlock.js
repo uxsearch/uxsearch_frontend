@@ -24,7 +24,6 @@ const TextInput = withStyles({
   },
 })(TextField);
 
-
 class ProjectBlock extends React.Component {
   constructor(props) {
     super(props);
@@ -87,10 +86,8 @@ class ProjectBlock extends React.Component {
 
   handleImageChange = (event) => {
     event.preventDefault();
-
     const reader = new FileReader();
     const file = event.target.files[0];
-
     reader.onloadend = () => {
       this.setState({
         file: file,
@@ -144,7 +141,7 @@ class ProjectBlock extends React.Component {
                   </DropdownToggle>
                   <DropdownMenu>
                     <DropdownItem onClick={() => this.toggleModal()}>
-                      <FontAwesomeIcon icon={faEdit} color='#D42B2B' size='sm' className='space-icon' />
+                      <FontAwesomeIcon icon={faEdit} size='sm' className='space-icon' />
                       <span>Edit Project </span>
                     </DropdownItem>
                     <DropdownItem>
