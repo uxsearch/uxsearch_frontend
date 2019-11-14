@@ -344,7 +344,6 @@ class AnswerTestnote extends React.Component {
                   country={`${experiment.country}`}
                   educate={`${experiment.educate}`}
                   job={`${experiment.job}`}
-                  lifestyle={`${experiment.lifestyle}`}
                 />
               </>
             }

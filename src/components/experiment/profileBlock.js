@@ -237,7 +237,7 @@ class ProfileBlock extends React.Component {
                                   <Label className='no-margin w-100'>
                                     <select {...input}
                                       name='city'
-                                      placeholder='Choose Your Province/City'
+                                      placeholder='Choose Your City/State'
                                       className='form-control'
                                       id="city"
                                     >
@@ -308,7 +308,7 @@ class ProfileBlock extends React.Component {
               </Col>
             </Row>
           </Col>
-        </Row>
+        </Row >
       </div >
     )
   }

@@ -69,6 +69,9 @@ class ExperProfile extends React.Component {
 									<p className='d-none d-md-block'>{this.props.email || 'none'}</p>
 								</Col>
 							</Row>
+
+						</Col>
+						<Col xs={12} lg={6}>
 							<Row>
 								<Col xs={12} md={3} lg={4}>
 									<p className='no-margin topic-text'>Province/City :</p>
@@ -91,8 +94,6 @@ class ExperProfile extends React.Component {
 									<p className='d-none d-md-block'>{this.props.country || 'none'}</p>
 								</Col>
 							</Row>
-						</Col>
-						<Col xs={12} lg={6}>
 							<Row>
 								<Col xs={12} md={3} lg={4}>
 									<p className='no-margin topic-text'>Education :</p>
@@ -113,17 +114,6 @@ class ExperProfile extends React.Component {
 										<Input type='text' value={this.props.job || 'none'} className='input-field' disabled />
 									</Label>
 									<p className='d-none d-md-block'>{this.props.job || 'none'}</p>
-								</Col>
-							</Row>
-							<Row>
-								<Col xs={12} md={3} lg={4}>
-									<p className='no-margin topic-text'>Lifestyle :</p>
-								</Col>
-								<Col xs={12} md={9} lg={8}>
-									<Label className='w-100 d-md-none'>
-										<Input type='textarea' value={this.props.lifestyle || 'none'} className='input-field' disabled />
-									</Label>
-									<p className='d-none d-md-block'>{this.props.lifestyle || 'none'}</p>
 								</Col>
 							</Row>
 						</Col>
