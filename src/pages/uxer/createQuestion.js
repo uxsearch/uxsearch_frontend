@@ -40,7 +40,6 @@ class CreateQuestion extends React.Component {
     }
   }
 
-
   togglePopup() {
     this.setState({
       showPopup: !this.state.showPopup

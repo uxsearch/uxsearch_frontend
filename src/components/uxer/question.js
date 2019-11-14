@@ -100,7 +100,6 @@ class Question extends React.Component {
     setQuestion(newQuestion)
   }
 
-
   addOption() {
     const { question, setQuestion } = this.props
     const newQuestion = { ...question }
@@ -114,12 +113,10 @@ class Question extends React.Component {
   blockRemoveOption = (optionId, questionId, optionIndex) => {
     const option = { optionId: optionId }
     this.props.deleteOption(option, questionId)
-
     const { question, setQuestion } = this.props
     const newQuestion = { ...question }
     newQuestion.options.splice(optionIndex, 1)
     setQuestion(newQuestion)
-
   }
 
   blockRemoveQuestion = (questionId) => {
@@ -160,12 +157,9 @@ class Question extends React.Component {
             <FormGroup>
               <Row className='justify-content-center'>
                 <Col xs={12} className='text-end'
-
-
                   onClick={async () => {
                     const confirm = await this.modalSubmit()
                     if (confirm) {
-
                       this.blockRemoveQuestion(this.props.question.questionId)
                     }
                   }}

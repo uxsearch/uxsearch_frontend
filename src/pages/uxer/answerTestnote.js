@@ -236,19 +236,12 @@ class AnswerTestnote extends React.Component {
   }
 
   handleChange = questionId => event => {
-    console.log('entry handle')
     let { noteAndAnswer } = this.state
-    console.log('id quesiton', questionId)
     noteAndAnswer.map(e => {
-      console.log('entry map')
       if (e.question.type_form === "multiple") {
-        console.log('entry if')
         e.answer.answer = event.target.value
         let multipleState = { ...this.state.multipleState }
-        console.log('>>> multipleState be', multipleState)
-        console.log('multipleState id', multipleState[questionId])
         multipleState[questionId] = event.target.value
-        console.log('>>> multipleState af', multipleState)
         this.setState({ multipleState })
       }
     })
