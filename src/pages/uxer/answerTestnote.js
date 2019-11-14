@@ -121,6 +121,7 @@ class AnswerTestnote extends React.Component {
       if (response.status !== 200) {
         throw new Error('CANNOT CREATE TESTNOTE')
       }
+      await this.modalSubmit()
       this.props.history.push(`/uxer/${this.state.uxerId}/project/${this.state.projectId}/experiment/${this.state.experId}/answertestnote`)
     } catch (e) {
       console.error(e)
@@ -255,6 +256,34 @@ class AnswerTestnote extends React.Component {
         [questionId]: checkboxState
       }
     })
+  }
+
+  confirmTestnote = async (value) => {
+    const confirm = await this.modalConfirm()
+    if (confirm) {
+      this.submitTestnote(value)
+    }
+  }
+
+  modalConfirm = async () => {
+    let willSubmit = await swal({
+      title: 'Are you sure?',
+      icon: 'warning',
+      buttons: {
+        cancel: {
+          text: 'Cancel',
+          value: false,
+          visible: true,
+        },
+        confirm: {
+          text: 'Confirm',
+          value: true,
+          visible: true,
+        }
+      },
+      dangerMode: false,
+    })
+    return willSubmit
   }
 
   modalSubmit = () => {
@@ -438,7 +467,6 @@ class AnswerTestnote extends React.Component {
                         <Row className='justify-content-center space-btn'>
                           <Col xs={12} md={4} >
                             <Button className='btn-submit-test' >Submit</Button>
-                            {/* <Button className='btn-submit-test' onClick={() => this.modalSubmit()} disabled={noteAndAnswer.length === 0}>Submit</Button> */}
                           </Col>
                         </Row>
                       </form>
