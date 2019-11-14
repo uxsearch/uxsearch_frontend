@@ -236,12 +236,19 @@ class AnswerTestnote extends React.Component {
   }
 
   handleChange = questionId => event => {
+    console.log('entry handle')
     let { noteAndAnswer } = this.state
+    console.log('id quesiton', questionId)
     noteAndAnswer.map(e => {
+      console.log('entry map')
       if (e.question.type_form === "multiple") {
+        console.log('entry if')
         e.answer.answer = event.target.value
         let multipleState = { ...this.state.multipleState }
+        console.log('>>> multipleState be', multipleState)
+        console.log('multipleState id', multipleState[questionId])
         multipleState[questionId] = event.target.value
+        console.log('>>> multipleState af', multipleState)
         this.setState({ multipleState })
       }
     })
@@ -295,8 +302,7 @@ class AnswerTestnote extends React.Component {
   }
 
   render() {
-    const { uxerId, project, experiment, noteAndAnswer } = this.state
-    const swal = require('sweetalert')
+    const { uxerId, project, experiment, noteAndAnswer, multipleState } = this.state
 
     return (
       <div>
@@ -403,7 +409,7 @@ class AnswerTestnote extends React.Component {
                                               <RadioGroup
                                                 aria-label='answer'
                                                 name={`answers[${index}][answer]`}
-                                                value={qNa.answer.answer}
+                                                value={qNa.answer.answer && multipleState[qNa.question.questionId]}
                                                 onChange={this.handleChange(qNa.question.questionId)}
                                               >
                                                 {qNa.question.options.map(option => (
