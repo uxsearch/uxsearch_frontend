@@ -6,6 +6,7 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
 
+import NotSupport from "../../components/utils/notSupport";
 import NavbarUXer from '../../components/utils/navbarUXer'
 import PlayVideo from '../../components/uxer/videoresult/video'
 import ExperProfile from '../../components/uxer/videoresult/profileBlock'
@@ -97,6 +98,7 @@ class VideoResult extends React.Component {
 
     return (
       <section id='video-result'>
+        <NotSupport className='d-md-none' />
         <NavbarUXer title={`${project && project.name}`} />
         <Container fluid>
           {records &&
