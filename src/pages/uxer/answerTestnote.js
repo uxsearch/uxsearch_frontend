@@ -122,7 +122,7 @@ class AnswerTestnote extends React.Component {
         throw new Error('CANNOT CREATE TESTNOTE')
       }
       await this.modalSubmit()
-      this.props.history.push(`/uxer/${this.state.uxerId}/project/${this.state.projectId}/experiment/${this.state.experId}/answertestnote`)
+      this.formatData()
     } catch (e) {
       console.error(e)
     }
