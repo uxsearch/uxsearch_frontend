@@ -218,13 +218,13 @@ class Question extends React.Component {
                         </DropdownToggle>
                         <DropdownMenu className='btn-secondary indropdown text-center '>
                           <DropdownItem onClick={() => this.changeType('multiple')}>
-                            <FontAwesomeIcon icon={faCircle} size='1x' color='#efefef' className='textHeight' />Multiple Choice
+                            <FontAwesomeIcon icon={faCircle} size='1x' color='#303030' className='textHeight' />multiple Choice
                           </DropdownItem>
                           <DropdownItem onClick={() => this.changeType('checkbox')}>
-                            <FontAwesomeIcon icon={faSquare} size='1x' color='#efefef' className='textHeight' />Check Box
+                            <FontAwesomeIcon icon={faSquare} size='1x' color='#303030' className='textHeight' />check Box
                           </DropdownItem>
                           <DropdownItem onClick={() => this.changeType('textbox')}>
-                            <FontAwesomeIcon icon={faTextHeight} size='1x' color='#efefef' className='textHeight' />Text box
+                            <FontAwesomeIcon icon={faTextHeight} size='1x' color='#303030' className='textHeight' />text box
                           </DropdownItem>
                         </DropdownMenu>
                       </Dropdown>
