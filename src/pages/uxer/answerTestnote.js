@@ -164,7 +164,6 @@ class AnswerTestnote extends React.Component {
     if (questions.length !== 0) {
       for (let i = 0; i < questions.length; i++) {
         if (answers.length !== 0) {
-          // MARK: beware idex out of bounds
           questionAndAnswer.push({
             question: {
               questionId: questions[i].id,
@@ -294,6 +293,10 @@ class AnswerTestnote extends React.Component {
     });
   }
 
+  backToResultPage = () => {
+    this.props.history.push(`/uxer/${this.state.uxerId}/project/${this.state.projectId}/experiment/${this.state.experId}/result`)
+  }
+
   render() {
     const { uxerId, project, experiment, noteAndAnswer, multipleState } = this.state
 
@@ -326,6 +329,7 @@ class AnswerTestnote extends React.Component {
                   src={require('../../static/img/close.svg')}
                   className="close_btn"
                   alt="close button"
+                  onClick={() => this.backToResultPage()}
                 />
               </Col>
             </Row>
