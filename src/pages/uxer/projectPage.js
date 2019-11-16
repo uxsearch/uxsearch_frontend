@@ -1,5 +1,4 @@
 import React from 'react'
-import { Redirect } from 'react-router'
 import { Form, Field } from 'react-final-form'
 import { Container, Row, Col, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalBody, Button, Label } from 'reactstrap'
 import { TextField, withStyles } from '@material-ui/core'
@@ -200,9 +199,9 @@ class ProjectPage extends React.Component {
           <NavbarUxer title='My Projects' uxerId={uxerId} />
           <Container>
             <Row>
-              <Col xs={11} sm={10} md={11}>
+              <Col xs={10} sm={10} md={11}>
               </Col>
-              <Col xs={1} sm={2} md={1} onClick={this.toggleModal}>
+              <Col xs={2} sm={2} md={1} onClick={this.toggleModal}>
                 <FontAwesomeIcon icon={faCircle} size='3x' color='#28a1f2' className='circle' />
                 <FontAwesomeIcon icon={faPlus} size='1x' color='#fff' className='plus' />
               </Col>

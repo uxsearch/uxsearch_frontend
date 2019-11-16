@@ -1,6 +1,9 @@
 import React from 'react'
 import { Row, Col } from 'reactstrap'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
+
 import '../../static/sass/uxer/experPage.scss'
 
 const ExperBlock = (props) => {
@@ -11,15 +14,10 @@ const ExperBlock = (props) => {
           <Col xs={12}>
             <Row className='justify-content-center'>
               <Col xs={12} className='profile-block'>
-                <img
-                  src={props.imgUrl}
-                  className="profile-img"
-                  alt="Profile"
-                />
+                <FontAwesomeIcon icon={faUserCircle} className='logo-icon-user' />
               </Col>
             </Row>
-            <br />
-            <Row className='justify-content-center'>
+            <Row className='justify-content-center text-box-name'>
               <Col xs={12}>
                 <p className='no-margin'>{props.firstname}</p>
                 <p className='no-margin'>{props.lastname}</p>

@@ -1,23 +1,18 @@
 import React from 'react'
 import { Container, Row, Col, Button, Label } from 'reactstrap'
 import { Form, Field } from 'react-final-form'
-import swal from 'sweetalert'
+import { withStyles, TextField } from "@material-ui/core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserAlt, faLock } from '@fortawesome/free-solid-svg-icons'
+
+// import NotSupport from '../../components/utils/notSupport'
+import background1 from '../../static/img/background.jpg'
+import logo from '../../static/img/logo.png'
 
 import axios from '../../utils/axios'
-import APIURI from '../../utils/apiuri'
-
-import NotSupport from '../../components/utils/notSupport'
 
 import '../../static/sass/experimenter/index.scss'
 import "../../static/sass/uxer/signin.scss";
-
-import { withStyles, TextField, Grid } from "@material-ui/core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { faUserAlt, faLock } from '@fortawesome/free-solid-svg-icons'
-import logo from '../../static/img/full_logo.png'
-import background1 from '../../static/img/background.jpg'
-
 
 const TextInput = withStyles({
   root: {
@@ -36,10 +31,6 @@ const TextInput = withStyles({
 })(TextField);
 
 class SignIn extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   submitLogin = async (values) => {
     try {
       const response = await axios.post(`authen/signin`, values)
@@ -65,19 +56,19 @@ class SignIn extends React.Component {
   render() {
     return (
       <div>
-        <NotSupport className='d-md-none' />
-        <section id='signin' className='d-none d-md-block'>
+        {/* <NotSupport className='d-md-none' /> */}
+        {/* <section id='signin' className='d-none d-md-block'> */}
+        <section id='signin' >
           <div className='blue-screen'></div>
           <img className='background ' src={background1} />
           <Container  >
             <Row className='align-items-center justify-content-center'>
-              <Col xs={5} md={4} lg={3} className='profile-block '>
+              <Col xs={7} md={4} lg={3} className='profile-block '>
                 <Row>
                   <Col xs={12} className='text-center img-block'>
                     <img className='logo-icon' src={logo} />
                   </Col>
                 </Row>
-                <br />
 
                 <Form
                   onSubmit={this.submitLogin}

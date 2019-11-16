@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { withRouter } from 'react-router-dom'
 import { Container, Row, Col, Button } from "reactstrap";
 import { Form } from 'react-final-form'
-import { withStyles, TextField } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import swal from 'sweetalert'
 
 import NotSupport from "../../components/utils/notSupport";
 import NavbarUXer from "../../components/utils/navbarUXer";
@@ -15,22 +15,6 @@ import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
 
 import "../../static/sass/uxer/createQuestion.scss";
-
-const SearchField = withStyles({
-  root: {
-    "& label.Mui-focused": {
-      color: "#28a1f2"
-    },
-    "& .MuiInput-underline:after": {
-      borderBottomColor: "#28a1f2"
-    },
-    "& .MuiOutlinedInput-root": {
-      "&.Mui-focused fieldset": {
-        borderColor: "#28a1f2"
-      }
-    }
-  }
-})(TextField);
 
 class CreateTestnote extends Component {
   constructor(props) {
@@ -71,7 +55,6 @@ class CreateTestnote extends Component {
   async componentDidMount() {
     await this.getProject()
     await this.getTestnote()
-    console.log(this.state.questions.length)
     if (this.state.questions.length === 0) {
       this.setState({
         questions: [this.state.defaultQuestion]
@@ -92,8 +75,15 @@ class CreateTestnote extends Component {
     }
   }
 
+  deleteQuestion(index) {
+    const newQuestions = [...this.state.questions]
+    newQuestions.splice(index, 1)
+    this.setState({
+      questions: newQuestions
+    })
+  }
+
   addQuestion() {
-    console.log(this.state.questions)
     if (this.state.questions) {
       const questions = [...this.state.questions];
       questions.push({
@@ -183,14 +173,10 @@ class CreateTestnote extends Component {
       console.error(e)
     }
   }
-
   removeQuestion = async (questionId, statusRemove) => {
-    console.log(">>>questionId large", questionId, statusRemove)
     try {
       if (statusRemove === true) {
-        console.log(">>>questionId 5555555", questionId, statusRemove)
         const response = await axios.delete(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/delete-question`, questionId)
-        console.log(">>>response", response, questionId, statusRemove)
         if (response.status !== 200) {
           throw new Error('CANNOT DELETE TESTNOTE')
         }
@@ -201,8 +187,12 @@ class CreateTestnote extends Component {
     }
   }
 
-  popupSave() {
-    alert("Save Usability Successful")
+  modalSubmit = () => {
+    swal("Save Usability Test Note Successful", {
+      icon: "success",
+      timer: 1000,
+      buttons: false
+    });
   }
 
   render() {
@@ -228,7 +218,7 @@ class CreateTestnote extends Component {
                             <h2>Usability Test Note : {`${project && project.name}`} </h2>
                           </Col>
                         </Row>
-                        <Row>
+                        {/* <Row>
                           <Col xs={1} md={1}></Col>
                           <Col xs={12} md={10} lg={10}>
                             <SearchField
@@ -241,7 +231,7 @@ class CreateTestnote extends Component {
                           </Col>
                           <Col xs={1} md={1}></Col>
                         </Row>
-                        <br />
+                        <br /> */}
                         <Col xs={12} md={12}>
                           <hr className="black-line" />
                         </Col>
@@ -255,6 +245,7 @@ class CreateTestnote extends Component {
                             key={index}
                             deleteOption={this.deleteOption}
                             removeQuestion={(questionId, statusRemove) => this.removeQuestion(questionId, statusRemove)}
+                            deleteQuestion={() => this.deleteQuestion(index)}
                           />
                         ))}
                         <br />
@@ -280,7 +271,7 @@ class CreateTestnote extends Component {
                     </Row >
                     <Row className='justify-content-center space-btn'>
                       <Col xs={12} md={4} className='text-center'>
-                        <Button type="submit" className='btn-save-questionnaire' onClick={() => this.popupSave()}>Save Usability Test Note</Button>
+                        <Button type="submit" className='btn-save-questionnaire' onClick={() => this.modalSubmit()}>Save Usability Test Note</Button>
                       </Col>
                     </Row>
                   </form>
@@ -289,7 +280,7 @@ class CreateTestnote extends Component {
           </Container>
         </section>
       </div>
-    );
+    )
   }
 }
 

@@ -2,10 +2,6 @@ import React from 'react'
 import { Row, Col, Label, Input } from 'reactstrap'
 
 class ResultQuestion extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const questions = this.props.questions
     return (

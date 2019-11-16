@@ -9,7 +9,6 @@ const normalizePhone = value => {
   if (!value) {
     return value
   }
-
   const onlyNums = value.replace(/[^\d]/g, "")
   if (onlyNums.length <= 3) {
     return onlyNums
@@ -42,11 +41,12 @@ class ProfileBlock extends React.Component {
                           <>
                             <Row className='align-items-center'>
                               <Col xs={12} lg={4} className='space'>
+                                <span className="star">* </span>
                                 <span>Firstname : </span>
                               </Col>
                               <Col xs={12} lg={8}>
                                 <Label className=' w-100'>
-                                  <Input {...input} required />
+                                  <Input {...input} required id="firstname" />
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
                                 </Label>
                               </Col>
@@ -61,11 +61,12 @@ class ProfileBlock extends React.Component {
                           <>
                             <Row className='align-items-center'>
                               <Col xs={12} lg={4}>
+                                <span className="star">* </span>
                                 <span>Lastname : </span>
                               </Col>
                               <Col xs={12} lg={8}>
                                 <Label className='no-margin w-100'>
-                                  <Input {...input} required />
+                                  <Input {...input} required id="lastname" />
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
                                 </Label>
                               </Col>
@@ -88,11 +89,12 @@ class ProfileBlock extends React.Component {
                           <>
                             <Row className='align-items-center'>
                               <Col xs={12} lg={4} className='space'>
+                                <span className="star">* </span>
                                 <span>Birthdate : </span>
                               </Col>
                               <Col xs={12} lg={8} >
                                 <Label className='w-100'>
-                                  <Input {...input} min='0' max='150' placeholder='0' required />
+                                  <Input {...input} min='0' max='150' placeholder='0' required id="birthdate" />
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
                                 </Label>
                               </Col>
@@ -107,12 +109,13 @@ class ProfileBlock extends React.Component {
                           <>
                             <Row className='align-items-center'>
                               <Col xs={12} lg={4}>
+                                <span className="star">* </span>
                                 <span>Gender : </span>
                               </Col>
                               <Col xs={12} lg={8}>
-                                <Label className='no-margin w-100'> 
+                                <Label className='no-margin w-100'>
                                   <Label className='no-margin w-100'>
-                                    <select {...input} name='gender' placeholder='Choose Your Gender' className='form-control' required>
+                                    <select {...input} name='gender' placeholder='Choose Your Gender' className='form-control' required id="gender">
                                       <option value='' disabled>Choose Your Gender</option>
                                       <option value='Male'>Male</option>
                                       <option value='Female'>Female</option>
@@ -141,11 +144,12 @@ class ProfileBlock extends React.Component {
                           <>
                             <Row className='align-items-center'>
                               <Col xs={12} lg={4}>
+                                <span className="star">* </span>
                                 <span>Tel : </span>
                               </Col>
                               <Col xs={12} lg={8}>
                                 <Label className='no-margin w-100 '>
-                                  <Input {...input} placeholder='999-999-9999' required />
+                                  <Input {...input} placeholder='999-999-9999' required id="tel" />
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
                                 </Label>
                               </Col>
@@ -160,11 +164,12 @@ class ProfileBlock extends React.Component {
                           <>
                             <Row className='align-items-center'>
                               <Col xs={12} lg={4}>
+                                <span className="star">* </span>
                                 <span>Email : </span>
                               </Col>
                               <Col xs={12} lg={8}>
                                 <Label className='no-margin w-100'  >
-                                  <Input {...input} placeholder='example@uxsearch.com' required />
+                                  <Input {...input} placeholder='example@uxsearch.com' required id="email" />
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
                                 </Label>
                               </Col>
@@ -202,6 +207,7 @@ class ProfileBlock extends React.Component {
                                       name='country'
                                       placeholder='Choose Your Country'
                                       className='form-control'
+                                      id="country"
                                     >
                                       <option value='' disabled>Choose Your Country</option>
                                       {countries.map(country => (
@@ -230,8 +236,9 @@ class ProfileBlock extends React.Component {
                                   <Label className='no-margin w-100'>
                                     <select {...input}
                                       name='city'
-                                      placeholder='Choose Your Province/City'
+                                      placeholder='Choose Your City/State'
                                       className='form-control'
+                                      id="city"
                                     >
                                       <option value='' disabled>Choose Your City/State</option>
                                       {this.props.country && countries.filter(country => {
@@ -267,7 +274,7 @@ class ProfileBlock extends React.Component {
                               </Col>
                               <Col xs={12} lg={8}>
                                 <Label className=' w-100'>
-                                  <Input {...input} />
+                                  <Input {...input} id="education" />
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
                                 </Label>
                               </Col>
@@ -286,7 +293,7 @@ class ProfileBlock extends React.Component {
                               </Col>
                               <Col xs={12} lg={8}>
                                 <Label className='w-100'>
-                                  <Input {...input} />
+                                  <Input {...input} id="job" />
                                   {meta.touched && meta.error && <span>{meta.error}</span>}
                                 </Label>
                               </Col>
@@ -300,7 +307,7 @@ class ProfileBlock extends React.Component {
               </Col>
             </Row>
           </Col>
-        </Row>
+        </Row >
       </div >
     )
   }

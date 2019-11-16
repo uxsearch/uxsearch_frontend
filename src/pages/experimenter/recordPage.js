@@ -15,35 +15,6 @@ import NotSupport from '../../components/utils/notSupport'
 import '../../static/sass/experimenter/record.scss'
 import { delay } from '../../utils/delay'
 
-const modalSubmit = () => {
-  swal({
-    title: "Are you sure?",
-    text: `You won't be able to reverse this!`,
-    icon: "warning",
-    buttons: {
-      cancel: {
-        text: "Cancel",
-        value: null,
-        visible: true,
-      },
-      confirm: {
-        text: "Confirm",
-        value: true,
-        visible: true,
-      }
-    },
-    dangerMode: false,
-  }).then((willSubmit) => {
-    if (willSubmit) {
-      swal("Thank you very much", {
-        icon: "success",
-        timer: 1000,
-        buttons: false
-      });
-    }
-  });
-}
-
 class RecordPage extends React.Component {
   constructor(props) {
     super(props)
@@ -76,6 +47,7 @@ class RecordPage extends React.Component {
       timeDuration: timeDuration,
       blob: cameraBlob
     }
+    console.log('camera', cameraBlob, timeDuration)
     this.setState({ cameraBlob: Childcamera })
   }
 
@@ -117,7 +89,12 @@ class RecordPage extends React.Component {
       if (response.status !== 201) {
         throw new Error('CANNOT CREATE FORM RECORD')
       }
-      this.props.history.push(`/${this.state.projectId}/experimenter/${this.state.experId}/answer`)
+      if (response.status === 201) {
+        const willSubmit = await this.modalSubmit()
+        if (willSubmit) {
+          this.props.history.push(`/${this.state.projectId}/experimenter/${this.state.experId}/answer`)
+        }
+      }
     } catch (e) {
       console.error(e)
     }
@@ -147,12 +124,54 @@ class RecordPage extends React.Component {
     }
   }
 
-  stopRecord(value) {
-    this.setState({ stopStatus: value })
+  stopRecord = async (value) => {
+    const confirm = await this.modalConfirm()
+    if (confirm) {
+      this.setState({ stopStatus: true })
+      this.submitResult(value)
+    }
+  }
+
+  modalConfirm = async () => {
+    let willSubmit = await swal({
+      title: 'Are you sure?',
+      icon: 'warning',
+      buttons: {
+        cancel: {
+          text: 'Cancel',
+          value: false,
+          visible: true,
+        },
+        confirm: {
+          text: 'Confirm',
+          value: true,
+          visible: true,
+        }
+      },
+      dangerMode: false,
+    })
+    return willSubmit
+  }
+
+  modalSubmit = async () => {
+    let willSubmit = await swal({
+      title: 'Thank you for your test',
+      text: 'Next, Please answer the questionnaire for further program development. Thank you .',
+      icon: 'success',
+      buttons: {
+        confirm: {
+          text: 'OK',
+          value: true,
+          visible: true,
+        }
+      },
+    })
+    return willSubmit
   }
 
   render() {
     const project = this.state.project
+
     return (
       <div>
         <NotSupport className='d-md-none' />
@@ -167,7 +186,7 @@ class RecordPage extends React.Component {
                   </Col>
                 </Row>
                 <Form
-                  onSubmit={this.submitResult}
+                  onSubmit={this.stopRecord}
                   render={({
                     handleSubmit, form, submitting, pristine
                   }) => (
@@ -188,7 +207,7 @@ class RecordPage extends React.Component {
                             <br />
                             <Row className='justify-content-center'>
                               <Col xs={12} md={3} className='text-center'>
-                                <Button onClick={() => this.stopRecord(true)} type='submit' className='btn-finish-test'>Finish Testing</Button>
+                                <Button type='submit' className='btn-finish-test'>Finish Testing</Button>
                               </Col>
                             </Row>
                           </Col>

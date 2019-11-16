@@ -4,6 +4,9 @@ import { Container, Row, Col, Button, Label, Input } from 'reactstrap'
 import { Form, Field } from 'react-final-form'
 import arrayMutators from 'final-form-arrays'
 import { Checkbox, Radio, RadioGroup, FormGroup, FormControlLabel, withStyles } from '@material-ui/core'
+import swal from 'sweetalert'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
 import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
@@ -118,7 +121,8 @@ class AnswerTestnote extends React.Component {
       if (response.status !== 200) {
         throw new Error('CANNOT CREATE TESTNOTE')
       }
-      this.props.history.push(`/uxer/${this.state.uxerId}/project/${this.state.projectId}/experiment/${this.state.experId}/answertestnote`)
+      await this.modalSubmit()
+      this.formatData()
     } catch (e) {
       console.error(e)
     }
@@ -160,7 +164,6 @@ class AnswerTestnote extends React.Component {
     if (questions.length !== 0) {
       for (let i = 0; i < questions.length; i++) {
         if (answers.length !== 0) {
-          // MARK: beware idex out of bounds
           questionAndAnswer.push({
             question: {
               questionId: questions[i].id,
@@ -254,8 +257,48 @@ class AnswerTestnote extends React.Component {
     })
   }
 
+  confirmTestnote = async (value) => {
+    const confirm = await this.modalConfirm()
+    if (confirm) {
+      this.submitTestnote(value)
+    }
+  }
+
+  modalConfirm = async () => {
+    let willSubmit = await swal({
+      title: 'Are you sure?',
+      icon: 'warning',
+      buttons: {
+        cancel: {
+          text: 'Cancel',
+          value: false,
+          visible: true,
+        },
+        confirm: {
+          text: 'Confirm',
+          value: true,
+          visible: true,
+        }
+      },
+      dangerMode: false,
+    })
+    return willSubmit
+  }
+
+  modalSubmit = () => {
+    swal("Submit Successful", {
+      icon: "success",
+      timer: 1000,
+      buttons: false
+    });
+  }
+
+  backToResultPage = () => {
+    this.props.history.push(`/uxer/${this.state.uxerId}/project/${this.state.projectId}/experiment/${this.state.experId}/result`)
+  }
+
   render() {
-    const { uxerId, project, experiment, noteAndAnswer } = this.state
+    const { uxerId, project, experiment, noteAndAnswer, multipleState } = this.state
 
     return (
       <div>
@@ -268,7 +311,7 @@ class AnswerTestnote extends React.Component {
                 <Row className='align-items-center justify-content-center'>
                   <Col xs={1} sm={4} xl={3}>
                     <div className='profile-block'>
-                      <img src='https://picsum.photos/200/300' alt='Profile Picture' className='profile-img' />
+                      <FontAwesomeIcon icon={faUserCircle} size='6x' />
                     </div>
                   </Col>
                   <Col xs={12} sm={8} xl={9}>
@@ -286,6 +329,7 @@ class AnswerTestnote extends React.Component {
                   src={require('../../static/img/close.svg')}
                   className="close_btn"
                   alt="close button"
+                  onClick={() => this.backToResultPage()}
                 />
               </Col>
             </Row>
@@ -303,7 +347,6 @@ class AnswerTestnote extends React.Component {
                   country={`${experiment.country}`}
                   educate={`${experiment.educate}`}
                   job={`${experiment.job}`}
-                  lifestyle={`${experiment.lifestyle}`}
                 />
               </>
             }
@@ -349,7 +392,7 @@ class AnswerTestnote extends React.Component {
                                                   <Row className='align-items-center'>
                                                     <Col xs={12}>
                                                       <Label className=' w-100'>
-                                                        <Input {...input} rows='4' className='text-style'/>
+                                                        <Input {...input} rows='4' className='text-style' />
                                                         {meta.touched && meta.error && <span>{meta.error}</span>}
                                                       </Label>
                                                     </Col>
@@ -363,7 +406,7 @@ class AnswerTestnote extends React.Component {
                                               <RadioGroup
                                                 aria-label='answer'
                                                 name={`answers[${index}][answer]`}
-                                                value={qNa.answer.answer}
+                                                value={qNa.answer.answer && multipleState[qNa.question.questionId]}
                                                 onChange={this.handleChange(qNa.question.questionId)}
                                               >
                                                 {qNa.question.options.map(option => (
@@ -425,7 +468,7 @@ class AnswerTestnote extends React.Component {
                         </Row>
                         <Row className='justify-content-center space-btn'>
                           <Col xs={12} md={4} >
-                            <Button className='btn-submit-test'>Submit</Button>
+                            <Button className='btn-submit-test' >Submit</Button>
                           </Col>
                         </Row>
                       </form>

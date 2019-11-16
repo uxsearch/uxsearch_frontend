@@ -5,6 +5,7 @@ import { Form, Field } from 'react-final-form'
 import { FieldArray } from 'react-final-form-arrays'
 import arrayMutators from 'final-form-arrays'
 import { Checkbox, Radio, RadioGroup, FormControlLabel, withStyles } from '@material-ui/core'
+import swal from 'sweetalert'
 
 import NavbarExp from '../../components/utils/navbarExperimenter'
 import NotSupport from '../../components/utils/notSupport'
@@ -81,6 +82,7 @@ class Answer extends React.Component {
       if (response.status !== 200) {
         throw new Error('CANNOT SUBMIT QUESTIONNAIRE')
       }
+      await this.modalSubmit()
       this.props.history.push(`/${this.state.projectId}/experimenter/${this.state.experId}/thanks`)
     } catch (e) {
       console.error(e)
@@ -111,8 +113,45 @@ class Answer extends React.Component {
     }
   }
 
+  confirmQuestionnaire = async (value) => {
+    const confirm = await this.modalConfirm()
+    if (confirm) {
+      this.submitQuestionnaire(value)
+    }
+  }
+
+  modalConfirm = async () => {
+    let willSubmit = await swal({
+      title: 'Are you sure?',
+      icon: 'warning',
+      buttons: {
+        cancel: {
+          text: 'Cancel',
+          value: false,
+          visible: true,
+        },
+        confirm: {
+          text: 'Confirm',
+          value: true,
+          visible: true,
+        }
+      },
+      dangerMode: false,
+    })
+    return willSubmit
+  }
+
+  modalSubmit = () => {
+    swal("Submit Successful", {
+      icon: "success",
+      timer: 1000,
+      buttons: false
+    });
+  }
+
   render() {
     const { questionnaire, project } = this.state
+    const swal = require('sweetalert')
 
     return (
       <div>
@@ -134,7 +173,7 @@ class Answer extends React.Component {
                 </Row>
                 <br />
                 <Form
-                  onSubmit={this.submitQuestionnaire}
+                  onSubmit={this.confirmQuestionnaire}
                   mutators={{ ...arrayMutators }}
                   render={({
                     handleSubmit, form, submitting, pristine

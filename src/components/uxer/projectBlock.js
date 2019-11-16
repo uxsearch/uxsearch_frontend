@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Form, Field } from 'react-final-form'
-import { Container, Row, Col, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalBody, Button, Label } from 'reactstrap'
+import { Row, Col, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Modal, ModalBody, Button, Label } from 'reactstrap'
 import { TextField, withStyles } from '@material-ui/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisV, faTrash, faShare, faEdit, faBook, faLink, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
@@ -23,7 +23,6 @@ const TextInput = withStyles({
     },
   },
 })(TextField);
-
 
 class ProjectBlock extends React.Component {
   constructor(props) {
@@ -87,10 +86,8 @@ class ProjectBlock extends React.Component {
 
   handleImageChange = (event) => {
     event.preventDefault();
-
     const reader = new FileReader();
     const file = event.target.files[0];
-
     reader.onloadend = () => {
       this.setState({
         file: file,
@@ -144,7 +141,7 @@ class ProjectBlock extends React.Component {
                   </DropdownToggle>
                   <DropdownMenu>
                     <DropdownItem onClick={() => this.toggleModal()}>
-                      <FontAwesomeIcon icon={faEdit} color='#D42B2B' size='sm' className='space-icon' />
+                      <FontAwesomeIcon icon={faEdit} size='sm' className='space-icon' />
                       <span>Edit Project </span>
                     </DropdownItem>
                     <DropdownItem>

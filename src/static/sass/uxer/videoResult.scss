@@ -1,4 +1,4 @@
-@import '../variables';
+@import "../variables";
 
 #video-result {
   .no-margin {
@@ -9,15 +9,32 @@
     margin: 50px auto;
   }
 
-  .card-video{
+  .card-video {
     background-color: $black;
     padding: 10px;
     margin-top: 0px;
   }
 
-  .play-video{
+  .play-video {
     width: 100%;
     height: 200px;
+  }
+
+  .control-bar {
+    padding: 10px;
+    background-color: $white;
+  }
+
+  .control-btn {
+    width: 100%;
+    background-color: $blue;
+    border: $blue;
+    border-radius: 10px;
+
+    &:hover {
+      background-color: $blue-hover;
+      border: $blue-hover;
+    }
   }
 
   .space-bottom-video {
@@ -27,7 +44,6 @@
   .profile-block {
     width: 100px;
     height: 100px;
-    overflow: hidden;
     border-radius: 100%;
   }
 
@@ -58,12 +74,12 @@
     }
   }
 
-  .bg-experprofile{
+  .bg-experprofile {
     width: 100%;
     height: auto;
     padding: 30px;
     background-color: $white;
-    border-radius: 20px; 
+    border-radius: 20px;
   }
 
   .topic-text {
@@ -77,7 +93,7 @@
     color: $dark;
   }
 
-  .bg-questionnaire{
+  .bg-questionnaire {
     width: 100%;
     height: auto;
     padding: 30px;
@@ -90,7 +106,7 @@
   }
 
   @media (min-width: 768px) {
-    .play-video{
+    .play-video {
       height: 300px;
     }
 
@@ -100,13 +116,13 @@
   }
 
   @media (min-width: 992px) {
-    .play-video{
+    .play-video {
       height: 400px;
     }
   }
 
   @media (min-width: 1200px) {
-    .play-video{
+    .play-video {
       height: 500px;
     }
   }

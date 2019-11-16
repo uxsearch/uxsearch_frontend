@@ -1,9 +1,12 @@
 import React from 'react'
 import { Container, Row, Col, Button } from 'reactstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
 import axios from '../../utils/axios'
 import APIURI from '../../utils/apiuri'
 
+import NotSupport from "../../components/utils/notSupport";
 import NavbarUXer from '../../components/utils/navbarUXer'
 import PlayVideo from '../../components/uxer/videoresult/video'
 import ExperProfile from '../../components/uxer/videoresult/profileBlock'
@@ -11,8 +14,7 @@ import ResultQuestion from '../../components/uxer/videoresult/resultBlock'
 
 import '../../static/sass/uxer/videoResult.scss'
 
-class VideoResult extends React.
-  Component {
+class VideoResult extends React.Component {
   constructor(props) {
     super(props);
     const { computedMatch } = props
@@ -95,70 +97,73 @@ class VideoResult extends React.
     const records = this.state.records
 
     return (
-      <section id='video-result'>
-        <NavbarUXer title={`${project && project.name}`} />
-        <Container fluid>
-          {records &&
-            <PlayVideo
-              faceVideo={records.video_url}
-              faceVideoTime={records.video_time}
-              screenVideo={records.screen_url}
-              screenVideoTime={records.screen_time}
-            />
-          }
-        </Container>
-        <Container fluid className='space-bottom-video'>
-          <Row className='justify-content-center align-items-center'>
-            <Col xs={12} sm={8} md={6} lg={5}>
-              <Row className='align-items-center justify-content-center'>
-                <Col xs={3} sm={4} xl={3}>
-                  <div className='profile-block'>
-                    <img src='https://picsum.photos/200/300' alt='Profile Picture' className='profile-img' />
-                  </div>
-                </Col>
-                <Col xs={9} sm={8} xl={9}>
-                  <Row>
-                    <Col xs={12}>
-                      <p className='no-margin exper-name'>{experiment && `${experiment.firstname} ${experiment.lastname}`}</p>
-                    </Col>
-                  </Row>
-                  <Row className='d-sm-none space-btn-mobile'>
-                    <Col xs={12}>
-                      <Button href={`/uxer/${this.state.uxerId}/project/${this.state.projectId}/experiment/answertestnote`} className='btn-usability-test'>Usability Test Note</Button>
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
-            </Col>
-            <Col md={3} xl={4} className='d-none d-md-block' />
-            <Col xs={12} sm={4} md={3} xl={2} className='d-none d-sm-block'>
-              <Button href={`/uxer/${this.state.uxerId}/project/${this.state.projectId}/experiment/${this.state.experId}/answertestnote`} className='btn-usability-test w-100'>Usability Test Note</Button>
-            </Col>
-          </Row>
-        </Container>
-        <Container className='space-block'>
-          {experiment &&
-            <>
-              <ExperProfile
-                name={`${experiment.firstname} ${experiment.lastname}`}
-                age={this.getAge(new Date(experiment.birthdate.seconds * 1000))}
-                gender={`${experiment.gender}`}
-                tel={`${experiment.tel}`}
-                email={`${experiment.email}`}
-                city={`${experiment.province}`}
-                country={`${experiment.country}`}
-                educate={`${experiment.educate}`}
-                job={`${experiment.job}`}
-                lifestyle={`${experiment.lifestyle}`}
+      <div>
+        <NotSupport className='d-md-none' />
+        <section id='video-result' className='d-none d-md-block'>
+          <NavbarUXer title={`${project && project.name}`} />
+          <Container fluid >
+            {records &&
+              <PlayVideo
+                faceVideo={records.video_url}
+                faceVideoTime={records.video_time}
+                screenVideo={records.screen_url}
+                screenVideoTime={records.screen_time}
               />
-            </>
-          }
-          <br />
-          <ResultQuestion
-            questions={questions && questions}
-          />
-        </Container>
-      </section>
+            }
+          </Container>
+          <Container fluid className='space-bottom-video'>
+            <Row className='justify-content-center align-items-center'>
+              <Col xs={12} sm={8} md={6} lg={5}>
+                <Row className='align-items-center justify-content-center'>
+                  <Col xs={3} sm={4} xl={3}>
+                    <div className='profile-block'>
+                      <FontAwesomeIcon icon={faUserCircle} size='6x' />
+                    </div>
+                  </Col>
+                  <Col xs={9} sm={8} xl={9}>
+                    <Row>
+                      <Col xs={12}>
+                        <p className='no-margin exper-name'>{experiment && `${experiment.firstname} ${experiment.lastname}`}</p>
+                      </Col>
+                    </Row>
+                    <Row className='d-sm-none space-btn-mobile'>
+                      <Col xs={12}>
+                        <Button href={`/uxer/${this.state.uxerId}/project/${this.state.projectId}/experiment/answertestnote`} className='btn-usability-test'>Usability Test Note</Button>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              </Col>
+              <Col md={3} xl={4} className='d-none d-md-block' />
+              <Col xs={12} sm={4} md={3} xl={2} className='d-none d-sm-block'>
+                <Button href={`/uxer/${this.state.uxerId}/project/${this.state.projectId}/experiment/${this.state.experId}/answertestnote`} className='btn-usability-test w-100'>Usability Test Note</Button>
+              </Col>
+            </Row>
+          </Container>
+          <Container className='space-block'>
+            {experiment &&
+              <>
+                <ExperProfile
+                  name={`${experiment.firstname} ${experiment.lastname}`}
+                  age={this.getAge(new Date(experiment.birthdate.seconds * 1000))}
+                  gender={`${experiment.gender}`}
+                  tel={`${experiment.tel}`}
+                  email={`${experiment.email}`}
+                  city={`${experiment.province}`}
+                  country={`${experiment.country}`}
+                  educate={`${experiment.educate}`}
+                  job={`${experiment.job}`}
+                  lifestyle={`${experiment.lifestyle}`}
+                />
+              </>
+            }
+            <br />
+            <ResultQuestion
+              questions={questions && questions}
+            />
+          </Container>
+        </section>
+      </div>
     )
   }
 }
