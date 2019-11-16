@@ -276,7 +276,6 @@ class CreateQuestion extends React.Component {
                     <Row className='justify-content-center space-btn'>
                       <Col xs={12} md={4} className='text-center'>
                         <Button type="submit" className='btn-save-questionnaire' onClick={() => this.modalSubmit()}>Save Questionnaire</Button>
-
                       </Col>
                     </Row>
                   </form>
