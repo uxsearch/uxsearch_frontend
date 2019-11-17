@@ -218,10 +218,10 @@ class Question extends React.Component {
                         </DropdownToggle>
                         <DropdownMenu className='btn-secondary indropdown text-center '>
                           <DropdownItem onClick={() => this.changeType('multiple')}>
-                            <FontAwesomeIcon icon={faCircle} size='1x' color='#303030' className='textHeight' />multiple Choice
+                            <FontAwesomeIcon icon={faCircle} size='1x' color='#303030' className='textHeight' />multiple choice
                           </DropdownItem>
                           <DropdownItem onClick={() => this.changeType('checkbox')}>
-                            <FontAwesomeIcon icon={faSquare} size='1x' color='#303030' className='textHeight' />check Box
+                            <FontAwesomeIcon icon={faSquare} size='1x' color='#303030' className='textHeight' />check box
                           </DropdownItem>
                           <DropdownItem onClick={() => this.changeType('textbox')}>
                             <FontAwesomeIcon icon={faTextHeight} size='1x' color='#303030' className='textHeight' />text box
@@ -256,7 +256,7 @@ class Question extends React.Component {
                                 <Input
                                   className='font'
                                   type='multiple'
-                                  placeholder='Addoption'
+                                  placeholder='AddOption'
                                   value={option.option}
                                   onChange={e => {
                                     this.changeOption(e.target.value, index)

@@ -5,8 +5,7 @@ import { withStyles, TextField } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserAlt, faLock } from '@fortawesome/free-solid-svg-icons'
 
-// import NotSupport from '../../components/utils/notSupport'
-import background1 from '../../static/img/background.jpg'
+import background from '../../static/img/background.jpg'
 import logo from '../../static/img/logo.png'
 
 import axios from '../../utils/axios'
@@ -56,11 +55,9 @@ class SignIn extends React.Component {
   render() {
     return (
       <div>
-        {/* <NotSupport className='d-md-none' /> */}
-        {/* <section id='signin' className='d-none d-md-block'> */}
         <section id='signin' >
           <div className='blue-screen'></div>
-          <img className='background ' src={background1} />
+          <img className='background ' src={background} />
           <Container  >
             <Row className='align-items-center justify-content-center'>
               <Col xs={7} md={4} lg={3} className='profile-block '>
@@ -69,7 +66,6 @@ class SignIn extends React.Component {
                     <img className='logo-icon' src={logo} />
                   </Col>
                 </Row>
-
                 <Form
                   onSubmit={this.submitLogin}
                   render={({
@@ -121,7 +117,6 @@ class SignIn extends React.Component {
                                   {({ input, meta }) => (
                                     <>
                                       <Row className='align-items-center'>
-
                                         <Col xs={12}>
                                           <Label className='w-100 no-margin'>
                                             <TextInput {...input}
@@ -149,7 +144,6 @@ class SignIn extends React.Component {
                             <Button type="submit" className='btn-signin'>Sign in</Button>
                           </Col>
                         </Row>
-
                       </form>
                     )}
                 />
