@@ -58,6 +58,17 @@
     right: 100px;
   }
 
+  .option-block {
+    border: 1px solid $dark;
+    padding: 10px;
+    cursor: pointer;
+
+    &.active {
+      background-color: $dark;
+      color: $white;
+    }
+  }
+
   .share-block {
     position: relative;
     width: 40px;

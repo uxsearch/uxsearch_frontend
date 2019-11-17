@@ -198,7 +198,6 @@ class CreateQuestion extends React.Component {
 
   render() {
     const { uxerId, projectId, project, questions, loading } = this.state
-    const swal = require('sweetalert')
 
     return (
       <div>
@@ -216,24 +215,10 @@ class CreateQuestion extends React.Component {
                     <Row className="questionnaire-block no-gutters">
                       <Col xs={12} md={12}>
                         <Row>
-                          <Col xs={12} md={12} lg={12} className="space-side ">
+                          <Col xs={12} md={12} lg={12} className="space-side">
                             <h2>{`${project && project.name}`} Questionnaire</h2>
                           </Col>
                         </Row>
-                        {/* <Row>
-                          <Col xs={1} md={1}></Col>
-                          <Col xs={12} md={10} lg={10}>
-                            <SearchField
-                              id="standard-search"
-                              label="Form Description"
-                              type="search"
-                              className="w-100 no-margin"
-                              margin="normal"
-                            />
-                          </Col>
-                          <Col xs={1} md={1}></Col>
-                        </Row> */}
-                        {/* <br /> */}
                         <Col xs={12} md={12}>
                           <hr className="black-line" />
                         </Col>
@@ -276,7 +261,6 @@ class CreateQuestion extends React.Component {
                     <Row className='justify-content-center space-btn'>
                       <Col xs={12} md={4} className='text-center'>
                         <Button type="submit" className='btn-save-questionnaire' onClick={() => this.modalSubmit()}>Save Questionnaire</Button>
-
                       </Col>
                     </Row>
                   </form>
