@@ -5,11 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faCopy, faShare } from '@fortawesome/free-solid-svg-icons'
 
 import axios from '../../utils/axios'
-import APIUPI from '../../utils/apiuri'
+import APIURI from '../../utils/apiuri'
 
 import NavbarUxer from '../../components/utils/navbarUXer'
 import SubNavbar from '../../components/utils/subNavbar';
 import ExperBlock from '../../components/uxer/experimentBlock'
+import Summarize from '../../components/uxer/summarize'
 
 import '../../static/sass/uxer/experPage.scss'
 
@@ -38,20 +39,22 @@ class ExperPage extends React.Component {
       projectId: computedMatch.params.projId,
       project: undefined,
       experList: [],
+      avgTime: undefined,
+      resultSummarize: undefined,
+      resultOption: 'video'
     }
   }
 
-  componentDidMount() {
-    this.getAllExperiment()
-    this.getProject()
-  }
-
-  componentDidUpdate() {
+  async componentDidMount() {
+    await this.getAllExperiment()
+    await this.getProject()
+    await this.getResultAnswer()
+    await this.getAvgTime()
   }
 
   getProject = async () => {
     try {
-      const response = await axios.get(`${APIUPI.UXER}${this.state.uxerId}/${APIUPI.ONE_PROJECT}${this.state.projectId}`)
+      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}`)
       if (response.status !== 200) {
         throw new Error('CANNOT GET PROJECT')
       }
@@ -63,7 +66,7 @@ class ExperPage extends React.Component {
 
   getAllExperiment = async () => {
     try {
-      const response = await axios.get(`${APIUPI.UXER}${this.state.uxerId}/${APIUPI.ONE_PROJECT}${this.state.projectId}/experimenters`)
+      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/experimenters`)
       if (response.status !== 200) {
         throw new Error('CANNOT GET ALL EXPERIMENT OF THIS PROJECT')
       }
@@ -73,8 +76,48 @@ class ExperPage extends React.Component {
     }
   }
 
+  getResultAnswer = async () => {
+    try {
+      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/summarize-note`)
+      if (response.status !== 200) {
+        throw new Error('CANNOT GET RESULT ANSWER')
+      }
+      this.setState({ resultSummarize: response.data })
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  getAvgTime = async () => {
+    try {
+      const response = await axios.get(`${APIURI.UXER}${this.state.uxerId}/${APIURI.ONE_PROJECT}${this.state.projectId}/summarize-recordTime`)
+      if (response.status !== 200) {
+        throw new Error('CANNOT GET RESULT')
+      }
+      this.setState({ avgTime: response.data })
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  handleResultOption = async option => {
+    console.log('option', option)
+    await this.setState({ resultOption: option })
+    const videoOption = document.getElementById('videoOption')
+    const summarizeOption = document.getElementById('summarizeOption')
+    if (this.state.resultOption === 'video') {
+      console.log('if video')
+      videoOption.classList.add('active')
+      summarizeOption.classList.remove('active')
+    } else if (this.state.resultOption === 'summarize') {
+      console.log('if summarize')
+      summarizeOption.classList.add('active')
+      videoOption.classList.remove('active')
+    }
+  }
+
   render() {
-    const { project, experList, uxerId, projectId } = this.state
+    const { project, experList, uxerId, projectId, resultSummarize, avgTime, resultOption } = this.state
 
     return (
       <section id='exper-page'>
@@ -127,20 +170,55 @@ class ExperPage extends React.Component {
         </Container>
         <br />
         <Container>
-          <Row>
-            {experList.map(experiment => (
-              <>
-                <Col xs={12} sm={6} md={4} lg={3} key={experiment.id}>
-                  <ExperBlock
-                    link={`/uxer/${this.state.uxerId}/project/${this.state.projectId}/experiment/${experiment.data.experimenter_key}/result`}
-                    firstname={experiment.data.firstname}
-                    lastname={experiment.data.lastname}
-                  />
-                </Col>
-              </>
-            ))}
+          <Row className='justify-content-center'>
+            <Col xs={5} sm={4} md={3} lg={2}
+              id='videoOption'
+              className='text-center option-block active'
+              onClick={() => this.handleResultOption('video')}
+            >
+              <p className='no-margin'>Video</p>
+            </Col>
+            <Col xs={5} sm={4} md={3} lg={2}
+              id='summarizeOption'
+              className='text-center option-block'
+              onClick={() => this.handleResultOption('summarize')}
+            >
+              <p className='no-margin'>Summarize</p>
+            </Col>
           </Row>
         </Container>
+        <br />
+        {resultOption === 'video' &&
+          <Container>
+            {console.log('video', resultOption)}
+            <Row>
+              {experList.map(experiment => (
+                <>
+                  <Col xs={12} sm={6} md={4} lg={3} key={experiment.id}>
+                    <ExperBlock
+                      link={`/uxer/${this.state.uxerId}/project/${this.state.projectId}/experiment/${experiment.data.experimenter_key}/result`}
+                      firstname={experiment.data.firstname}
+                      lastname={experiment.data.lastname}
+                    />
+                  </Col>
+                </>
+              ))}
+            </Row>
+          </Container>
+        }
+        {resultOption === 'summarize' &&
+          <Container>
+            {console.log('summarize', resultOption)}
+            <Summarize
+              uxerId={uxerId}
+              projId={projectId}
+              projectName={`${project && project.name}`}
+              avgTime={avgTime}
+              result={resultSummarize}
+            />
+          </Container>
+
+        }
       </section>
     )
   }
