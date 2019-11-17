@@ -101,16 +101,13 @@ class ExperPage extends React.Component {
   }
 
   handleResultOption = async option => {
-    console.log('option', option)
     await this.setState({ resultOption: option })
     const videoOption = document.getElementById('videoOption')
     const summarizeOption = document.getElementById('summarizeOption')
     if (this.state.resultOption === 'video') {
-      console.log('if video')
       videoOption.classList.add('active')
       summarizeOption.classList.remove('active')
     } else if (this.state.resultOption === 'summarize') {
-      console.log('if summarize')
       summarizeOption.classList.add('active')
       videoOption.classList.remove('active')
     }
@@ -190,7 +187,6 @@ class ExperPage extends React.Component {
         <br />
         {resultOption === 'video' &&
           <Container>
-            {console.log('video', resultOption)}
             <Row>
               {experList.map(experiment => (
                 <>
@@ -208,7 +204,6 @@ class ExperPage extends React.Component {
         }
         {resultOption === 'summarize' &&
           <Container>
-            {console.log('summarize', resultOption)}
             <Summarize
               uxerId={uxerId}
               projId={projectId}
