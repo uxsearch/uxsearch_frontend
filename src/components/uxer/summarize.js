@@ -1,13 +1,15 @@
 import React from 'react'
 import { Row, Col } from 'reactstrap'
 import { Table } from '@material-ui/core'
-import { Pie } from 'react-chartjs-2'
+import { Pie, HorizontalBar } from 'react-chartjs-2'
 
 import '../../static/sass/uxer/summarize.scss'
 
 class Summarize extends React.Component {
-  data = (option, results) => {
-    const data = {
+  data = (option, results, type_form) => {
+    let data = {}
+    if (type_form === 'multiple') {
+    data = {
       labels: option,
       datasets: [{
         data: results,
@@ -17,6 +19,22 @@ class Summarize extends React.Component {
           '#4BC0C0', '#2d3561', '#540e33', '#de356a', '#fc7fb2',
         ],
       }],
+    }
+    } else if (type_form === 'checkbox') {
+      data = {
+        labels: option,
+        datasets: [
+          {
+            label: 'options',
+            backgroundColor: 'rgba(255,99,132,0.2)',
+            borderColor: 'rgba(255,99,132,1)',
+            borderWidth: 1,
+            hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+            hoverBorderColor: 'rgba(255,99,132,1)',
+            data: results
+          }
+        ]
+      }
     }
     return data
   }
@@ -62,7 +80,7 @@ class Summarize extends React.Component {
                   </Col>
                 </Row>
                 <hr />
-                {result.summary.map(result => (
+                {result.takeNoteExper !== 0 && result.summary.map(result => (
                   <>
                     <Row className='justify-content-center'>
                       <Col xs={10}>
@@ -84,14 +102,23 @@ class Summarize extends React.Component {
                         ) : (
                             <Row className='justify-content-start'>
                               <Col xs={12}>
-                                <Pie
-                                  data={this.data(result.options, result.answer)}
-                                  legend={{
-                                    position: 'bottom',
-                                  }}
-                                  width={100}
-                                  height={35}
-                                />
+                                {result.type_form === 'multiple' ? (
+                                  <Pie
+                                    data={this.data(result.options, result.answer, 'multiple')}
+                                    legend={{
+                                      position: 'bottom',
+                                    }}
+                                    width={100}
+                                    height={35}
+                                  />
+
+                                ) : (
+                                    <HorizontalBar
+                                      data={this.data(result.options, result.answer, 'checkbox')}
+                                      width={100}
+                                      height={35}
+                                    />
+                                  )}
                               </Col>
                             </Row>
                           )}
