@@ -60,7 +60,7 @@ class SignIn extends React.Component {
           <img className='background ' src={background} />
           <Container  >
             <Row className='align-items-center justify-content-center'>
-              <Col xs={11} sm={8} md={6} lg={4} className='profile-block '>
+              <Col xs={11} sm={8} md={6} lg={4} xl={3} className='profile-block '>
                 <Row>
                   <Col xs={12} className='text-center img-block'>
                     <img className='logo-icon' src={logo} />
