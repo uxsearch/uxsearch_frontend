@@ -47,7 +47,6 @@ class RecordPage extends React.Component {
       timeDuration: timeDuration,
       blob: cameraBlob
     }
-    console.log('camera', cameraBlob, timeDuration)
     this.setState({ cameraBlob: Childcamera })
   }
 
