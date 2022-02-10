@@ -16,7 +16,7 @@
     "final-form-arrays": "^3.0.1",
     "lodash": "^4.17.15",
     "nginx-conf": "^1.5.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "react": "^16.8.6",
     "react-chartjs-2": "^2.8.0",
     "react-dom": "^16.8.6",
