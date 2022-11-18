@@ -23,7 +23,7 @@
     "react-final-form": "^6.3.0",
     "react-final-form-arrays": "^3.1.1",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1",
+    "react-scripts": "5.0.1",
     "reactstrap": "^8.0.1",
     "recordrtc": "^5.5.4",
     "sweetalert": "^2.1.2",
